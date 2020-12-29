@@ -1,0 +1,21 @@
+
+.mat-toolbar{
+    background-color: #5a9bd5;
+}
+.login-header-section{
+    position: absolute;
+    left: 0;
+}
+
+.hide{
+    display: none;
+}
+
+.open{
+    background-color: #4473c5;
+    color: white;
+}
+
+#current-mission-management-sub-menu{
+    background-color: #c6c6c6;
+}

@@ -1,0 +1,68 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <button mat-button>
+        <h2>גדוד 941</h2>
+      </button>
+      <span class="menu-spacer"></span>
+      
+      <div class="login-header-section">
+        <a mat-button > מנהל מערכת </a>
+        <a mat-button > התחברות </a>
+      </div>
+    </mat-toolbar-row>
+</mat-toolbar>
+  
+  <mat-sidenav-container>
+    <mat-sidenav mode="side" #sidenav opened>
+      <mat-nav-list style="background-color: #a0bfe5;">
+        <a mat-list-item id="current-mission-management" (click)="onNavTabClick(0)" [ngClass]="{'open': navArray[0]}">ניהול משימה נוכחית</a>
+        <mat-nav-list id="current-mission-management-sub-menu" [ngClass]="{'open': navArray[0] ,hide:!navArray[0]}">
+          <a mat-list-item [routerLink]="'manage-current-task/warehouse-unit-inventor'" (click)="onNavSubTabClick(0)" [ngClass]="{open: subNavArray[0]}">מלאי ימ"ח</a>
+          <a mat-list-item [routerLink]="'manage-current-task/allocate-pakal-battlion'" (click)="onNavSubTabClick(1)" [ngClass]="{'open': subNavArray[1]}">הקצאת פק"לים גדודי</a>
+          <a mat-list-item [routerLink]="'manage-current-task/allocate-pakal-squad'" (click)="onNavSubTabClick(2)" [ngClass]="{'open': subNavArray[2]}">הקצאת פק"לים פלוגתי</a>
+          <a mat-list-item [routerLink]="'manage-current-task/recruitment-management'" (click)="onNavSubTabClick(3)" [ngClass]="{'open': subNavArray[3]}">ניהול גיוס</a>
+          <a mat-list-item [routerLink]="'manage-current-task/reports'" (click)="onNavSubTabClick(4)" [ngClass]="{'open': subNavArray[4]}">דו"חות</a>
+        </mat-nav-list>
+
+        <a mat-list-item [routerLink]="'manage/names-list'" (click)="onNavTabClick(1)" [ngClass]="{'open': navArray[1]}">ניהול רשימת שמות</a>
+        <a mat-list-item [routerLink]="'manage/tasks'" (click)="onNavTabClick(2)" [ngClass]="{'open': navArray[2]}">ניהול משימות</a>
+        <a mat-list-item [routerLink]="'manage/pakal-types'" (click)="onNavTabClick(3)" [ngClass]="{'open': navArray[3]}">ניהול סוגי פק"לים</a>
+        <a mat-list-item [routerLink]="'manage/users'" (click)="onNavTabClick(4)" [ngClass]="{'open': navArray[4]}">ניהול משתמשים</a>
+        <a mat-list-item [routerLink]="'manage/sub-units'" (click)="onNavTabClick(5)" [ngClass]="{'open': navArray[5]}">ניהול תתי יחידות</a>
+  
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div style="height: 88vh; border: solid red 2px; width: 80%; float: left">
+  
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+
+  <!-- <mat-tab-group mat-align-tabs="center" selectedIndex="0" class="vertical">
+    <mat-tab label="Tab1">
+      <p>
+         Tab 1 details
+      </p>
+    </mat-tab>
+    <mat-tab label="Tab2">
+      <p>
+         Tab 2 details
+      </p>
+    </mat-tab>
+    <mat-tab label="Tab3" >
+      <ng-template matTabContent>
+        <mat-tab-group mat-align-tabs="center" selectedIndex="1" >
+          <mat-tab label="Tab3-1">
+            Test3-1
+          </mat-tab>
+          <mat-tab label="Tab3-2">
+            Test3-2
+          </mat-tab>
+        </mat-tab-group>
+      </ng-template>
+      
+    </mat-tab>
+  </mat-tab-group> -->
