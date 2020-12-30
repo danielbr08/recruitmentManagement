@@ -1,1 +1,41 @@
-<p>pakal-types-managementent works!</p>
+<app-manage-current-task></app-manage-current-task>
+
+<!-- <mat-form-field floatLabel="always" hideRequiredMarker appearance="fill">
+    <mat-select placeholder='פק"ל'>
+        <mat-option> 1 פק"ל </mat-option>
+        <mat-option> 2 פק"ל </mat-option>
+        <mat-option> 3 פק"ל </mat-option>
+    </mat-select>
+</mat-form-field>
+
+<mat-form-field floatLabel="never" hideRequiredMarker appearance="fill" style="margin:10px">
+    <mat-label>כמות</mat-label>
+    <input min="0" type="number" matInput required> 
+</mat-form-field> -->
+
+<!-- <button mat-button mat-raised-button color="primary">הוסף</button> -->
+<table>
+    <tr>
+        <th>מזהה</th>
+        <th>פק"ל</th>
+        <th colspan="3">רשימת החתמה</th>
+    </tr>
+    <tr *ngFor='let row of dataSource; let pakalIndex=index'>
+        <td>{{row.id}}</td>
+        <td><input type="text" placeholder="" required [value]=row.pakal></td>
+        <td>
+            <table>
+                <tr *ngFor='let signature of row.signatureList; let signatureIndex=index'>
+                    <td><input type="text" required [value]="signature.item"></td>
+                    <td><input type="text" required [value]="signature.serialNumber"></td>
+                    <td><input min="0" type="number" required [value]="signature.quantity"></td>
+                    <td (click)="addNewSignatureItem(pakalIndex)"><mat-icon aria-label="add">add</mat-icon></td>
+                    <td (click)="removeNewSignatureItem(pakalIndex, signatureIndex)"><mat-icon aria-label="Delete">delete</mat-icon></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+  <button (click)="addNewRow()" mat-button mat-raised-button color="primary"><mat-icon aria-label="Add">add</mat-icon></button>
+  <!-- <button (click)="saveData(warehouseUnitTable)" mat-button mat-raised-button color="primary">שמירה</button> -->
