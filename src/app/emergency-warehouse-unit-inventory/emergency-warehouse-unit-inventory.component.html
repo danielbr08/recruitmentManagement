@@ -16,9 +16,7 @@
 
 <button mat-button mat-raised-button color="primary">הוסף</button>
 
-<div>{{dataSource[0].id}} , {{dataSource[0].pakal}}</div>
-
-<mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<mat-table #warehouseUnitTable [dataSource]="dataSource" class="mat-elevation-z8">
     <!-- id Column -->
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef> מזהה </mat-header-cell>
@@ -50,3 +48,5 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
+
+  <button (click)="saveData(warehouseUnitTable)" mat-button mat-raised-button color="primary">שמירה</button>
