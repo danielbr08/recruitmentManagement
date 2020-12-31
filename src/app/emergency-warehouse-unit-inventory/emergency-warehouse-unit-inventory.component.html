@@ -39,8 +39,8 @@
     <ng-container matColumnDef=" "> 
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let element">
-            <button mat-icon-button matTooltip="Click to Delete" class="iconbutton" color="warn">
-        <mat-icon aria-label="Delete">delete</mat-icon>
+            <button *ngIf="dataSource.length > 1" mat-icon-button matTooltip="Click to Delete" class="iconbutton" color="warn">
+        <mat-icon aria-label="Delete">delete</mat-icon> 
       </button>
     </mat-cell>
     </ng-container>
@@ -49,4 +49,5 @@
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
 
+  <button (click)="addNewRow()" mat-button mat-raised-button color="primary"><mat-icon aria-label="Add">add</mat-icon></button>
   <button (click)="saveData(warehouseUnitTable)" mat-button mat-raised-button color="primary">שמירה</button>

@@ -1,41 +1,47 @@
 <app-manage-current-task></app-manage-current-task>
 
-<!-- <mat-form-field floatLabel="always" hideRequiredMarker appearance="fill">
-    <mat-select placeholder='פק"ל'>
-        <mat-option> 1 פק"ל </mat-option>
-        <mat-option> 2 פק"ל </mat-option>
-        <mat-option> 3 פק"ל </mat-option>
-    </mat-select>
-</mat-form-field>
+<mat-table id="warehouseUnitTable" #warehouseUnitTable [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- id Column -->
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef> מזהה </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+    </ng-container>
+  
+    <!-- pakal Column -->
+    <ng-container matColumnDef="pakal">
+      <mat-header-cell *matHeaderCellDef> פק"ל </mat-header-cell>
+      <mat-cell *matCellDef="let element"> <input type="text" matInput required [value]=element.pakal name="pakal-{{element.id}}" [(ngModel)]="element.pakal"> </mat-cell>
+    </ng-container>
 
-<mat-form-field floatLabel="never" hideRequiredMarker appearance="fill" style="margin:10px">
-    <mat-label>כמות</mat-label>
-    <input min="0" type="number" matInput required> 
-</mat-form-field> -->
-
-<!-- <button mat-button mat-raised-button color="primary">הוסף</button> -->
-<table #warehouseUnitTable> 
-    <tr>
-        <th>מזהה</th>
-        <th>פק"ל</th>
-        <th>רשימת החתמה</th>
-    </tr>
-    <tr *ngFor='let row of dataSource; let pakalIndex=index' style="border: solid black 1px">
-        <td>{{row.id}}</td>
-        <td><input type="text" placeholder='שם פק"ל' required [value]=row.pakal></td>
-        <td>
-            <table>
-                <tr *ngFor='let signature of row.signatureList; let signatureIndex=index'>
-                    <td><input placeholder="פריט" type="text" required [value]="signature.item"></td>
-                    <td><input placeholder='מק"ט' type="text" required [value]="signature.serialNumber"></td>
-                    <td><input min="0" type="number" required [value]="signature.quantity"></td>
-                    <td *ngIf='row.signatureList.length > 1' (click)="removeNewSignatureItem(pakalIndex, signatureIndex)"><mat-icon aria-label="Delete">delete</mat-icon></td>
-                    <td *ngIf='signatureIndex == row.signatureList.length-1' (click)="addNewSignatureItem(pakalIndex)"><mat-icon aria-label="add">add</mat-icon></td>
+        <!-- quantity Column -->
+        <ng-container matColumnDef="signatureList">
+            <mat-header-cell *matHeaderCellDef> רשימת החתמה </mat-header-cell>
+            <mat-cell *matCellDef="let element">            
+                <table>
+                <tr *ngFor='let signature of element.signatureList; let signatureIndex=index'>
+                    <td><input type="text" required [value]="signature.item" name="signature-item-{{signature.id}}" [(ngModel)]="signature.item"></td>
+                    <td><input type="text" required [value]="signature.serialNumber" name="signature-serialNumber-{{signature.serialNumber}}" [(ngModel)]="signature.serialNumber"></td>
+                    <td><input min="1" type="number" required [value]="signature.quantity" name="signature-quantity-{{signature.id}}" [(ngModel)]="signature.quantity"></td>
+                    <td [style.visibility]="element.signatureList.length>1 ? 'visible' : 'hidden'" (click)="removeSignatureItem(element.id,signature.id)"><mat-icon aria-label="Delete">delete</mat-icon></td>
+                    <td [style.visibility]="signatureIndex ==  element.signatureList.length-1 ? 'visible' : 'hidden'" (click)="addNewSignatureItem(element.id)"><mat-icon aria-label="add">add</mat-icon></td>
                 </tr>
-            </table>
-        </td>
-    </tr>
-</table>
+            </table> 
+        </mat-cell>
+          </ng-container>
+  
+    <!-- delete Column -->
+    <ng-container matColumnDef=" "> 
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let element">
+            <button [style.visibility]="dataSource.length>1 ? 'visible' : 'hidden'" (click)="removePakalItem(element.id)" mat-icon-button matTooltip="Click to Delete" class="iconbutton" color="warn">
+        <mat-icon aria-label="Delete">delete</mat-icon> 
+      </button>
+    </mat-cell>
+    </ng-container>
+  
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
 
   <button (click)="addNewRow()" mat-button mat-raised-button color="primary"><mat-icon aria-label="Add">add</mat-icon></button>
   <button (click)="saveData(warehouseUnitTable)" mat-button mat-raised-button color="primary">שמירה</button>

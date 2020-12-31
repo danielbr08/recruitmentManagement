@@ -31,7 +31,7 @@ import { UsersManagemententComponent } from './manage/users-managementent/users-
 import { PakalTypesManagemententComponent } from './manage/pakal-types-managementent/pakal-types-managementent.component';
 import { SubUnitsManagementComponent } from './manage/sub-units-management/sub-units-management.component';
 
-
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -52,6 +52,8 @@ import { SubUnitsManagementComponent } from './manage/sub-units-management/sub-u
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
+    FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatSliderModule,

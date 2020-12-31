@@ -1,0 +1,3 @@
+#warehouseUnitTable .mat-cell, #warehouseUnitTable .mat-header-cell{
+    flex: auto;
+}

@@ -27,7 +27,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class EmergencyWarehouseUnitInventoryComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'pakal', 'quantity', ' '];
-  dataSource = ELEMENT_DATA;
+  dataSource: PeriodicElement[]= [{ id: 1, pakal: '', quantity: 1 }];
 
   constructor() { }
 
@@ -39,6 +39,11 @@ export class EmergencyWarehouseUnitInventoryComponent implements OnInit {
       let row = warehouseUnitTable._data[i];
       console.log("row", row);
     }
+  }
+
+  addNewRow(){
+    this.dataSource.push({ id: this.dataSource.length+1, pakal: '', quantity:1 });
+    this.dataSource = [...this.dataSource];
   }
 
 }
