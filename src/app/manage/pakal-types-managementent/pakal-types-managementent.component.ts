@@ -35,6 +35,8 @@ export class PakalTypesManagemententComponent implements OnInit {
   }
 
   saveData(warehouseUnitTable: any) {
+    console.log("warehouseUnitTable: ",warehouseUnitTable);
+    console.log("dataSource: ",this.dataSource);
     for (let i = 0; i < warehouseUnitTable._data.length; i++) {
       let row = warehouseUnitTable._data[i];
       console.log("row", row);

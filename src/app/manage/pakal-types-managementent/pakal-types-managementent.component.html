@@ -14,23 +14,23 @@
 </mat-form-field> -->
 
 <!-- <button mat-button mat-raised-button color="primary">הוסף</button> -->
-<table>
+<table #warehouseUnitTable> 
     <tr>
         <th>מזהה</th>
         <th>פק"ל</th>
-        <th colspan="3">רשימת החתמה</th>
+        <th>רשימת החתמה</th>
     </tr>
-    <tr *ngFor='let row of dataSource; let pakalIndex=index'>
+    <tr *ngFor='let row of dataSource; let pakalIndex=index' style="border: solid black 1px">
         <td>{{row.id}}</td>
-        <td><input type="text" placeholder="" required [value]=row.pakal></td>
+        <td><input type="text" placeholder='שם פק"ל' required [value]=row.pakal></td>
         <td>
             <table>
                 <tr *ngFor='let signature of row.signatureList; let signatureIndex=index'>
-                    <td><input type="text" required [value]="signature.item"></td>
-                    <td><input type="text" required [value]="signature.serialNumber"></td>
+                    <td><input placeholder="פריט" type="text" required [value]="signature.item"></td>
+                    <td><input placeholder='מק"ט' type="text" required [value]="signature.serialNumber"></td>
                     <td><input min="0" type="number" required [value]="signature.quantity"></td>
-                    <td (click)="addNewSignatureItem(pakalIndex)"><mat-icon aria-label="add">add</mat-icon></td>
-                    <td (click)="removeNewSignatureItem(pakalIndex, signatureIndex)"><mat-icon aria-label="Delete">delete</mat-icon></td>
+                    <td *ngIf='row.signatureList.length > 1' (click)="removeNewSignatureItem(pakalIndex, signatureIndex)"><mat-icon aria-label="Delete">delete</mat-icon></td>
+                    <td *ngIf='signatureIndex == row.signatureList.length-1' (click)="addNewSignatureItem(pakalIndex)"><mat-icon aria-label="add">add</mat-icon></td>
                 </tr>
             </table>
         </td>
@@ -38,4 +38,4 @@
 </table>
 
   <button (click)="addNewRow()" mat-button mat-raised-button color="primary"><mat-icon aria-label="Add">add</mat-icon></button>
-  <!-- <button (click)="saveData(warehouseUnitTable)" mat-button mat-raised-button color="primary">שמירה</button> -->
+  <button (click)="saveData(warehouseUnitTable)" mat-button mat-raised-button color="primary">שמירה</button>
