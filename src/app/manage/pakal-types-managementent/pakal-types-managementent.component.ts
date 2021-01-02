@@ -1,23 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-export interface PeriodicElement {
-  pakal: string;
-  id: number;
-  signatureList: Object;
-}
-
-// const ELEMENT_DATA: PeriodicElement[] = [
-//   { id: 1, pakal: 'Hydrogen', signatureList: '1' },
-//   { id: 2, pakal: 'Helium', signatureList: '2' },
-//   { id: 3, pakal: 'Lithium', signatureList: '3' },
-//   { id: 4, pakal: 'Beryllium', signatureList: '4' },
-//   { id: 5, pakal: 'Boron', signatureList: '5' },
-//   { id: 6, pakal: 'Carbon', signatureList: '6'},
-//   { id: 7, pakal: 'Nitrogen', signatureList: '7' },
-//   { id: 8, pakal: 'Oxygen', signatureList: '8' },
-//   { id: 9, pakal: 'Fluorine', signatureList: '9' },
-//   { id: 10, pakal: 'Neon', signatureList: '10' }
-// ];
+import { Pakal } from 'src/app/models/Pakal.model';
 
 @Component({
   selector: 'app-pakal-types-managementent',
@@ -27,7 +9,7 @@ export interface PeriodicElement {
 export class PakalTypesManagemententComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'pakal', 'signatureList', ' '];
-  dataSource = [{ id: 1, pakal: '', signatureList: [{id:1, item:'', serialNumber:'', quantity:1}] }];
+  dataSource: Pakal[] = [{ id: 1, pakal: '', signatureList: [{id:1, item:'', serialNumber:'', quantity:1}] }];
   
   constructor() { }
 

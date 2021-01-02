@@ -1,30 +1,13 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatSelect } from '@angular/material/select';
+import { Pakal } from '../models/Pakal.model';
+import { PakalAllocated } from '../models/pakalAllocated.model';
 
-export interface PakalSelected {
-  pakalId: number;
-  quantity: number;
-}
-
-export interface Pakal {
-  pakal: string;
-  id: number;
-  signatureList: SignatureList[];
-}
-
-export interface SignatureList {
-  id: number;
-  item: string;
-  serialNumber: number;
-  quantity: number;
-}
-
-const PAKALS: Pakal[] =
+const PAKALS: Pakal[] = // The vale should be taken from server(by service)
   [
-    {"id":1,"pakal":"מאג","signatureList":[{"id":1,"item":"רצועה","serialNumber":123456,"quantity":4},{"id":2,"item":"חצובה","serialNumber":12345,"quantity":4},{"id":3,"item":"מאג","serialNumber":1234,"quantity":2}]},
-    {"id":2,"pakal":"נשק","signatureList":[{"id":1,"item":"M16","serialNumber":123,"quantity":2},{"id":2,"item":"רצועה","serialNumber":12,"quantity":2}]}
+    {"id":1,"pakal":"מאג","signatureList":[{"id":1,"item":"רצועה","serialNumber":"123456","quantity":4},{"id":2,"item":"חצובה","serialNumber":"12345","quantity":4},{"id":3,"item":"מאג","serialNumber":"1234","quantity":2}]},
+    {"id":2,"pakal":"נשק","signatureList":[{"id":1,"item":"M16","serialNumber":"123","quantity":2},{"id":2,"item":"רצועה","serialNumber":"12","quantity":2}]}
   ];
-
 
 @Component({
   selector: 'app-emergency-warehouse-unit-inventory',
@@ -40,7 +23,7 @@ export class EmergencyWarehouseUnitInventoryComponent implements OnInit {
   
   displayedColumns: string[] = ['id', 'pakal', 'quantity', ' '];
   pakals: Pakal[]= PAKALS;
-  pakalsSelected: PakalSelected[] = [];
+  pakalsSelected: PakalAllocated[] = [];
 
   constructor() { }
 
@@ -48,12 +31,12 @@ export class EmergencyWarehouseUnitInventoryComponent implements OnInit {
   }
 
   saveData() {
-    console.log("pakalsSelected", this.pakalsSelected);
+    console.log("pakalsSelected", JSON.stringify(this.pakalsSelected));
   }
 
   addNewRow(){
     let pakalId = this.pakalMatSelect.value;
-    let quantity = this.pakalQuaantity.nativeElement.value;
+    let quantity = +this.pakalQuaantity.nativeElement.value;
     if(pakalId && !this.isPakalSelected(pakalId)){
       console.log(pakalId,quantity);
       this.pakalsSelected.push({pakalId: pakalId, quantity: quantity});
