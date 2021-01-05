@@ -1,0 +1,19 @@
+<div style="direction: rtl; text-align: start;">
+    <h1 style="text-align: center;" mat-dialog-title>יצירת משימה חדשה</h1>
+    <div style="display: flex; flex-direction: column;" mat-dialog-content>
+        <mat-form-field>
+            <!-- <label style="margin: 5px">שם משימה</label> -->
+            <input placeholder="שם משימה" required matInput #taskName>
+        </mat-form-field>
+        <mat-form-field >
+            <mat-select required placeholder='רשימת שמות' #nameListMatSelect>
+              <mat-option *ngFor='let namesList of data' [value]="namesList.id"> {{namesList.name}} </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-checkbox #currentTaskCB> <label style="margin-right: 10px;"> משימה נוכחית </label></mat-checkbox>
+    </div>
+    <div style="margin: 20px; text-align: end;" mat-dialog-actions>
+        <button style="margin: 10px;" mat-button cdkFocusInitial (click)="createNewTask(taskName.value, nameListMatSelect.value, currentTaskCB.checked)">אישור</button>
+        <button mat-button (click)="onNoClick()">ביטול</button>
+    </div>
+</div>

@@ -17,7 +17,7 @@ import { MatTableModule } from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDialogModule} from '@angular/material/dialog';
-
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 
 import { NavbarComponent } from './navbar/navbar.component';
@@ -34,6 +34,7 @@ import { PakalTypesManagemententComponent } from './manage/pakal-types-managemen
 import { SubUnitsManagementComponent } from './manage/sub-units-management/sub-units-management.component';
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { CreateTaskDialogComponent } from './dialogs/create-task-dialog/create-task-dialog.component';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     TasksManagemententComponent,
     UsersManagemententComponent,
     PakalTypesManagemententComponent,
-    SubUnitsManagementComponent
+    SubUnitsManagementComponent,
+    CreateTaskDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +71,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     MatTableModule,
     MatInputModule,
     MatFormFieldModule,
-    MatDialogModule
+    MatDialogModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]
