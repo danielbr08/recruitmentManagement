@@ -2,6 +2,11 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NamesList } from 'src/app/models/NamesList.model';
 
+export interface DialogData {
+  animal: string;
+  name: string;
+}
+
 @Component({
   selector: 'app-tasks-managementent',
   templateUrl: './tasks-managementent.component.html',
@@ -21,7 +26,7 @@ export class TasksManagemententComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
-      width: '250px',
+      width: '500px',
       data: {name: this.name, animal: this.animal}
     });
 
@@ -35,7 +40,7 @@ export class TasksManagemententComponent implements OnInit {
 
 @Component({
   selector: 'dialog-overview-example-dialog',
-  templateUrl: 'dialog-overview-example-dialog.html',
+  templateUrl: '../dialog-overview-example-dialog.html',
 })
 export class DialogOverviewExampleDialog {
 
