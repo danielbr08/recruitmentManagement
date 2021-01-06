@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CreateTaskDialogComponent } from 'src/app/dialogs/create-task-dialog/create-task-dialog.component';
 
 import { NamesList } from 'src/app/models/NamesList.model';
+import { Task } from 'src/app/models/Task.model';
 
 export interface DialogData {
   namesLists: NamesList[];
@@ -19,6 +20,8 @@ export class TasksManagemententComponent implements OnInit {
     {id:1, name: "רשימה 1", soldiers: [{personalNumber: 123456, fistName: "דניאל", lastName:"ברוש", squad: "א", department: '2', class:'1', role: 'חפ"ש',pakal:{pakal:"מאג", id: 1, signatureList:[{id:1, item:"מאג", serialNumber: '1234', quantity: 3 }]}}]},
     {id:1, name: "רשימה 2", soldiers: [{personalNumber: 12345, fistName: "נדב", lastName:"ברוש", squad: "ב", department: '1', class:'2', role: 'חפ"ש',pakal:{pakal:"מאג", id: 2, signatureList:[{id:1, item:"2מאג", serialNumber: '123', quantity: 2 }]}}]}
   ]; 
+
+  tasks: Task[]=[];
 
   constructor(public dialog: MatDialog) {}
 
