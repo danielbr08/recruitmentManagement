@@ -1,6 +1,6 @@
 <button mat-raised-button (click)="openDialog(namesLists)">משימה חדשה</button>
 
-<mat-table id="warehouseUnitTable" [dataSource]="tasks" class="mat-elevation-z8">
+<mat-table id="warehouseUnitTable" [dataSource]="service.tasks" class="mat-elevation-z8">
   <!-- id Column -->
   <ng-container matColumnDef="id">
     <mat-header-cell *matHeaderCellDef> מזהה </mat-header-cell>
@@ -26,9 +26,9 @@
   </ng-container>
 
   <!-- listNameId Column -->
-  <ng-container matColumnDef="listNameId">
+  <ng-container matColumnDef="namesListId">
     <mat-header-cell *matHeaderCellDef> רשימת שמות מקושרת </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.listNameId}} </mat-cell>
+    <mat-cell *matCellDef="let element"> {{element.namesListId}} </mat-cell>
   </ng-container>
 
   <!-- pakal isCurrentTask -->
@@ -49,7 +49,7 @@
   <ng-container matColumnDef=" ">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <button [style.visibility]="tasks.length>1 ? 'visible' : 'hidden'" (click)="removeTask(element.id)"
+        <button [style.visibility]="service.tasks.length>1 ? 'visible' : 'hidden'" (click)="removeTask(element.id)"
           mat-icon-button matTooltip="Click to Delete" class="iconbutton" color="warn">
           <mat-icon aria-label="Delete">delete</mat-icon>
         </button>

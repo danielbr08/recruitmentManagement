@@ -5,6 +5,6 @@ export interface Task {
     name: string;
     creationDate: Date;
     status: TaskStatus;
-    listNameId: number;
+    namesListId: number;
     isCurrentTask: boolean;
   }
