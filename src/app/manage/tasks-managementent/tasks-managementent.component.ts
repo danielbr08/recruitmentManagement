@@ -16,6 +16,8 @@ export interface DialogData {
 })
 export class TasksManagemententComponent implements OnInit {
 
+  displayedColumns: string[] = ['id', 'name', 'creationDate', 'status','listNameId','isCurrentTask', ' '];
+
   namesLists: NamesList[]=[
     {id:1, name: "רשימה 1", soldiers: [{personalNumber: 123456, fistName: "דניאל", lastName:"ברוש", squad: "א", department: '2', class:'1', role: 'חפ"ש',pakal:{pakal:"מאג", id: 1, signatureList:[{id:1, item:"מאג", serialNumber: '1234', quantity: 3 }]}}]},
     {id:1, name: "רשימה 2", soldiers: [{personalNumber: 12345, fistName: "נדב", lastName:"ברוש", squad: "ב", department: '1', class:'2', role: 'חפ"ש',pakal:{pakal:"מאג", id: 2, signatureList:[{id:1, item:"2מאג", serialNumber: '123', quantity: 2 }]}}]}
@@ -43,6 +45,13 @@ export class TasksManagemententComponent implements OnInit {
       console.log('The dialog was closed');
       this.name = result;
     });
+  }
+
+  saveData(){
+  }
+
+  removeTask(taskId: number){
+
   }
 
 }

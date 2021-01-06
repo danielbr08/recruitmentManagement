@@ -1,3 +1,4 @@
+import { TaskStatus } from "./TaskStatus.model";
 
 export interface Task {
     id: number;
