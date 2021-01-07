@@ -24,7 +24,7 @@ export class TasksManagemententComponent implements OnInit {
   ]; 
 
   constructor(public dialog: MatDialog,
-              public service: TasksServiceService) {}
+              public taskService: TasksServiceService) {}
 
   ngOnInit(): void {
   }

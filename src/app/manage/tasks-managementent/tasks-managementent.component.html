@@ -1,6 +1,6 @@
 <button mat-raised-button (click)="openDialog(namesLists)">משימה חדשה</button>
 
-<mat-table id="warehouseUnitTable" [dataSource]="service.tasks" class="mat-elevation-z8">
+<mat-table id="warehouseUnitTable" [dataSource]="taskService.tasks" class="mat-elevation-z8">
   <!-- id Column -->
   <ng-container matColumnDef="id">
     <mat-header-cell *matHeaderCellDef> מזהה </mat-header-cell>
@@ -16,13 +16,13 @@
   <!-- creationDate Column -->
   <ng-container matColumnDef="creationDate">
     <mat-header-cell *matHeaderCellDef> תאריך יצירה </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.creationDate}} </mat-cell>
+    <mat-cell *matCellDef="let element"> {{element.creationDate | date: 'dd/MM/yyyy'}} </mat-cell>
   </ng-container>
 
   <!-- status Column -->
   <ng-container matColumnDef="status">
     <mat-header-cell *matHeaderCellDef> סטטוס </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.status}} </mat-cell>
+    <mat-cell *matCellDef="let element"> {{taskService.getTaskStatusName(element.status)}} </mat-cell>
   </ng-container>
 
   <!-- listNameId Column -->
@@ -34,7 +34,9 @@
   <!-- pakal isCurrentTask -->
   <ng-container matColumnDef="isCurrentTask">
     <mat-header-cell *matHeaderCellDef> משימה נוכחית </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.isCurrentTask}} </mat-cell>
+    <mat-cell *matCellDef="let element">
+      <mat-checkbox #currentTaskCB [checked]="element.isCurrentTask"></mat-checkbox>
+    </mat-cell>
   </ng-container>
 
   <!-- quantity Column -->
@@ -47,14 +49,14 @@
 
   <!-- delete Column -->
   <ng-container matColumnDef=" ">
-      <mat-header-cell *matHeaderCellDef></mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <button [style.visibility]="service.tasks.length>1 ? 'visible' : 'hidden'" (click)="removeTask(element.id)"
-          mat-icon-button matTooltip="Click to Delete" class="iconbutton" color="warn">
-          <mat-icon aria-label="Delete">delete</mat-icon>
-        </button>
-      </mat-cell>
-    </ng-container>
+    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <button [style.visibility]="taskService.tasks.length>1 ? 'visible' : 'hidden'" (click)="removeTask(element.id)"
+        mat-icon-button matTooltip="Click to Delete" class="iconbutton" color="warn">
+        <mat-icon aria-label="Delete">delete</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
