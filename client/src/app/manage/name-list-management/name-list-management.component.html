@@ -1,7 +1,5 @@
-<mat-form-field >
-    <ngx-mat-file-input #fileInput>
-    </ngx-mat-file-input>
- </mat-form-field>
+    <input type="file" (change)="getData($event)" multiple="false"/>
+
 
 <mat-table id="warehouseUnitTable" [dataSource]="namesList" class="mat-elevation-z8">
   <!-- id Column -->
@@ -44,4 +42,4 @@
 </mat-table>
 
 
-<button mat-button cdkFocusInitial (click)="getData(fileInput.value)">אישור</button>
+<button mat-button cdkFocusInitial >אישור</button>
