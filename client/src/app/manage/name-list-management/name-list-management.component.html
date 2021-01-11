@@ -1,0 +1,47 @@
+<mat-form-field >
+    <ngx-mat-file-input #fileInput>
+    </ngx-mat-file-input>
+ </mat-form-field>
+
+<mat-table id="warehouseUnitTable" [dataSource]="namesList" class="mat-elevation-z8">
+  <!-- id Column -->
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef> מזהה </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+  </ng-container>
+
+  <!-- pakal Column -->
+  <ng-container matColumnDef="creationDate">
+    <mat-header-cell *matHeaderCellDef> תאריך הכנסה </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.creationDate| date: 'dd/MM/yyyy'}} </mat-cell>
+  </ng-container>
+
+  <!-- quantity Column -->
+  <ng-container matColumnDef="count">
+    <mat-header-cell *matHeaderCellDef> מספר חיילים </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.soldiers.length}}</mat-cell>
+  </ng-container>
+
+    <!-- quantity Column -->
+    <ng-container matColumnDef="taskId">
+        <mat-header-cell *matHeaderCellDef> מקושר למשימה </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.taskId}} </mat-cell>
+      </ng-container>
+
+  <!-- delete Column -->
+  <!-- <ng-container matColumnDef=" ">
+    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <button [style.visibility]="pakals.length>1 ? 'visible' : 'hidden'" (click)="removePakalItem(element.pakalId)"
+        mat-icon-button matTooltip="Click to Delete" class="iconbutton" color="warn">
+        <mat-icon aria-label="Delete">delete</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container> -->
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+
+
+<button mat-button cdkFocusInitial (click)="getData(fileInput.value)">אישור</button>
