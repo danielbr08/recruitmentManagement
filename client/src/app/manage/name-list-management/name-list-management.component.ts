@@ -19,7 +19,6 @@ export class NameListManagementComponent implements OnInit {
 
   getData(event: any){
     let elements: any = {};
-    console.log("event: ",event);
     const file = event.target.files[0];
       let workBook: any = null;
       let jsonData = null;
@@ -32,10 +31,8 @@ export class NameListManagementComponent implements OnInit {
           initial[name] = XLSX.utils.sheet_to_json(sheet);
           return initial;
         }, {});
-        const dataString = JSON.stringify(jsonData);
-        console.log(dataString);
-
-        JSON.parse(dataString).forEach( (element: any) => {
+        const dataString = jsonData["גיליון1"];
+        dataString.forEach( (element: any) => {
               let misgeret = element['נתיב מסגרת מלא'].split("\\");
               let pluga = misgeret[0];
               let mahlaka = misgeret[1];
@@ -44,31 +41,8 @@ export class NameListManagementComponent implements OnInit {
               let firstName = element['שם פרטי'];
               let lastName = element['שם משפחה'];
               elements[personalNumber] = {pluga,mahlaka,class: _class ,personalNumber, firstName, lastName};
-              console.log("elements: ", elements);
-      
-              // Object.keys(element).forEach(element2 => {
-              //     obj.add(element2);
-              // });;
           });
-
-
-    //     let elements: any = {};
-    //     console.log(workBook);
-    //     XLSX.utils.sheet_to_json(workBook.Workbook.Sheets[0]).forEach( (element: any) => {
-    //     let misgeret = element['נתיב מסגרת מלא'].split("\\");
-    //     let pluga = misgeret[0];
-    //     let mahlaka = misgeret[1];
-    //     let _class = misgeret[2];
-    //     let personalNumber = element['מספר אישי'];
-    //     let firstName = element['שם פרטי'];
-    //     let lastName = element['שם משפחה'];
-    //     elements[personalNumber] = {pluga,mahlaka,class: _class ,personalNumber, firstName, lastName};
-    //     console.log("elements: ", elements);
-
-    //     // Object.keys(element).forEach(element2 => {
-    //     //     obj.add(element2);
-    //     // });;
-    // });
+          console.log("elements: ", elements);
 }
       reader.readAsBinaryString(file);
     }
