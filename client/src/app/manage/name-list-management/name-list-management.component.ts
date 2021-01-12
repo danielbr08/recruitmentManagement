@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NamesList } from 'src/app/models/NamesList.model';
+import { Soldier } from 'src/app/models/Soldier.model';
 import * as XLSX from 'xlsx';
 
 @Component({
@@ -15,7 +16,6 @@ export class NameListManagementComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 
   getData(event: any){
     let elements: any = {};
@@ -34,16 +34,27 @@ export class NameListManagementComponent implements OnInit {
         const dataString = jsonData["גיליון1"];
         dataString.forEach( (element: any) => {
               let misgeret = element['נתיב מסגרת מלא'].split("\\");
-              let pluga = misgeret[0];
-              let mahlaka = misgeret[1];
+              let squad = misgeret[0];
+              let department = misgeret[1];
               let _class = misgeret[2];
               let personalNumber = element['מספר אישי'];
               let firstName = element['שם פרטי'];
               let lastName = element['שם משפחה'];
-              elements[personalNumber] = {pluga,mahlaka,class: _class ,personalNumber, firstName, lastName};
+              elements[personalNumber] = {squad,department,class: _class ,personalNumber, firstName, lastName, role:'', pakal:''};
           });
-          console.log("elements: ", elements);
+          let soldiers: Soldier[] = Object.values(elements);
+          let id: number = this.generateNewNamesListId();
+          this.namesList.push({id, name:'', soldiers, taskId:-1, creationDate: new Date()});
+          console.log("this.namesList: ", this.namesList);
 }
       reader.readAsBinaryString(file);
+    }
+
+    generateNewNamesListId(){
+      if(this.namesList.length == 0)
+        return 1;
+      let ids: number[] = [];
+      this.namesList.map(item=>ids.push(item.id));
+      return Math.max(...ids) + 1;
     }
 }
