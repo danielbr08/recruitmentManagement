@@ -36,6 +36,7 @@ import { SubUnitsManagementComponent } from './manage/sub-units-management/sub-u
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { CreateTaskDialogComponent } from './dialogs/create-task-dialog/create-task-dialog.component';
+import { NamesListSoldiersManagementComponent } from './manage/names-list-soldiers-management/names-list-soldiers-management.component';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { CreateTaskDialogComponent } from './dialogs/create-task-dialog/create-t
     UsersManagemententComponent,
     PakalTypesManagemententComponent,
     SubUnitsManagementComponent,
-    CreateTaskDialogComponent
+    CreateTaskDialogComponent,
+    NamesListSoldiersManagementComponent
   ],
   imports: [
     BrowserModule,

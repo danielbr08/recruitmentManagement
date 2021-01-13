@@ -1,4 +1,4 @@
-<form (submit)='getData($event)'>
+<form (submit)='namesListService.getData($event)'>
   <input id="namesListFile" type="file" placeholder="בחר קובץ" multiple="false"/>
   <button >צור רשימה חדשה</button>
 </form>
@@ -6,7 +6,7 @@
 
 
 
-<mat-table id="warehouseUnitTable" [dataSource]="namesList" class="mat-elevation-z8">
+<mat-table id="warehouseUnitTable" [dataSource]="this.namesListService.namesList" class="mat-elevation-z8">
   <!-- id Column -->
   <ng-container matColumnDef="id">
     <mat-header-cell *matHeaderCellDef> מזהה </mat-header-cell>
@@ -30,6 +30,17 @@
         <mat-header-cell *matHeaderCellDef> מקושר למשימה </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.taskId}} </mat-cell>
       </ng-container>
+
+  <!-- delete Column -->
+  <ng-container matColumnDef=" ">
+    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <button (click)="editNamesList(element.id)"
+        mat-icon-button matTooltip="לחץ לעריכה" class="iconbutton" color="warn">
+        <mat-icon aria-label="Edit">edit</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
 
   <!-- delete Column -->
   <!-- <ng-container matColumnDef=" ">

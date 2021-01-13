@@ -5,6 +5,7 @@ import { AllocatePakalSquadComponent } from './allocate-pakal-squad/allocate-pak
 import { AppComponent } from './app.component';
 import { EmergencyWarehouseUnitInventoryComponent } from './emergency-warehouse-unit-inventory/emergency-warehouse-unit-inventory.component';
 import { NameListManagementComponent } from './manage/name-list-management/name-list-management.component';
+import { NamesListSoldiersManagementComponent } from './manage/names-list-soldiers-management/names-list-soldiers-management.component';
 import { PakalTypesManagemententComponent } from './manage/pakal-types-managementent/pakal-types-managementent.component';
 import { SubUnitsManagementComponent } from './manage/sub-units-management/sub-units-management.component';
 import { TasksManagemententComponent } from './manage/tasks-managementent/tasks-managementent.component';
@@ -24,7 +25,8 @@ const routes: Routes = [
   { path: 'manage/tasks', component: TasksManagemententComponent, pathMatch: 'full' },
   { path: 'manage/pakal-types', component: PakalTypesManagemententComponent, pathMatch: 'full' },
   { path: 'manage/users', component: UsersManagemententComponent, pathMatch: 'full' },
-  { path: 'manage/sub-units', component: SubUnitsManagementComponent, pathMatch: 'full' }
+  { path: 'manage/sub-units', component: SubUnitsManagementComponent, pathMatch: 'full' },
+  { path: 'manage/nameslist/:id', component: NamesListSoldiersManagementComponent, pathMatch: 'full' }
 ];
 
 @NgModule({
