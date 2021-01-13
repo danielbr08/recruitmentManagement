@@ -1,4 +1,9 @@
-    <input type="file" (change)="getData($event)" multiple="false"/>
+<form (submit)='getData($event)'>
+  <input id="namesListFile" type="file" placeholder="בחר קובץ" multiple="false"/>
+  <button >צור רשימה חדשה</button>
+</form>
+
+
 
 
 <mat-table id="warehouseUnitTable" [dataSource]="namesList" class="mat-elevation-z8">
@@ -40,6 +45,3 @@
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </mat-table>
-
-
-<button mat-button cdkFocusInitial >אישור</button>

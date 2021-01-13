@@ -19,7 +19,7 @@ export class NameListManagementComponent implements OnInit {
 
   getData(event: any){
     let elements: any = {};
-    const file = event.target.files[0];
+    const file = event.target[0].files[0];
       let workBook: any = null;
       let jsonData = null;
       const reader = new FileReader();
@@ -45,6 +45,7 @@ export class NameListManagementComponent implements OnInit {
           let soldiers: Soldier[] = Object.values(elements);
           let id: number = this.generateNewNamesListId();
           this.namesList.push({id, name:'', soldiers, taskId:-1, creationDate: new Date()});
+          this.refresh()
           console.log("this.namesList: ", this.namesList);
 }
       reader.readAsBinaryString(file);
@@ -56,5 +57,9 @@ export class NameListManagementComponent implements OnInit {
       let ids: number[] = [];
       this.namesList.map(item=>ids.push(item.id));
       return Math.max(...ids) + 1;
+    }
+
+    refresh(){
+      this.namesList = [...this.namesList];
     }
 }
