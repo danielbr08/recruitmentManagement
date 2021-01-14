@@ -3,55 +3,91 @@
     <!-- id Column -->
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef> מזהה </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+      <mat-cell *matCellDef="let element"> 
+        <mat-form-field>
+        <input matInput type="text" [value]="element.id" disabled>
+      </mat-form-field>   
+      </mat-cell>
     </ng-container>
   
     <!-- personalNumber Column -->
     <ng-container matColumnDef="personalNumber">
       <mat-header-cell *matHeaderCellDef> מספר אישי </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.personalNumber}} </mat-cell>
+      <mat-cell *matCellDef="let element">     
+        <mat-form-field> 
+        <input matInput type="text" [value]="element.personalNumber" disabled>
+      </mat-form-field>   
+      </mat-cell>
     </ng-container>
   
     <!-- firstName Column -->
     <ng-container matColumnDef="firstName">
       <mat-header-cell *matHeaderCellDef> שם פרטי </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.firstName}}</mat-cell>
+      <mat-cell *matCellDef="let element"> 
+        <mat-form-field>
+        <input matInput  type="text" required [value]="element.firstName" name="firstName-{{element.personalNumber}}" [(ngModel)]="element.firstName">
+      </mat-form-field>
+      </mat-cell>
     </ng-container>
   
       <!-- lastName Column -->
       <ng-container matColumnDef="lastName">
           <mat-header-cell *matHeaderCellDef> שם משפחה </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.lastName}} </mat-cell>
+          <mat-cell *matCellDef="let element">
+            <mat-form-field>
+            <input matInput type="text" required [value]="element.lastName" name="lastName-{{element.personalNumber}}" [(ngModel)]="element.lastName">
+          </mat-form-field>
+          </mat-cell>
         </ng-container>
 
             <!-- squad Column -->
     <ng-container matColumnDef="squad">
         <mat-header-cell *matHeaderCellDef> פלוגה </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.squad}} </mat-cell>
+        <mat-cell *matCellDef="let element">
+          <mat-form-field>
+          <input matInput type="text" required [value]="element.squad" name="squad-{{element.personalNumber}}" [(ngModel)]="element.squad">
+        </mat-form-field>
+           </mat-cell>
       </ng-container>
     
       <!-- department Column -->
       <ng-container matColumnDef="department">
         <mat-header-cell *matHeaderCellDef> מחלקה </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.department}}</mat-cell>
+        <mat-cell *matCellDef="let element"> 
+          <mat-form-field>
+          <input matInput type="text" required [value]="element.department" name="department-{{element.personalNumber}}" [(ngModel)]="element.department">
+        </mat-form-field>
+        </mat-cell>
       </ng-container>
     
         <!-- class Column -->
         <ng-container matColumnDef="class">
             <mat-header-cell *matHeaderCellDef> כיתה </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.class}} </mat-cell>
+            <mat-cell *matCellDef="let element"> 
+              <mat-form-field>
+              <input matInput type="text" required [value]="element.class" name="class-{{element.personalNumber}}" [(ngModel)]="element.class">
+            </mat-form-field>
+             </mat-cell>
           </ng-container>
   
             <!-- role Column -->
             <ng-container matColumnDef="role">
                 <mat-header-cell *matHeaderCellDef> תפקיד </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.role}} </mat-cell>
+                <mat-cell *matCellDef="let element"> 
+                  <mat-form-field>
+                  <input matInput type="text" required [value]="element.role" name="role-{{element.personalNumber}}" [(ngModel)]="element.role">
+                </mat-form-field>
+                </mat-cell>
               </ng-container>
             
               <!-- pakal Column -->
               <ng-container matColumnDef="pakal">
                 <mat-header-cell *matHeaderCellDef> פק"ל </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.pakal.pakal}}</mat-cell>
+                <mat-cell *matCellDef="let element">
+                  <mat-form-field>
+                  <input matInput type="text" required [value]="element.pakal.pakal" name="pakal-{{element.personalNumber}}" [(ngModel)]="element.pakal.pakal">
+                </mat-form-field>
+                  </mat-cell>
               </ng-container>
 
     <!-- delete Column -->
