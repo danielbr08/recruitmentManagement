@@ -1,5 +1,11 @@
-<mat-table id="warehouseUnitTable" [dataSource]="soldiers" class="mat-elevation-z8">
+<div id="paging-sort-soldiers-table-div" fxLayout fxLayoutAlign="center center">
+  <mat-form-field fxFlex="40%">
+    <input matInput type="text" (keyup)="doFilter($event)" placeholder="סנן">
+  </mat-form-field>
+  <mat-paginator [pageSize]="25" [pageSizeOptions]="[25, 50, 100]" dir="rtl"></mat-paginator>
+</div>
     
+<mat-table id="warehouseUnitTable" [dataSource]="dataSource" matSort class="mat-elevation-z8">
     <!-- id Column -->
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef> מזהה </mat-header-cell>
@@ -12,7 +18,7 @@
   
     <!-- personalNumber Column -->
     <ng-container matColumnDef="personalNumber">
-      <mat-header-cell *matHeaderCellDef> מספר אישי </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> מספר אישי </mat-header-cell>
       <mat-cell *matCellDef="let element">     
         <mat-form-field> 
         <input matInput type="text" [value]="element.personalNumber" disabled>
@@ -22,7 +28,7 @@
   
     <!-- firstName Column -->
     <ng-container matColumnDef="firstName">
-      <mat-header-cell *matHeaderCellDef> שם פרטי </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> שם פרטי </mat-header-cell>
       <mat-cell *matCellDef="let element"> 
         <mat-form-field>
         <input matInput  type="text" required [value]="element.firstName" name="firstName-{{element.personalNumber}}" [(ngModel)]="element.firstName">
@@ -32,7 +38,7 @@
   
       <!-- lastName Column -->
       <ng-container matColumnDef="lastName">
-          <mat-header-cell *matHeaderCellDef> שם משפחה </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> שם משפחה </mat-header-cell>
           <mat-cell *matCellDef="let element">
             <mat-form-field>
             <input matInput type="text" required [value]="element.lastName" name="lastName-{{element.personalNumber}}" [(ngModel)]="element.lastName">
@@ -42,7 +48,7 @@
 
             <!-- squad Column -->
     <ng-container matColumnDef="squad">
-        <mat-header-cell *matHeaderCellDef> פלוגה </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header> פלוגה </mat-header-cell>
         <mat-cell *matCellDef="let element">
           <mat-form-field>
           <input matInput type="text" required [value]="element.squad" name="squad-{{element.personalNumber}}" [(ngModel)]="element.squad">
@@ -52,7 +58,7 @@
     
       <!-- department Column -->
       <ng-container matColumnDef="department">
-        <mat-header-cell *matHeaderCellDef> מחלקה </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header> מחלקה </mat-header-cell>
         <mat-cell *matCellDef="let element"> 
           <mat-form-field>
           <input matInput type="text" required [value]="element.department" name="department-{{element.personalNumber}}" [(ngModel)]="element.department">
@@ -62,7 +68,7 @@
     
         <!-- class Column -->
         <ng-container matColumnDef="class">
-            <mat-header-cell *matHeaderCellDef> כיתה </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> כיתה </mat-header-cell>
             <mat-cell *matCellDef="let element"> 
               <mat-form-field>
               <input matInput type="text" required [value]="element.class" name="class-{{element.personalNumber}}" [(ngModel)]="element.class">
@@ -72,7 +78,7 @@
   
             <!-- role Column -->
             <ng-container matColumnDef="role">
-                <mat-header-cell *matHeaderCellDef> תפקיד </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header> תפקיד </mat-header-cell>
                 <mat-cell *matCellDef="let element"> 
                   <mat-form-field>
                   <input matInput type="text" required [value]="element.role" name="role-{{element.personalNumber}}" [(ngModel)]="element.role">
@@ -82,7 +88,7 @@
             
               <!-- pakal Column -->
               <ng-container matColumnDef="pakal">
-                <mat-header-cell *matHeaderCellDef> פק"ל </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header> פק"ל </mat-header-cell>
                 <mat-cell *matCellDef="let element">
                   <mat-form-field>
                   <input matInput type="text" required [value]="element.pakal.pakal" name="pakal-{{element.personalNumber}}" [(ngModel)]="element.pakal.pakal">

@@ -1,7 +1,26 @@
-.mat-cell {
+#warehouseUnitTable .mat-cell {
     font-size: 14px;
     min-height: 48px;
     text-align: center;
     border-right: 1px solid black;
+    border-left: 1px solid black;
     border-bottom: 1px solid black;
+}
+
+#warehouseUnitTable .mat-header-cell{
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    font-weight: bold; 
+    /* color: black */
+}
+
+#paging-sort-soldiers-table-div{
+    display: flex;
+    flex-direction: row;
+}
+
+#warehouseUnitTable mat-form-field{
+    width: 100%;
 }

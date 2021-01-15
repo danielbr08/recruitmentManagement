@@ -19,6 +19,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+import {MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+
 
 
 import { NavbarComponent } from './navbar/navbar.component';
@@ -76,7 +79,9 @@ import { NamesListSoldiersManagementComponent } from './manage/names-list-soldie
     MatFormFieldModule,
     MatDialogModule,
     MatCheckboxModule,
-    NgxMatFileInputModule
+    NgxMatFileInputModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]
