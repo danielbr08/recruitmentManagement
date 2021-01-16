@@ -1,8 +1,8 @@
-<div id="paging-sort-soldiers-table-div" fxLayout fxLayoutAlign="center center">
+<div id="paging-sort-soldiers-table-div" fxLayout fxLayoutAlign="center center" class="footer">
   <mat-form-field fxFlex="40%">
     <input matInput type="text" (keyup)="doFilter($event)" placeholder="סנן">
   </mat-form-field>
-  <mat-paginator [pageSize]="25" [pageSizeOptions]="[25, 50, 100]" dir="rtl"></mat-paginator>
+  <mat-paginator [pageSize]="25" [pageSizeOptions]="[25, 50, 100]" dir="rtl" class="mat-paginator-sticky"></mat-paginator>
 </div>
     
 <mat-table id="warehouseUnitTable" [dataSource]="dataSource" matSort class="mat-elevation-z8">
@@ -107,6 +107,6 @@
       </mat-cell>
     </ng-container> -->
   
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true;"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>

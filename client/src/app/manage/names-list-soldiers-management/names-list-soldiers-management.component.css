@@ -24,3 +24,10 @@
 #warehouseUnitTable mat-form-field{
     width: 100%;
 }
+.footer {
+    position: fixed;
+    right: 40%;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+  }
