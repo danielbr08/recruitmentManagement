@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NamesList } from 'src/app/models/NamesList.model';
 import { NamesListServiceService } from 'src/app/services/names-list-service.service';
 
 @Component({

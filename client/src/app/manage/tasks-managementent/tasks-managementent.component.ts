@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CreateTaskDialogComponent } from 'src/app/dialogs/create-task-dialog/create-task-dialog.component';
 
 import { NamesList } from 'src/app/models/NamesList.model';
+import { NamesListServiceService } from 'src/app/services/names-list-service.service';
 import { TasksServiceService } from 'src/app/services/tasks-service.service';
 
 export interface DialogData {
@@ -24,7 +25,10 @@ export class TasksManagemententComponent implements OnInit {
   ]; 
 
   constructor(public dialog: MatDialog,
-              public taskService: TasksServiceService) {}
+              public taskService: TasksServiceService, 
+              public namesListService: NamesListServiceService) {
+                this.namesLists = namesListService.namesList;
+              }
 
   ngOnInit(): void {
   }

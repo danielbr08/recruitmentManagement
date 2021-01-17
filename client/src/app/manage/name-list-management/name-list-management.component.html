@@ -1,10 +1,10 @@
-<form (submit)='namesListService.getData($event)'>
+<form id="form-select-names-list" (submit)='namesListService.getData($event)'>
   <input id="namesListFile" type="file" placeholder="בחר קובץ" multiple="false"/>
-  <button >צור רשימה חדשה</button>
+  <mat-form-field> 
+    <input matInput type="text" >
+  </mat-form-field>   
+  <button mat-button mat-button mat-raised-button color="primary">צור רשימה חדשה</button>
 </form>
-
-
-
 
 <mat-table id="warehouseUnitTable" [dataSource]="this.namesListService.namesList" class="mat-elevation-z8">
   <!-- id Column -->
