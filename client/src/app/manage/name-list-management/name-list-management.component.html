@@ -1,7 +1,7 @@
-<form id="form-select-names-list" (submit)='namesListService.getData($event)'>
+<form id="form-select-names-list" (submit)='createNamesList($event, namesListName.value)'>
   <input id="namesListFile" type="file" placeholder="בחר קובץ" multiple="false"/>
   <mat-form-field> 
-    <input matInput type="text" >
+    <input matInput type="text" #namesListName>
   </mat-form-field>   
   <button mat-button mat-button mat-raised-button color="primary">צור רשימה חדשה</button>
 </form>

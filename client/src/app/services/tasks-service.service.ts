@@ -1,19 +1,26 @@
 import { Injectable } from '@angular/core';
 import { Task } from '../models/Task.model';
 import { TaskStatus } from '../models/TaskStatus.model';
+import { NamesListServiceService } from './names-list-service.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TasksServiceService {
 
-  constructor() { }
+  constructor(public namesListService: NamesListServiceService) { }
 
   tasks: Task[] = [];
 
   addTask(task: Task) {
     this.tasks.push(task);
+    let namesList = this.namesListService.getNamesList(task.namesListId);
+    if(namesList){
+      namesList.taskId = task.id;
+    }
     this.tasks = [...this.tasks];
+    this.namesListService.refresh();
+    console.log(this.tasks, namesList, task);
   }
 
   generateId() {

@@ -16,8 +16,10 @@ export class NamesListServiceService {
     return this.namesList.find(element=>element.id=id);
   }
 
-  
-  getData(event: any){
+  // createNamesList(event: any, name: string){
+
+  // }
+  getData(event: any, name: string){
     let elements: any = {};
     const file = event.target[0].files[0];
       let workBook: any = null;
@@ -44,7 +46,7 @@ export class NamesListServiceService {
           });
           let soldiers: Soldier[] = Object.values(elements);
           let id: number = this.generateNewNamesListId();
-          this.namesList.push({id, name:'', soldiers, taskId:-1, creationDate: new Date()});
+          this.namesList.push({id, name, soldiers, taskId:-1, creationDate: new Date()});
           this.refresh()
           console.log("this.namesList: ", this.namesList);
 }

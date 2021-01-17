@@ -23,4 +23,8 @@ export class NameListManagementComponent implements OnInit {
 
     }
 
+    createNamesList(event: any, name: string){
+      this.namesListService.getData(event, name);
+    }
+
 }
