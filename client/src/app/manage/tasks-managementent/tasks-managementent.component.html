@@ -35,7 +35,7 @@
   <ng-container matColumnDef="isCurrentTask">
     <mat-header-cell *matHeaderCellDef> משימה נוכחית </mat-header-cell>
     <mat-cell *matCellDef="let element">
-      <mat-checkbox #currentTaskCB [checked]="element.isCurrentTask"></mat-checkbox>
+      <mat-checkbox #currentTaskCB [checked]="element.isCurrentTask" (change)="taskService.changeCurrentTask(element.id)"></mat-checkbox>
     </mat-cell>
   </ng-container>
 

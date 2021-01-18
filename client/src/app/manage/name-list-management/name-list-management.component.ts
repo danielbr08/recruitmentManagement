@@ -8,7 +8,7 @@ import { NamesListServiceService } from 'src/app/services/names-list-service.ser
   styleUrls: ['./name-list-management.component.css']
 })
 export class NameListManagementComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'creationDate', 'count','taskId', ' '];
+  displayedColumns: string[] = ['id', 'name', 'creationDate', 'count','taskId', ' '];
 
   constructor(public router: Router,
     public namesListService: NamesListServiceService) { 

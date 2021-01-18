@@ -13,7 +13,7 @@ export class NamesListServiceService {
   constructor() { }
 
   getNamesList(id: number){
-    return this.namesList.find(element=>element.id=id);
+    return this.namesList.find(element=>element.id==id);
   }
 
   // createNamesList(event: any, name: string){

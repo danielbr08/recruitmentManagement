@@ -13,6 +13,9 @@ export class TasksServiceService {
   tasks: Task[] = [];
 
   addTask(task: Task) {
+    if(task.isCurrentTask){
+      this.changeCurrentTask(task.id);
+    }
     this.tasks.push(task);
     let namesList = this.namesListService.getNamesList(task.namesListId);
     if(namesList){
@@ -43,4 +46,7 @@ export class TasksServiceService {
     }
   }
 
+  changeCurrentTask(taskId: number){
+    this.tasks.map(_task=>_task.id !== taskId ? _task.isCurrentTask=false : _task.isCurrentTask=true);
+  }
 }

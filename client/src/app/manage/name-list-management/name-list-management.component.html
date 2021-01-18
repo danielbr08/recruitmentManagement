@@ -13,6 +13,12 @@
     <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
   </ng-container>
 
+    <!-- name Column -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> שם רשימה </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+    </ng-container>
+
   <!-- pakal Column -->
   <ng-container matColumnDef="creationDate">
     <mat-header-cell *matHeaderCellDef> תאריך הכנסה </mat-header-cell>

@@ -7,7 +7,7 @@
         </mat-form-field>
         <mat-form-field >
             <mat-select required placeholder='רשימת שמות' #nameListMatSelect>
-              <mat-option *ngFor='let namesList of data' [value]="namesList.id"> {{namesList.name}} </mat-option>
+              <mat-option *ngFor='let namesList of data' [value]="namesList.id" [disabled]="namesList.taskId !==-1"> {{namesList.name}} </mat-option>
             </mat-select>
         </mat-form-field>
         <mat-checkbox #currentTaskCB> <label style="margin-right: 10px;"> משימה נוכחית </label></mat-checkbox>
