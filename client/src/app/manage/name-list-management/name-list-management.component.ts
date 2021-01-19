@@ -25,7 +25,7 @@ export class NameListManagementComponent implements OnInit {
 
     editNamesList(id: number){
       console.log(this.namesListService.getNamesList(id));
-      this.router.navigate([`manage/nameslist/${id}`], { queryParams: { } });
+      this.router.navigate([`manage/names-list/${id}`], { queryParams: { } });
 
     }
 

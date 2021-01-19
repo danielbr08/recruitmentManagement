@@ -26,7 +26,7 @@ const routes: Routes = [
   { path: 'manage/pakal-types', component: PakalTypesManagemententComponent, pathMatch: 'full' },
   { path: 'manage/users', component: UsersManagemententComponent, pathMatch: 'full' },
   { path: 'manage/sub-units', component: SubUnitsManagementComponent, pathMatch: 'full' },
-  { path: 'manage/nameslist/:id', component: NamesListSoldiersManagementComponent, pathMatch: 'full' }
+  { path: 'manage/names-list/:id', component: NamesListSoldiersManagementComponent, pathMatch: 'full' }
 ];
 
 @NgModule({
