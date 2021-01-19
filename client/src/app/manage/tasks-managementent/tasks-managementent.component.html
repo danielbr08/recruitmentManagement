@@ -22,7 +22,14 @@
   <!-- status Column -->
   <ng-container matColumnDef="status">
     <mat-header-cell *matHeaderCellDef> סטטוס </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{taskService.getTaskStatusName(element.status)}} </mat-cell>
+    <mat-cell *matCellDef="let element">
+      <mat-form-field >
+        <mat-select required #taskStatusMatSelect [value]="taskService.getTaskStatusName(element.status)">
+          <mat-option *ngFor='let status of taskStatuses' [value]="element.status"> {{taskService.getTaskStatusName(status)}} </mat-option>
+        </mat-select>
+    </mat-form-field>
+       <!-- {{taskService.getTaskStatusName(element.status)}} -->
+       </mat-cell>
   </ng-container>
 
   <!-- listNameId Column -->

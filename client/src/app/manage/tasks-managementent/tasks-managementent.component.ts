@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CreateTaskDialogComponent } from 'src/app/dialogs/create-task-dialog/create-task-dialog.component';
 
 import { NamesList } from 'src/app/models/NamesList.model';
+import { TaskStatus } from 'src/app/models/TaskStatus.model';
 import { NamesListServiceService } from 'src/app/services/names-list-service.service';
 import { TasksServiceService } from 'src/app/services/tasks-service.service';
 
@@ -18,6 +19,7 @@ export interface DialogData {
 export class TasksManagemententComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'name', 'creationDate', 'status','namesListId','isCurrentTask', ' '];
+  taskStatuses: TaskStatus[] = [TaskStatus.New, TaskStatus.Edit, TaskStatus.Close];
 
   namesLists: NamesList[]=[
     // {id:1, name: "רשימה 1", soldiers: [{personalNumber: 123456, fistName: "דניאל", lastName:"ברוש", squad: "א", department: '2', class:'1', role: 'חפ"ש',pakal:{pakal:"מאג", id: 1, signatureList:[{id:1, item:"מאג", serialNumber: '1234', quantity: 3 }]}}]},
