@@ -1,0 +1,57 @@
+{
+    "tables": {
+        "soldier": {
+            "tableName": "soldier",
+            "indexes": []
+        },
+        "constructors": {
+            "tableName": "constructors",
+            "indexes": []
+        },
+        "constructor_results": {
+            "tableName": "constructor_results",
+            "indexes": []
+        },
+        "constructor_standings": {
+            "tableName": "constructor_standings",
+            "indexes": []
+        },
+        "drivers": {
+            "tableName": "drivers",
+            "indexes": []
+        },
+        "driver_standings": {
+            "tableName": "driver_standings",
+            "indexes": []
+        },
+        "lap_times": {
+            "tableName": "lap_times",
+            "indexes": []
+        },
+        "pit_stops": {
+            "tableName": "pit_stops",
+            "indexes": []
+        },
+        "qualifying": {
+            "tableName": "qualifying",
+            "indexes": []
+        },
+        "races": {
+            "tableName": "races",
+            "indexes": []
+        },
+        "results": {
+            "tableName": "results",
+            "indexes": []
+        },
+        "seasons": {
+            "tableName": "seasons",
+            "indexes": []
+        },
+        "status": {
+            "tableName": "status",
+            "indexes": []
+        }
+    },
+    "revision": 1
+}
