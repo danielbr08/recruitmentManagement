@@ -41,7 +41,7 @@ var migrationCommands = [{
     {
         fn: "createTable",
         params: [
-            "constructors",
+            "soldier_position",
             {
 
             },
@@ -51,7 +51,7 @@ var migrationCommands = [{
     {
         fn: "createTable",
         params: [
-            "constructor_results",
+            "signature_item",
             {
 
             },
@@ -61,7 +61,7 @@ var migrationCommands = [{
     {
         fn: "createTable",
         params: [
-            "constructor_standings",
+            "names_list",
             {
 
             },
@@ -71,7 +71,7 @@ var migrationCommands = [{
     {
         fn: "createTable",
         params: [
-            "drivers",
+            "task",
             {
 
             },

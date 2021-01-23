@@ -1,33 +1,31 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('constructors', {
-    constructor_id: {
+  return sequelize.define('names_list', {
+    names_list_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    constructor_ref: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: ""
-    },
     name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    soldiers_ids: {
       type: DataTypes.STRING,
       allowNull: false,
       defaultValue: "",
-      //unique: true
-    },
-    nationality: {
-      type: DataTypes.STRING,
+        },
+    taskId: {
+      type: DataTypes.INTEGER,
       allowNull: true,
-      defaultValue: "NULL"
-    },
-    url: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: ""
+      defaultValue: -1
     }
+    // ,
+    // creationDate: {
+    //   type: DataTypes.timestamps,
+    //   allowNull: false
+    // }
   }, {
     indexes:[
       {
@@ -37,7 +35,7 @@ module.exports = function(sequelize, DataTypes) {
     ],
     timestamps:false,
     sequelize,
-    tableName: 'constructors',
+    tableName: 'names_list',
     schema: 'public'
   });
 };

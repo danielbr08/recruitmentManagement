@@ -21,6 +21,11 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false,
       defaultValue: ""
+    },
+    soldier_position_id: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: ""
     }
   
   }, {

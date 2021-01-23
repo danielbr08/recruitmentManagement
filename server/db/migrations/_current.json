@@ -4,20 +4,20 @@
             "tableName": "soldier",
             "indexes": []
         },
-        "constructors": {
-            "tableName": "constructors",
+        "soldier_position": {
+            "tableName": "soldier_position",
             "indexes": []
         },
-        "constructor_results": {
-            "tableName": "constructor_results",
+        "signature_item": {
+            "tableName": "signature_item",
             "indexes": []
         },
-        "constructor_standings": {
-            "tableName": "constructor_standings",
+        "names_list": {
+            "tableName": "names_list",
             "indexes": []
         },
-        "drivers": {
-            "tableName": "drivers",
+        "task": {
+            "tableName": "task",
             "indexes": []
         },
         "driver_standings": {
