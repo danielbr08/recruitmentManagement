@@ -19,38 +19,6 @@
         "task": {
             "tableName": "task",
             "indexes": []
-        },
-        "driver_standings": {
-            "tableName": "driver_standings",
-            "indexes": []
-        },
-        "lap_times": {
-            "tableName": "lap_times",
-            "indexes": []
-        },
-        "pit_stops": {
-            "tableName": "pit_stops",
-            "indexes": []
-        },
-        "qualifying": {
-            "tableName": "qualifying",
-            "indexes": []
-        },
-        "races": {
-            "tableName": "races",
-            "indexes": []
-        },
-        "results": {
-            "tableName": "results",
-            "indexes": []
-        },
-        "seasons": {
-            "tableName": "seasons",
-            "indexes": []
-        },
-        "status": {
-            "tableName": "status",
-            "indexes": []
         }
     },
     "revision": 1
