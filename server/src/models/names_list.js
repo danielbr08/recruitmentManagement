@@ -11,21 +11,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false
     },
-    soldiers_ids: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: "",
-        },
-    taskId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      defaultValue: -1
+    creationDate: {
+      type: DataTypes.TIME,
+      allowNull: false
     }
-    // ,
-    // creationDate: {
-    //   type: DataTypes.timestamps,
-    //   allowNull: false
-    // }
   }, {
     indexes:[
       {

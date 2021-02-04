@@ -31,7 +31,7 @@ Object.keys(db).forEach(modelName => {
   }
 });
 
-//Relations
+// Relations
 // db.results.belongsTo(db.races,{foreignKey: 'race_id', targetKey: 'race_id', foreignKeyConstraint: false});
 // db.races.hasMany(db.results);
 

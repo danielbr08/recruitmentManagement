@@ -41,7 +41,7 @@ var migrationCommands = [{
     {
         fn: "createTable",
         params: [
-            "soldier_position",
+            "soldier_personal_details",
             {
 
             },
@@ -72,6 +72,36 @@ var migrationCommands = [{
         fn: "createTable",
         params: [
             "task",
+            {
+
+            },
+            {}
+        ]
+    },
+    {
+        fn: "createTable",
+        params: [
+            "names_list_soldiers",
+            {
+
+            },
+            {}
+        ]
+    },
+    {
+        fn: "createTable",
+        params: [
+            "pakal",
+            {
+
+            },
+            {}
+        ]
+    },
+    {
+        fn: "createTable",
+        params: [
+            "soldier_pakal",
             {
 
             },

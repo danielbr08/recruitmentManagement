@@ -7,34 +7,35 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
-    personal_number: {
+    version: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: false
+      allowNull: false
     },
-    first_name: {
+    squad: {
       type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: ""
+      allowNull: false
     },
-    last_name: {
+    department: {
       type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: ""
+      allowNull: false
     },
-    soldier_position_id: {
+    class: {
       type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: ""
+      allowNull: false
+    },
+    role: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }, 
+    pakal_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },      
+    creation_date: {
+      type: DataTypes.TIME,
+      allowNull: false
     }
-  
-  }, {
-    indexes:[
-      {
-        unique:true,
-        fields:['personal_number']
-      }
-    ],
+  }, {  
     timestamps:false,
     sequelize,
     tableName: 'soldier',

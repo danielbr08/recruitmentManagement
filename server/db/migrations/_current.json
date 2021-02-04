@@ -4,8 +4,8 @@
             "tableName": "soldier",
             "indexes": []
         },
-        "soldier_position": {
-            "tableName": "soldier_position",
+        "soldier_personal_details": {
+            "tableName": "soldier_personal_details",
             "indexes": []
         },
         "signature_item": {
@@ -18,6 +18,18 @@
         },
         "task": {
             "tableName": "task",
+            "indexes": []
+        },
+        "names_list_soldiers": {
+            "tableName": "names_list_soldiers",
+            "indexes": []
+        },
+        "soldier_pakal": {
+            "tableName": "soldier_pakal",
+            "indexes": []
+        },
+        "pakal": {
+            "tableName": "pakal",
             "indexes": []
         }
     },

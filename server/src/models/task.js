@@ -7,25 +7,25 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
+    names_list_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
       defaultValue: ''
     },
-    // creation_date: {
-    //   type: DataTypes.timestamps,
-    //   allowNull: false
-    // },
     status: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    names_list_id: {
+    current_task: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    is_current_task: {
-      type: DataTypes.INTEGER,
+    creation_date: {
+      type: DataTypes.TIME,
       allowNull: false
     }
   }, {
