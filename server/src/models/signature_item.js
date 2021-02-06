@@ -6,7 +6,8 @@ module.exports = function(sequelize, DataTypes) {
     signature_item_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true
     },
     item: {
       type: DataTypes.STRING,

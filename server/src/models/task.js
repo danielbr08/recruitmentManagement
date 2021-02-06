@@ -5,7 +5,8 @@ module.exports = function(sequelize, DataTypes) {
     task_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true
     },
     names_list_id: {
       type: DataTypes.INTEGER,

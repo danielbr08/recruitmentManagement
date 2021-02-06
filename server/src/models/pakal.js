@@ -3,7 +3,8 @@ module.exports = function(sequelize, DataTypes) {
         pakal_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true
       },
       signature_id: {
         type: DataTypes.INTEGER,

@@ -5,6 +5,12 @@ module.exports = function(sequelize, DataTypes) {
     soldier_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    personal_number: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
       primaryKey: true
     },
     version: {

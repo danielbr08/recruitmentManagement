@@ -2,15 +2,10 @@
 
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('soldier_personal_details', {
-    soldier_personal_details_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
-    },
     personal_number: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: false
+      primaryKey: true
     },
     first_name: {
       type: DataTypes.STRING,

@@ -5,5 +5,9 @@ module.exports = {
    getUsersList: async (req,res,next) => {
       const result = await recruitmentProvider.getUsersList();
       res.status(200).send(result);
-   }
+   },
+   insertSoldier: async (req,res,next) => {
+      const result = await recruitmentProvider.insertSoldier();
+      res.status(200).send(result);
+   },
 }

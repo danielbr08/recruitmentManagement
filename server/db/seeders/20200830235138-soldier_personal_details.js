@@ -5,7 +5,7 @@ console.log("date to insert: ", date);
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.sequelize.query(`INSERT INTO soldier_personal_details VALUES (1,'66879568','Daniel','Brosh','${date}');`)
+    return queryInterface.sequelize.query(`INSERT INTO soldier_personal_details VALUES ('66879568','Daniel','Brosh','${date}');`)
   },
 
   down: (queryInterface, Sequelize) => {
