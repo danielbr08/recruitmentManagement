@@ -1,4 +1,4 @@
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   return sequelize.define('names_list_soldiers', {
     names_list_soldiers_id: {
       type: DataTypes.INTEGER,
@@ -14,10 +14,19 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false
     }
-  }, {
-    timestamps:false,
-    sequelize,
-    tableName: 'names_list_soldiers',
-    schema: 'public'
-  });
+  },
+    {
+      indexes: [
+        {
+          unique: true,
+          fields: ['names_list_id', 'soldier_id']
+        }
+      ]
+    },
+    {
+      timestamps: false,
+      sequelize,
+      tableName: 'names_list_soldiers',
+      schema: 'public'
+    });
 };

@@ -7,13 +7,12 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
-
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    creationDate: {
+    creation_date: {
       type: DataTypes.TIME,
       allowNull: false
     }

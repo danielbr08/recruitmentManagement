@@ -1,6 +1,6 @@
 /* jshint indent: 2 */
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   return sequelize.define('soldier', {
     soldier_id: {
       type: DataTypes.INTEGER,
@@ -10,8 +10,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     personal_number: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
+      allowNull: false
     },
     version: {
       type: DataTypes.INTEGER,
@@ -32,19 +31,27 @@ module.exports = function(sequelize, DataTypes) {
     role: {
       type: DataTypes.STRING,
       allowNull: false
-    }, 
+    },
     pakal_id: {
       type: DataTypes.INTEGER,
       allowNull: false
-    },      
+    },
     creation_date: {
       type: DataTypes.TIME,
       allowNull: false
     }
-  }, {  
-    timestamps:false,
-    sequelize,
-    tableName: 'soldier',
-    schema: 'public'
-  });
+  },
+    {
+      timestamps:false,
+      sequelize,
+      tableName: 'soldier',
+      schema: 'public',
+    indexes: [
+        {
+            name: 'unique_index',
+            unique: true,
+            fields: ['personal_number', 'version']
+        }
+    ]
+    });
 };

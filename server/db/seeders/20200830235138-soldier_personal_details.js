@@ -1,7 +1,6 @@
 'use strict';
 var dateFormat = require('dateformat');
 var date=dateFormat(new Date(), "yyyy-mm-dd hh:MM:ss");
-console.log("date to insert: ", date);
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
