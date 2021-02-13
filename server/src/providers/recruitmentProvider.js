@@ -41,9 +41,9 @@ const _getUsersList = async () => {
     await setSoldiersVersion(soldiers, soldiersDbMap);    
     console.log("soldiersDbMap: ", soldiersDbMap);
     const insertSoldiersQuery = await createQueryInsertSoldiers(Object.values(soldiersDbMap));
-    res.soldiers = await executeQuery(insertSoldiersQuery);
+    // res.soldiers = await executeQuery(insertSoldiersQuery);
 
-    return res;
+    return res.insertSoldiersQuery = insertSoldiersQuery;
     // insert personal soldier details if not exists
     // INSERT INTO public.soldier_personal_details(
     //   personal_number, first_name, last_name, creation_date)
@@ -117,11 +117,17 @@ const _getUsersList = async () => {
 
   const createQueryInsertSoldiers = async (soldiers)=>{
     let soldiersValues = "";
+    let personalNumbers = "";
     await soldiers.forEach(soldier => {
+      personalNumbers += `${soldier.personalNumber},`;
       soldiersValues += `('${soldier.personalNumber}','${soldier.version}','${soldier.squad}','${soldier.department}','${soldier.class}','${soldier.role}','${soldier.pakalId}','${getNowFormated()}'),`;
     });
+    personalNumbers = personalNumbers.substr(0,personalNumbers.length-1);
     soldiersValues = soldiersValues.substr(0,soldiersValues.length-1);// remove last unnecessary ',' character
-   return `with i as (INSERT INTO public.soldier( personal_number, version, squad, department, class, role, pakal_id, creation_date) VALUES ${soldiersValues} ON CONFLICT (personal_number, version) DO NOTHING RETURNING soldier_id as "soldierId", personal_number as "personalNumber", version);`;
+   return `with t as (INSERT INTO public.soldier( personal_number, version, squad, department, class, role, pakal_id, creation_date) VALUES ${soldiersValues} ON CONFLICT (personal_number, version) DO NOTHING RETURNING soldier_id, personal_number, version)
+   select soldier_id as "soldierId", personal_number as "personalNumber", version from t
+   union all
+   select s1.soldier_id as "soldierId", s1.personal_number as "personalNumber", s1.version from public.soldier s1 where s1.personal_number in(${personalNumbers}) and s1.version = (select max(s2.version) from public.soldier s2 where s1.personal_number = s2.personal_number);`;
   }
 
   const _insertSoldiers = async (soldiers, namesListId) => {
