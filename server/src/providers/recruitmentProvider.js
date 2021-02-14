@@ -1,13 +1,5 @@
-var dateFormat = require('dateformat');
-const {
-  soldier_personal_details
-} = require("..//models/");
-const {sequelize} = require("..//models/");
-const soldier = require('../models/soldier');
-
-const getNowFormated = ()=>{
-  return dateFormat(new Date(), "yyyy-mm-dd hh:MM:ss");
-}
+const utils = require('../utils/utils');
+const queryUtils = require('../utils/queryUtils')
 
 const _getUsersList = async () => {
   // const query = "SELECT * FROM public.soldier_personal_details ORDER BY personal_number ASC;";
@@ -28,26 +20,27 @@ const _getUsersList = async () => {
     const res = {};
     const { soldiers, name } = namesList;
 
-    // const namesListQuery = createInsertNamesListQuery(name, getNowFormated());
-    // res.namesListId = await executeQuery(namesListQuery);
+    const namesListQuery = queryUtils.createInsertNamesListQuery(name, queryUtils.getNowFormated());
+    res.namesListId = await queryUtils.executeQuery(namesListQuery);
 
-    // const insertSoldiersPersonalDetailsQuery = await createQueryInsertSoldiersPersonalDetails(soldiers);
-    // res.soldiersPersonalDetails = await executeQuery(insertSoldiersPersonalDetailsQuery);
+    const insertSoldiersPersonalDetailsQuery = await queryUtils.createQueryInsertSoldiersPersonalDetails(soldiers);
+    res.soldiersPersonalDetails = await queryUtils.executeQuery(insertSoldiersPersonalDetailsQuery);
 
-    const personalNumbers = await getPersonalNumbersFromSoldiers(soldiers);
-    const getLastVersionSoldierQuery = await createLastVersionSoldierQuery(personalNumbers);
-    const lastVersionDbSoldiers = (await executeQuery(getLastVersionSoldierQuery))[0];
-    let soldiersDbMap = await getNamesListSoldiersMap(lastVersionDbSoldiers);
+    const personalNumbers = await utils.getPersonalNumbersFromSoldiers(soldiers);
+    const getLastVersionSoldierQuery = await queryUtils.createLastVersionSoldierQuery(personalNumbers);
+    const lastVersionDbSoldiers = (await queryUtils.executeQuery(getLastVersionSoldierQuery))[0];
+    let soldiersDbMap = await utils.getNamesListSoldiersMap(lastVersionDbSoldiers);
     await setSoldiersVersion(soldiers, soldiersDbMap);    
     console.log("soldiersDbMap: ", soldiersDbMap);
-    const insertSoldiersQuery = await createQueryInsertSoldiers(Object.values(soldiersDbMap));
-    // res.soldiers = await executeQuery(insertSoldiersQuery);
+    const insertSoldiersQuery = await queryUtils.createQueryInsertSoldiers(Object.values(soldiersDbMap));
+    res.soldiers = await queryUtils.executeQuery(insertSoldiersQuery);
 
-    return res.insertSoldiersQuery = insertSoldiersQuery;
+    res.insertSoldiersQuery = insertSoldiersQuery;
+    return res;
     // insert personal soldier details if not exists
     // INSERT INTO public.soldier_personal_details(
     //   personal_number, first_name, last_name, creation_date)
-    //   VALUES (soldier.personalNumber, soldier.firstName, soldier.lastName, getNowFormated()) ON CONFLICT (personal_number) DO NOTHING;
+    //   VALUES (soldier.personalNumber, soldier.firstName, soldier.lastName, queryUtils.getNowFormated()) ON CONFLICT (personal_number) DO NOTHING;
     // const personalNumberSoldierMap = {};
     // const personalNumbers = [];
     // await soldiers.forEach(element => {
@@ -78,64 +71,12 @@ const _getUsersList = async () => {
     soldiersDbMap = newSoldiersMap;
   }
 
-  const getNamesListSoldiersMap = async (soldiers)=>{
-    const namesListSoldiersMap = {};
-    await soldiers.forEach(soldier => {
-      namesListSoldiersMap[soldier.personalNumber] = soldier;
-    });
-    return namesListSoldiersMap;
-  }
-
-  const getPersonalNumbersFromSoldiers = async (soldiers)=>{
-    personalNumbers = "";
-    await soldiers.forEach(element => {
-      let personalNumber = element.personalNumber;
-      personalNumbers += `'${personalNumber}',`;
-    });
-    return personalNumbers.substr(0,personalNumbers.length-1);
-  }
-
-  const createLastVersionSoldierQuery = async (personalNumbers)=>{
-    return `SELECT s1.soldier_id as "soldierId", s1.personal_number as "personalNumber", s1.version, s1.squad, s1.department, s1.class, s1.role, s1.pakal_id as "pakalId", s1.creation_date as "creationDate"
-    FROM public.soldier s1
-    WHERE s1.personal_number in(${personalNumbers}) 
-    and version = (select max(version) from public.soldier s2 where s1.personal_number = s2.personal_number);`;
-  }
-
-  const createInsertNamesListQuery = (name, creationDate)=>{
-    return `INSERT INTO public.names_list( name, creation_date) VALUES ( '${name}', '${creationDate}') ON CONFLICT (name) DO NOTHING RETURNING names_list_id as "namesListId";`;
-  }
-
-  const createQueryInsertSoldiersPersonalDetails = async (soldiers)=>{
-    let soldiersValues = "";
-    await soldiers.forEach(soldier => {
-      soldiersValues += `('${soldier.personalNumber}','${soldier.firstName}','${soldier.lastName}','${getNowFormated()}'),`;
-    });
-    soldiersValues = soldiersValues.substr(0,soldiersValues.length-1);// remove last unnecessary ',' character
-   return `INSERT INTO public.soldier_personal_details( personal_number, first_name, last_name, creation_date) VALUES ${soldiersValues} ON CONFLICT (personal_number) DO NOTHING RETURNING personal_number as "personalNumber";`;
-  }
-
-  const createQueryInsertSoldiers = async (soldiers)=>{
-    let soldiersValues = "";
-    let personalNumbers = "";
-    await soldiers.forEach(soldier => {
-      personalNumbers += `${soldier.personalNumber},`;
-      soldiersValues += `('${soldier.personalNumber}','${soldier.version}','${soldier.squad}','${soldier.department}','${soldier.class}','${soldier.role}','${soldier.pakalId}','${getNowFormated()}'),`;
-    });
-    personalNumbers = personalNumbers.substr(0,personalNumbers.length-1);
-    soldiersValues = soldiersValues.substr(0,soldiersValues.length-1);// remove last unnecessary ',' character
-   return `with t as (INSERT INTO public.soldier( personal_number, version, squad, department, class, role, pakal_id, creation_date) VALUES ${soldiersValues} ON CONFLICT (personal_number, version) DO NOTHING RETURNING soldier_id, personal_number, version)
-   select soldier_id as "soldierId", personal_number as "personalNumber", version from t
-   union all
-   select s1.soldier_id as "soldierId", s1.personal_number as "personalNumber", s1.version from public.soldier s1 where s1.personal_number in(${personalNumbers}) and s1.version = (select max(s2.version) from public.soldier s2 where s1.personal_number = s2.personal_number);`;
-  }
-
   const _insertSoldiers = async (soldiers, namesListId) => {
 
     // insert personal soldier details if not exists
     // INSERT INTO public.soldier_personal_details(
     //   personal_number, first_name, last_name, creation_date)
-    //   VALUES (soldier.personalNumber, soldier.firstName, soldier.lastName, getNowFormated()) ON CONFLICT (personal_number) DO NOTHING;
+    //   VALUES (soldier.personalNumber, soldier.firstName, soldier.lastName, queryUtils.getNowFormated()) ON CONFLICT (personal_number) DO NOTHING;
 
     // select data of soldier from last version.
     
@@ -143,7 +84,7 @@ const _getUsersList = async () => {
     // compare with object data. if same version - take id, otherwise increase version and insert to table
 
     // INSERT INTO public.soldier( personal_number, version, squad, department, class, role, pakal_id, creation_date)
-	  // VALUES (soldier.personalNumber, version+1, soldier.squad, soldier.department, soldier.class, soldier.role, soldier.pakalId, getNowFormated()) RETURNING soldier_id as "soldierId", personal_number as "personalNumber", version;
+	  // VALUES (soldier.personalNumber, version+1, soldier.squad, soldier.department, soldier.class, soldier.role, soldier.pakalId, queryUtils.getNowFormated()) RETURNING soldier_id as "soldierId", personal_number as "personalNumber", version;
 
 
     // with i as (
@@ -159,11 +100,6 @@ const _getUsersList = async () => {
     const soldiersData = await soldier_personal_details.findAll();
     return soldiersData;
   };
-
-  const executeQuery = async (query)=>{
-    return sequelize.query(query);
-  }
-
 
   module.exports = {
     getUsersList: async () => {
