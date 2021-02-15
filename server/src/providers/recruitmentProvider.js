@@ -2,57 +2,47 @@ const utils = require('../utils/utils');
 const queryUtils = require('../utils/queryUtils')
 
 const _getUsersList = async () => {
-  // const query = "SELECT * FROM public.soldier_personal_details ORDER BY personal_number ASC;";
-  // const soldiersData = await sequelize.query(query);
-  // //  const soldiersData = await soldier_personal_details.findAll();
-  //   return soldiersData[0];
+    const query = `SELECT personal_number as "personalNumber", first_name as "firstName", last_name as "lastName", creation_date as "creationDate" FROM public.soldier_personal_details ORDER BY personal_number ASC;`;
+    const soldiersData = await queryUtils.executeQuery(query);
+    //  const soldiersData = await soldier_personal_details.findAll();
+      return soldiersData[0];
+}
 
-  const namesList = { soldiers: [
-    {personalNumber: '1234', firstName: 'firstName1', lastName: 'lastName1', squad: 'squad1', department: 'department1', class: 'class1', role: 'role1', pakalId:-1},
-    {personalNumber: '12345', firstName: 'firstName2', lastName: 'lastName2', squad: 'squad2', department: 'department2', class: 'class2', role: 'role2', pakalId:-1},
-    {personalNumber: '123456', firstName: 'firstName3', lastName: 'lastName3', squad: 'squad3', department: 'department3', class: 'class3', role: 'role3', pakalId:-1}
-  ],
-    name: 'names list 1'};
-  return _insertNamesList(namesList);
-  };
-
-  const _insertNamesList = async (namesList) => {
+  const _addNamesList = async (namesList) => {
     const res = {};
     const { soldiers, name } = namesList;
 
+    res.namesListId = await insertNamesList(name);
+    await insertSoldiersPersonalDetails(soldiers);
+    res.soldiers = (await insertSoldiers(soldiers))[0];
+    res.soldiersNamesList = await insertSoldiersNamesList(res.namesListId, res.soldiers);
+    return res;
+  }
+
+  const insertNamesList = async (name)=>{
     const namesListQuery = queryUtils.createInsertNamesListQuery(name, queryUtils.getNowFormated());
-    res.namesListId = await queryUtils.executeQuery(namesListQuery);
+    return (await queryUtils.executeQuery(namesListQuery))[0][0].namesListId;
+  }
 
+  const insertSoldiersPersonalDetails = async (soldiers)=>{
     const insertSoldiersPersonalDetailsQuery = await queryUtils.createQueryInsertSoldiersPersonalDetails(soldiers);
-    res.soldiersPersonalDetails = await queryUtils.executeQuery(insertSoldiersPersonalDetailsQuery);
+    return await queryUtils.executeQuery(insertSoldiersPersonalDetailsQuery);
+  }
 
+  const insertSoldiers = async (soldiers)=>{
     const personalNumbers = await utils.getPersonalNumbersFromSoldiers(soldiers);
     const getLastVersionSoldierQuery = await queryUtils.createLastVersionSoldierQuery(personalNumbers);
     const lastVersionDbSoldiers = (await queryUtils.executeQuery(getLastVersionSoldierQuery))[0];
+    console.log("lastVersionDbSoldiers: ", lastVersionDbSoldiers);
     let soldiersDbMap = await utils.getNamesListSoldiersMap(lastVersionDbSoldiers);
     await setSoldiersVersion(soldiers, soldiersDbMap);    
-    console.log("soldiersDbMap: ", soldiersDbMap);
     const insertSoldiersQuery = await queryUtils.createQueryInsertSoldiers(Object.values(soldiersDbMap));
-    res.soldiers = await queryUtils.executeQuery(insertSoldiersQuery);
+    return await queryUtils.executeQuery(insertSoldiersQuery);
+  }
 
-    res.insertSoldiersQuery = insertSoldiersQuery;
-    return res;
-    // insert personal soldier details if not exists
-    // INSERT INTO public.soldier_personal_details(
-    //   personal_number, first_name, last_name, creation_date)
-    //   VALUES (soldier.personalNumber, soldier.firstName, soldier.lastName, queryUtils.getNowFormated()) ON CONFLICT (personal_number) DO NOTHING;
-    // const personalNumberSoldierMap = {};
-    // const personalNumbers = [];
-    // await soldiers.forEach(element => {
-    //   let personalNumber = element.personalNumber;
-    //   personalNumberSoldierMap[personalNumber] = element;
-    //   personalNumbers.push(personalNumber);
-    // }); 
-
-
-    // _insertSoldiers();
-
-
+  const insertSoldiersNamesList = async (namesListid, soldiers)=>{
+    const insertSoldiersNamesListQuery = await queryUtils.createQueryInsertSoldiersNamesList(namesListid, soldiers);
+    return (await queryUtils.executeQuery(insertSoldiersNamesListQuery))[0];
   }
 
   const isSameSoldierVersion = (soldier1, soldier2)=>{
@@ -71,43 +61,18 @@ const _getUsersList = async () => {
     soldiersDbMap = newSoldiersMap;
   }
 
-  const _insertSoldiers = async (soldiers, namesListId) => {
-
-    // insert personal soldier details if not exists
-    // INSERT INTO public.soldier_personal_details(
-    //   personal_number, first_name, last_name, creation_date)
-    //   VALUES (soldier.personalNumber, soldier.firstName, soldier.lastName, queryUtils.getNowFormated()) ON CONFLICT (personal_number) DO NOTHING;
-
-    // select data of soldier from last version.
-    
-
-    // compare with object data. if same version - take id, otherwise increase version and insert to table
-
-    // INSERT INTO public.soldier( personal_number, version, squad, department, class, role, pakal_id, creation_date)
-	  // VALUES (soldier.personalNumber, version+1, soldier.squad, soldier.department, soldier.class, soldier.role, soldier.pakalId, queryUtils.getNowFormated()) RETURNING soldier_id as "soldierId", personal_number as "personalNumber", version;
-
-
-    // with i as (
-
-    // INSERT INTO t(personal_number) VALUES ('personal_number') ON CONFLICT (personal_number) DO NOTHING RETURNING id
-    // )
-    // select id from i
-    // union all
-    // select id from t where personal_number = 'personal_number' order by version desc
-    // limit 1
-    
-    // insert to nameslist_soldier(id of soldier, namesListId)
-    const soldiersData = await soldier_personal_details.findAll();
-    return soldiersData;
-  };
-
   module.exports = {
     getUsersList: async () => {
       const result = await _getUsersList();
       return result;
     },
-    insertSoldiers: async () => {
-      const result = await _insertSoldiers();
+    addNamesList: async (namesList) => {
+      try{
+      const result = await _addNamesList(namesList);
       return result;
+      } catch(error){
+        console.log("error: ", error);
+        return {error: true};
+      }
     }
   };

@@ -33,6 +33,15 @@ const createQueryInsertSoldiers = async (soldiers)=>{
    return `INSERT INTO public.soldier_personal_details( personal_number, first_name, last_name, creation_date) VALUES ${soldiersValues} ON CONFLICT (personal_number) DO NOTHING RETURNING personal_number as "personalNumber";`;
   }
 
+  const createQueryInsertSoldiersNamesList = async (namesListid, soldiers)=>{
+    let soldiersNamesListValues = "";
+    await soldiers.forEach(soldier => {
+      soldiersNamesListValues += `(${namesListid},${soldier.soldierId}),`;
+    });
+    soldiersNamesListValues = soldiersNamesListValues.substr(0,soldiersNamesListValues.length-1);// remove last unnecessary ',' character
+    return `INSERT INTO public.names_list_soldiers( names_list_id, soldier_id) VALUES ${soldiersNamesListValues} RETURNING names_list_id as "namesListId", soldier_id as "soldierId";`;
+  }
+
   const createLastVersionSoldierQuery = async (personalNumbers)=>{
     return `SELECT s1.soldier_id as "soldierId", s1.personal_number as "personalNumber", s1.version, s1.squad, s1.department, s1.class, s1.role, s1.pakal_id as "pakalId", s1.creation_date as "creationDate"
     FROM public.soldier s1
@@ -41,7 +50,7 @@ const createQueryInsertSoldiers = async (soldiers)=>{
   }
 
   const createInsertNamesListQuery = (name, creationDate)=>{
-    return `INSERT INTO public.names_list( name, creation_date) VALUES ( '${name}', '${creationDate}') ON CONFLICT (name) DO NOTHING RETURNING names_list_id as "namesListId";`;
+    return `INSERT INTO public.names_list( name, creation_date) VALUES ( '${name}', '${creationDate}') RETURNING names_list_id as "namesListId";`;
   }
 
   const getNowFormated = ()=>{
@@ -54,5 +63,6 @@ const createQueryInsertSoldiers = async (soldiers)=>{
     createQueryInsertSoldiersPersonalDetails,
     createLastVersionSoldierQuery,
     createInsertNamesListQuery,
+    createQueryInsertSoldiersNamesList,
     getNowFormated
   };
