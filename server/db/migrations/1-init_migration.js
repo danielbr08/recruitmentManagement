@@ -107,6 +107,26 @@ var migrationCommands = [{
             },
             {}
         ]
+    },
+    {
+        fn: "createTable",
+        params: [
+            "warehouse_unit",
+            {
+
+            },
+            {}
+        ]
+    },
+    {
+        fn: "createTable",
+        params: [
+            "squad_pakal_allocation",
+            {
+
+            },
+            {}
+        ]
     }
 ];
 

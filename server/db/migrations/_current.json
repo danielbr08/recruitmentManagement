@@ -31,7 +31,16 @@
         "pakal": {
             "tableName": "pakal",
             "indexes": []
+        },
+        "warehouse_unit": {
+            "tableName": "warehouse_unit",
+            "indexes": []
+        },
+        "squad_pakal_allocation": {
+            "tableName": "squad_pakal_allocation",
+            "indexes": []
         }
+        
     },
     "revision": 1
 }
