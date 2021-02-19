@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { NamesList } from '../models/NamesList.model';
 import * as XLSX from 'xlsx';
 import { Soldier } from 'src/app/models/Soldier.model';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
+const port = 3000;
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +13,7 @@ import { Soldier } from 'src/app/models/Soldier.model';
 export class NamesListServiceService {
 
   namesList: NamesList[] = [];
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getNamesList(id: number){
     return this.namesList.find(element=>element.id==id);
@@ -45,23 +48,18 @@ export class NamesListServiceService {
               elements[personalNumber] = {squad,department,class: _class ,personalNumber, firstName, lastName, role:'', pakal:''};
           });
           let soldiers: Soldier[] = Object.values(elements);
-          let id: number = this.generateNewNamesListId();
-          this.namesList.push({id, name, soldiers, taskId:-1, creationDate: new Date()});
+          const headers = { 'content-type': 'application/json'}  
+          const body = {name, soldiers, creationDate: new Date()};
+          this.http.post(`http://localhost:${port}/api/recruitment/add-nameslist`,body,{headers});
           this.refresh()
-          console.log("this.namesList: ", this.namesList);
 }
       reader.readAsBinaryString(file);
     }
 
-    generateNewNamesListId(){
-      if(this.namesList.length == 0)
-        return 1;
-      let ids: number[] = [];
-      this.namesList.map(item=>ids.push(item.id));
-      return Math.max(...ids) + 1;
+    refresh(){
+      this.http.get<NamesList[]>(`http://localhost:${port}/api/recruitment/names-lists`).subscribe(data=>{
+        this.namesList = data;
+      });
     }
 
-    refresh(){
-      this.namesList = [...this.namesList];
-    }
 }

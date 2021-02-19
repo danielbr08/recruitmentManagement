@@ -13,6 +13,10 @@ module.exports = {
       const result = await recruitmentProvider.getUsersList();
       res.status(200).send(result);
    },
+   getNamesLists: async (req,res,next) => {
+      const result = await recruitmentProvider.getNamesLists();
+      res.status(200).send(result);
+   },
    addNamesList: async (req,res,next) => {
       let result = await recruitmentProvider.addNamesList(req.body.namesList);
       if(!result.error)
