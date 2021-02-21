@@ -61,6 +61,31 @@ const getSoldiersFromNamesList = async (id)=>{
     return res;
   }
 
+  const _warehouseUnit = async (warehouseUnit) => {
+    {"id":1,"pakal":"מאג","signatureList":
+    [{"id":1,"item":"רצועה","serialNumber":"123456","quantity":4},
+    {"id":2,"item":"חצובה","serialNumber":"12345","quantity":4},
+    {"id":3,"item":"מאג","serialNumber":"1234","quantity":2}]
+  },
+    const res = {};
+    const { signatureList, name } = warehouseUnit;
+
+    let values = "";
+    await signatureList.forEach(signatureItem => {
+      const { item, serialNumber, quantity } = warehouseUnit.signatureList;
+      values += `(${item}, ${serialNumber}, ${quantity}),`;
+    });
+    values = values.substr(0,values.length-1);
+    let query = `insert into public warehouse_unit(item, serial_number, quantity) VALUES ${values} RETURNING item, serial_number as "serialNumber", quantity`;
+    
+    // insert
+    res.namesListId = await insertNamesList(name);
+    await insertSoldiersPersonalDetails(soldiers);
+    res.soldiers = (await insertSoldiers(soldiers))[0];
+    res.soldiersNamesList = await insertSoldiersNamesList(res.namesListId, res.soldiers);
+    return res;
+  }
+
   const insertNamesList = async (name)=>{
     const namesListQuery = queryUtils.createInsertNamesListQuery(name, queryUtils.getNowFormated());
     return (await queryUtils.executeQuery(namesListQuery))[0][0].namesListId;
@@ -120,6 +145,15 @@ const getSoldiersFromNamesList = async (id)=>{
     addNamesList: async (namesList) => {
       try{
       const result = await _addNamesList(namesList);
+      return result;
+      } catch(error){
+        console.log("error: ", error);
+        return {error: true};
+      }
+    },
+    warehouseUnit: async (warehouseUnit) => {
+      try{
+      const result = await _warehouseUnit(warehouseUnit);
       return result;
       } catch(error){
         console.log("error: ", error);

@@ -25,4 +25,16 @@ module.exports = {
          res.status(500).send("error occurd");
 
    },
+   saveWarehouseUnit: async (req,res,next) => {
+      const taskId = req.query.taskId;
+      if(!taskId){
+         res.status(400).send("task is required!");
+      }
+      let result = await recruitmentProvider.saveWarehouseUnit(req.body.warehouseUnit);
+      if(!result.error)
+         res.status(200).send(result);
+      else
+         res.status(500).send("error occurd");
+
+   },
 }
