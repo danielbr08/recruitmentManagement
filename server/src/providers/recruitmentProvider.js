@@ -11,7 +11,7 @@ const _getUsersList = async () => {
 const _getNamesLists = async () => {
   const namesListMap = {};
   const query = `select nl.names_list_id as "namesListId", nl.name, nl.creation_date as "namesListCreationDate",
-  spd.personal_number as "personalNumber", spd.first_name as "firstName",  spd.last_name as "lastName", spd.creation_date as "soldierPersonalDetailsCreationDate",
+  spd.personal_number as "personalNumber", spd.first_name as "firstName",  spd.last_name as "lastName", spd.creation_date as "personalDetailsCreationDate",
   s.soldier_id as "soldierId", s.version, s.squad, s.department, s.class, s.role, s.pakal_id as "pakalId", s.creation_date as "soldierCreationDate"
   from names_list nl 
      inner join names_list_soldiers nls on nl.names_list_id = nls.names_list_id
@@ -29,7 +29,7 @@ const _getNamesLists = async () => {
     let personalNumber = namesList.personalNumber;
     let firstName = namesList.firstName;
     let lastName = namesList.lastName;
-    let soldierPersonalDetailsCreationDate = namesList.soldierPersonalDetailsCreationDate;
+    let personalDetailsCreationDate = namesList.personalDetailsCreationDate;
     let soldierId = namesList.soldierId;
     let version = namesList.version;
     let squad = namesList.squad;
@@ -38,7 +38,7 @@ const _getNamesLists = async () => {
     let role = namesList.role;
     let pakalId = namesList.pakalId;
     let soldierCreationDate = namesList.soldierCreationDate;
-    let soldier = {personalNumber, firstName, lastName, soldierPersonalDetailsCreationDate, soldierId, version, squad, department, class: _class, role, pakalId, soldierCreationDate}; 
+    let soldier = {personalNumber, firstName, lastName, personalDetailsCreationDate, soldierId, version, squad, department, class: _class, role, pakalId, soldierCreationDate}; 
     namesListMap.namesListId.soldiers.push(soldier);
   });
     return Object.values(namesListMap);
