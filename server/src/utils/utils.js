@@ -16,7 +16,13 @@ const getPersonalNumbersFromSoldiers = async (soldiers)=>{
     return namesListSoldiersMap;
   }
 
+  const removeLastCharacters = (str, size)=>{
+    return str.substr(0, str.length-size);// remove last unnecessary ',' character
+  }
+
+
   module.exports = {
     getPersonalNumbersFromSoldiers,
+    removeLastCharacters,
     getNamesListSoldiersMap
   };

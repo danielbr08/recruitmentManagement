@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
     return sequelize.define('squad_pakal_allocation', {
-        squad_pakal_allocation_id: {
+        id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,

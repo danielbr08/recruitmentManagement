@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
     return sequelize.define('soldier_pakal', {
-        soldier_pakal_id: {
+        id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,

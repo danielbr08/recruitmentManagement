@@ -3,7 +3,7 @@
 
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('signature_item', {
-    signature_item_id: {
+    id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,

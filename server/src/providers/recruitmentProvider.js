@@ -61,17 +61,24 @@ const getSoldiersFromNamesList = async (id)=>{
     return res;
   }
 
-  const _warehouseUnit = async (warehouseUnit) => {
+  const _savePakals = async (pakals) => {
+    const pakalSignatureIdsMap = {};
     const res = {};
-    const { signatureList, name } = warehouseUnit;
-    const queryInsertSignatureItems = await queryUtils.createQueryInsertSignatureItems(signatureList);
-    const signatureItems = await queryUtils.executeQuery(QueryInsertSignatureItems);
+    pakals.forEach(pakal => {
+      const {name, signatureList} = pakal;
+      const queryInsertSignatureItems = await queryUtils.createQueryInsertSignatureItems(signatureList);
+      const signatureItems = (await queryUtils.executeQuery(queryInsertSignatureItems))[0];
+      await signatureItems.forEach(signatureItemRow => {
+        if(!pakalSignatureIdsMap.hasOwnProperty(name)){
+          pakalSignatureIdsMap[name] = [];
+        }
+        pakalSignatureIdsMap[name].push(signatureItemRow.id);
+      });
+    });
 
-    // insert
-    res.namesListId = await insertNamesList(name);
-    await insertSoldiersPersonalDetails(soldiers);
-    res.soldiers = (await insertSoldiers(soldiers))[0];
-    res.soldiersNamesList = await insertSoldiersNamesList(res.namesListId, res.soldiers);
+    const queryInsertPakals = await queryUtils.createQueryInsertPakals(pakalSignatureIdsMap);
+    const pakals = (await queryUtils.executeQuery(queryInsertPakals))[0];
+    res.pakals = pakals;
     return res;
   }
 
@@ -140,9 +147,9 @@ const getSoldiersFromNamesList = async (id)=>{
         return {error: true};
       }
     },
-    warehouseUnit: async (warehouseUnit) => {
+    savePakals: async (pakals) => {
       try{
-      const result = await _warehouseUnit(warehouseUnit);
+      const result = await _savePakals(pakals);
       return result;
       } catch(error){
         console.log("error: ", error);

@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
     return sequelize.define('warehouse_unit', {
-        warehouse_unit_id: {
+        id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
