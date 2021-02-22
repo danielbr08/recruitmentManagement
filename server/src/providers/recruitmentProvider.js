@@ -62,22 +62,11 @@ const getSoldiersFromNamesList = async (id)=>{
   }
 
   const _warehouseUnit = async (warehouseUnit) => {
-    {"id":1,"pakal":"מאג","signatureList":
-    [{"id":1,"item":"רצועה","serialNumber":"123456","quantity":4},
-    {"id":2,"item":"חצובה","serialNumber":"12345","quantity":4},
-    {"id":3,"item":"מאג","serialNumber":"1234","quantity":2}]
-  },
     const res = {};
     const { signatureList, name } = warehouseUnit;
+    const queryInsertSignatureItems = await queryUtils.createQueryInsertSignatureItems(signatureList);
+    const signatureItems = await queryUtils.executeQuery(QueryInsertSignatureItems);
 
-    let values = "";
-    await signatureList.forEach(signatureItem => {
-      const { item, serialNumber, quantity } = warehouseUnit.signatureList;
-      values += `(${item}, ${serialNumber}, ${quantity}),`;
-    });
-    values = values.substr(0,values.length-1);
-    let query = `insert into public warehouse_unit(item, serial_number, quantity) VALUES ${values} RETURNING item, serial_number as "serialNumber", quantity`;
-    
     // insert
     res.namesListId = await insertNamesList(name);
     await insertSoldiersPersonalDetails(soldiers);

@@ -9,6 +9,20 @@ const executeQuery = async (query)=>{
     return sequelize.query(query);
   }
 
+  const createQueryInsertSignatureItems = async (signatureList)=>{
+    let values = "";
+    await signatureList.forEach(signatureItem => {
+      const { item, serialNumber, quantity } = warehouseUnit.signatureList;
+      values += `(${item}, ${serialNumber}, ${quantity}),`;
+    });
+    values = values.substr(0,values.length-1);
+    let query = `with t as (insert into public signature_item(item, serial_number, quantity) VALUES ${values} RETURNING item, serial_number as "serialNumber", quantity ON CONFLICT (item, serial_number, quantity) DO NOTHING RETURNING item, serial_number, quantity)
+    select item, serial_number as "serialNumber", quantity from t
+    union all
+    select si.item, si.serial_number as "serialNumber", si.quantity from public.signature_item si where si.item = t.item and si.serial_number = t.serial_number and si.quantity = t.quantity;`
+    return query;
+  }
+
 const createQueryInsertSoldiers = async (soldiers)=>{
     let soldiersValues = "";
     let personalNumbers = "";
@@ -64,5 +78,6 @@ const createQueryInsertSoldiers = async (soldiers)=>{
     createLastVersionSoldierQuery,
     createInsertNamesListQuery,
     createQueryInsertSoldiersNamesList,
+    createQueryInsertSignatureItems,
     getNowFormated
   };
