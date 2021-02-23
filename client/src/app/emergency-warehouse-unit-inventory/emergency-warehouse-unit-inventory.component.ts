@@ -5,8 +5,8 @@ import { PakalAllocated } from '../models/pakalAllocated.model';
 
 const PAKALS: Pakal[] = // The vale should be taken from server(by service)
   [
-    {"id":1,"pakal":"מאג","signatureList":[{"id":1,"item":"רצועה","serialNumber":"123456","quantity":4},{"id":2,"item":"חצובה","serialNumber":"12345","quantity":4},{"id":3,"item":"מאג","serialNumber":"1234","quantity":2}]},
-    {"id":2,"pakal":"נשק","signatureList":[{"id":1,"item":"M16","serialNumber":"123","quantity":2},{"id":2,"item":"רצועה","serialNumber":"12","quantity":2}]}
+    {"id":1,"name":"מאג","signatureList":[{"id":1,"item":"רצועה","serialNumber":"123456","quantity":4},{"id":2,"item":"חצובה","serialNumber":"12345","quantity":4},{"id":3,"item":"מאג","serialNumber":"1234","quantity":2}]},
+    {"id":2,"name":"נשק","signatureList":[{"id":1,"item":"M16","serialNumber":"123","quantity":2},{"id":2,"item":"רצועה","serialNumber":"12","quantity":2}]}
   ];
 
 @Component({

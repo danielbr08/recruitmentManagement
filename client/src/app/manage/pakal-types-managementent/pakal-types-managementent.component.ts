@@ -1,5 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Pakal } from 'src/app/models/Pakal.model';
+
+const port = 3000;
 
 @Component({
   selector: 'app-pakal-types-managementent',
@@ -9,25 +12,28 @@ import { Pakal } from 'src/app/models/Pakal.model';
 export class PakalTypesManagemententComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'pakal', 'signatureList', ' '];
-  dataSource: Pakal[] = [{ id: 1, pakal: '', signatureList: [{id:1, item:'', serialNumber:'', quantity:1}] }];
+  dataSource: Pakal[] = [{ id: 1, name: '', signatureList: [{id:1, item:'', serialNumber:'', quantity:1}] }];
   
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
   }
 
   saveData(warehouseUnitTable: any) {
     console.log('this.dataSource: ', JSON.stringify(this.dataSource));
+    const headers = { 'content-type': 'application/json'}  
+    const body = JSON.stringify(this.dataSource);
+    this.http.post(`http://localhost:${port}/api/recruitment/save-pakals`,body,{headers}).toPromise().then(data=>console.log("data: ", data)).catch(e=>console.log("error: ",e));
 
-    for (let i = 0; i < warehouseUnitTable._data.length; i++) {
-      let row = warehouseUnitTable._data[i];
-      console.log("row", row);
-    }
+    // for (let i = 0; i < warehouseUnitTable._data.length; i++) {
+    //   let row = warehouseUnitTable._data[i];
+    //   console.log("row", row);
+    // }
   }
 
   addNewRow(){
     let id = this.generateNewPakalId();
-    let newRow = { id, pakal:'', signatureList: [{id:1, item:'', serialNumber:'', quantity:1}]};
+    let newRow = { id, name:'', signatureList: [{id:1, item:'', serialNumber:'', quantity:1}]};
     this.dataSource.push(newRow);
     this.refreshData();
     console.log('this.dataSource: ',this.dataSource);

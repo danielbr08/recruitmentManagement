@@ -1,7 +1,7 @@
 const utils = require('../utils/utils');
 const queryUtils = require('../utils/queryUtils')
 
-const _getUsersList = async () => {
+const _getSoldiersList = async () => {
     const query = `SELECT personal_number as "personalNumber", first_name as "firstName", last_name as "lastName", creation_date as "creationDate" FROM public.soldier_personal_details ORDER BY personal_number ASC;`;
     const soldiersData = await queryUtils.executeQuery(query);
     //  const soldiersData = await soldier_personal_details.findAll();
@@ -10,12 +10,12 @@ const _getUsersList = async () => {
 
 const _getNamesLists = async () => {
   const namesListMap = {};
-  const query = `select nl.names_list_id as "namesListId", nl.name, nl.creation_date as "namesListCreationDate",
+  const query = `select nl.id as "namesListId", nl.name, nl.creation_date as "namesListCreationDate",
   spd.personal_number as "personalNumber", spd.first_name as "firstName",  spd.last_name as "lastName", spd.creation_date as "personalDetailsCreationDate",
-  s.soldier_id as "soldierId", s.version, s.squad, s.department, s.class, s.role, s.pakal_id as "pakalId", s.creation_date as "soldierCreationDate"
+  s.id as "soldierId", s.version, s.squad, s.department, s.class, s.role, s.pakal_id as "pakalId", s.creation_date as "soldierCreationDate"
   from names_list nl 
-     inner join names_list_soldiers nls on nl.names_list_id = nls.names_list_id
-     inner join soldier s on nls.soldier_id = s.soldier_id
+     inner join names_list_soldiers nls on nl.id = nls.names_list_id
+     inner join soldier s on nls.soldier_id = s.id
      inner join soldier_personal_details spd on s.personal_number = spd.personal_number;`;
   const namesListsData = (await queryUtils.executeQuery(query))[0];
   await namesListsData.forEach(namesList => {
@@ -62,9 +62,10 @@ const getSoldiersFromNamesList = async (id)=>{
   }
 
   const _savePakals = async (pakals) => {
+    console.log("pakals:", pakals);
     const pakalSignatureIdsMap = {};
     const res = {};
-    pakals.forEach(pakal => {
+    await pakals.forEach(async pakal => {
       const {name, signatureList} = pakal;
       const queryInsertSignatureItems = await queryUtils.createQueryInsertSignatureItems(signatureList);
       const signatureItems = (await queryUtils.executeQuery(queryInsertSignatureItems))[0];
@@ -76,9 +77,8 @@ const getSoldiersFromNamesList = async (id)=>{
       });
     });
 
-    const queryInsertPakals = await queryUtils.createQueryInsertPakals(pakalSignatureIdsMap);
-    const pakals = (await queryUtils.executeQuery(queryInsertPakals))[0];
-    res.pakals = pakals;
+    // const queryInsertPakals = await queryUtils.createQueryInsertPakals(pakalSignatureIdsMap);
+    // res.pakals = (await queryUtils.executeQuery(queryInsertPakals))[0];
     return res;
   }
 
@@ -125,8 +125,8 @@ const getSoldiersFromNamesList = async (id)=>{
   }
 
   module.exports = {
-    getUsersList: async () => {
-      const result = await _getUsersList();
+    getSoldiersList: async () => {
+      const result = await _getSoldiersList();
       return result;
     },
     getNamesLists: async () => {
@@ -149,8 +149,8 @@ const getSoldiersFromNamesList = async (id)=>{
     },
     savePakals: async (pakals) => {
       try{
-      const result = await _savePakals(pakals);
-      return result;
+        const result = await _savePakals(pakals);
+        return result;
       } catch(error){
         console.log("error: ", error);
         return {error: true};

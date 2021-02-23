@@ -9,8 +9,8 @@ const namesList = { soldiers: [
    name: 'names list 2'};
 
 module.exports = {
-   getUsersList: async (req,res,next) => {
-      const result = await recruitmentProvider.getUsersList();
+   getSoldiersList: async (req,res,next) => {
+      const result = await recruitmentProvider.getSoldiersList();
       res.status(200).send(result);
    },
    getNamesLists: async (req,res,next) => {
@@ -26,11 +26,11 @@ module.exports = {
 
    },
    savePakals: async (req,res,next) => {
-      const taskId = req.query.taskId;
-      if(!taskId){
-         res.status(400).send("task is required!");
+      const body = req.body;
+      if(!body){
+         res.status(400).send("body is required!");
       }
-      let result = await recruitmentProvider.savePakals(req.body.warehouseUnit);
+      let result = await recruitmentProvider.savePakals(body);
       if(!result.error)
          res.status(200).send(result);
       else

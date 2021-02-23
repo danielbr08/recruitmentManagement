@@ -10,7 +10,7 @@
     <!-- pakal Column -->
     <ng-container matColumnDef="pakal">
       <mat-header-cell *matHeaderCellDef> פק"ל </mat-header-cell>
-      <mat-cell *matCellDef="let element"> <input type="text" matInput required [value]=element.pakal name="pakal-{{element.id}}" [(ngModel)]="element.pakal"> </mat-cell>
+      <mat-cell *matCellDef="let element"> <input type="text" matInput required [value]=element.name name="pakal-{{element.id}}" [(ngModel)]="element.name"> </mat-cell>
     </ng-container>
 
         <!-- quantity Column -->

@@ -3,7 +3,7 @@ const {
   } = require("..//models/");
 const {sequelize} = require("..//models/");
 var dateFormat = require('dateformat');
-
+const utils = require('../utils/utils');
 
 const executeQuery = async (query)=>{
     return sequelize.query(query);
@@ -20,8 +20,8 @@ const executeQuery = async (query)=>{
       const { item, serialNumber, quantity } = signatureItem;
       values += `(${item}, ${serialNumber}, ${quantity}),`;
     });
-    values = removeLastCharacters(values, 1);
-    let query = `with t as (insert into public signature_item(item, serial_number, quantity) VALUES ${values} ON CONFLICT (item, serial_number, quantity) DO NOTHING RETURNING id, item, serial_number, quantity)
+    values = utils.removeLastCharacters(values, 1);
+    let query = `with t as (insert into public.signature_item(item, serial_number, quantity) VALUES ${values} ON CONFLICT (item, serial_number, quantity) DO NOTHING RETURNING id, item, serial_number, quantity)
     select id, item, serial_number as "serialNumber", quantity from t
     union all
     select si.id, si.item, si.serial_number as "serialNumber", si.quantity from public.signature_item si where si.item = t.item and si.serial_number = t.serial_number and si.quantity = t.quantity;`
