@@ -67,8 +67,7 @@ const getSoldiersFromNamesList = async (id)=>{
     const res = {};
     await pakals.forEach(async pakal => {
       const {name, signatureList} = pakal;
-      const queryInsertSignatureItems = await queryUtils.createQueryInsertSignatureItems(signatureList);
-      const signatureItems = (await queryUtils.executeQuery(queryInsertSignatureItems))[0];
+      const signatureItems = await queryUtils.insertSignatureItems(signatureList);
       await signatureItems.forEach(signatureItemRow => {
         if(!pakalSignatureIdsMap.hasOwnProperty(name)){
           pakalSignatureIdsMap[name] = [];
@@ -77,8 +76,8 @@ const getSoldiersFromNamesList = async (id)=>{
       });
     });
 
-    // const queryInsertPakals = await queryUtils.createQueryInsertPakals(pakalSignatureIdsMap);
-    // res.pakals = (await queryUtils.executeQuery(queryInsertPakals))[0];
+    const queryInsertPakals = await queryUtils.createQueryInsertPakals(pakalSignatureIdsMap);
+    res.pakals = (await queryUtils.executeQuery(queryInsertPakals))[0];
     return res;
   }
 

@@ -6,6 +6,10 @@ module.exports = function(sequelize, DataTypes) {
         primaryKey: true,
         autoIncrement: true
       },
+      pakal_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
       signature_id: {
         type: DataTypes.INTEGER,
         allowNull: false

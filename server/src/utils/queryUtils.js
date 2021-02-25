@@ -14,18 +14,19 @@ const executeQuery = async (query)=>{
     return queryResult.maxId || 0;
   }
 
-  const createQueryInsertSignatureItems = async (signatureList)=>{
-    let values = "";
-    await signatureList.forEach(signatureItem => {
+  const insertSignatureItems = async (signatureList)=>{
+    const signatureItems = [];
+    await signatureList.forEach(async signatureItem => {
       const { item, serialNumber, quantity } = signatureItem;
-      values += `(${item}, ${serialNumber}, ${quantity}),`;
+      let query = `with t as (insert into public.signature_item(item, serial_number, quantity) VALUES ('${item}','${serialNumber}',${quantity}) ON CONFLICT (item, serial_number, quantity) DO NOTHING RETURNING id, item, serial_number, quantity)
+      select id, item, serial_number as "serialNumber", quantity from t
+      union all
+      select si.id, si.item, si.serial_number as "serialNumber", si.quantity from public.signature_item si where si.item = '${item}' and si.serial_number = '${serialNumber}' and si.quantity = ${quantity};`
+      const result = (await executeQuery(query))[0];
+      signatureItems.push(result);
     });
-    values = utils.removeLastCharacters(values, 1);
-    let query = `with t as (insert into public.signature_item(item, serial_number, quantity) VALUES ${values} ON CONFLICT (item, serial_number, quantity) DO NOTHING RETURNING id, item, serial_number, quantity)
-    select id, item, serial_number as "serialNumber", quantity from t
-    union all
-    select si.id, si.item, si.serial_number as "serialNumber", si.quantity from public.signature_item si where si.item = t.item and si.serial_number = t.serial_number and si.quantity = t.quantity;`
-    return query;
+
+    return signatureItems;
   }
 
   const createQueryInsertPakals = async (pakalSignatureIdsMap)=>{
@@ -101,7 +102,7 @@ const createQueryInsertSoldiers = async (soldiers)=>{
     createLastVersionSoldierQuery,
     createInsertNamesListQuery,
     createQueryInsertSoldiersNamesList,
-    createQueryInsertSignatureItems,
+    insertSignatureItems,
     createQueryInsertPakals,
     getNowFormated
   };

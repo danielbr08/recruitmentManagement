@@ -24,6 +24,12 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     }
   }, {
+    indexes:[
+      {
+        unique:true,
+        fields:['item', 'serial_number','quantity']
+      }
+    ],
     timestamps:false,
     sequelize,
     tableName: 'signature_item',
