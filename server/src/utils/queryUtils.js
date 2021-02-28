@@ -29,22 +29,15 @@ const executeQuery = async (query)=>{
     return signatureItems;
   }
 
-  const createQueryInsertPakals = async (pakalSignatureIdsMap)=>{
-    const maxId = await getMaxPakalId();
-    let pakalId = maxId;
-    let values = "";
-    for(let key in pakalSignatureIdsMap){
-      pakalId++;
-      let name = key;
-      let value = pakalSignatureIdsMap[key];
-      value = value.map((signatureId)=> `(${pakalId}, ${name}, ${signatureId}, '${getNowFormated()}')`);
-      values += value.toString();
-    }
-    let query = `with t as (insert into public pakal(pakal_id, name, signature_id) VALUES ${values} ON CONFLICT (name, signature_id) DO NOTHING RETURNING id, name, signature_id)
-    select id, pakal_id as "pakalId", name, signature_id as "signatureId" from t
-    union all
-    select p.id, p.pakal_id as "pakalId", p.name, p.signature_id as "signatureId" from public.pakal p where p.name = t.name and p.signature_id = t.signature_id;`
-    return query;
+  const insertPakal = async (pakalId, name, signatureIds)=>{
+    await signatureIds.forEach(signatureId => {
+      let query = `with t as (insert into public pakal(pakal_id, name, signature_id) VALUES (${pakalId}, ${name}, ${signatureId}, '${getNowFormated()}') ON CONFLICT (name, signature_id) DO NOTHING RETURNING id, pakal_id, name, signature_id)
+      select id, pakal_id as "pakalId", name, signature_id as "signatureId" from t
+      union all
+      select p.id, p.pakal_id as "pakalId", p.name, p.signature_id as "signatureId" from public.pakal p where p.name = ${name} and p.signature_id = ${signatureId};`
+      const result = (await executeQuery(query))[0];
+    });
+    return result;
   }
 
 const createQueryInsertSoldiers = async (soldiers)=>{
@@ -103,6 +96,6 @@ const createQueryInsertSoldiers = async (soldiers)=>{
     createInsertNamesListQuery,
     createQueryInsertSoldiersNamesList,
     insertSignatureItems,
-    createQueryInsertPakals,
+    insertPakal,
     getNowFormated
   };

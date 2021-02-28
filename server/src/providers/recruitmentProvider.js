@@ -64,8 +64,11 @@ const getSoldiersFromNamesList = async (id)=>{
   const _savePakals = async (pakals) => {
     console.log("pakals:", pakals);
     const pakalSignatureIdsMap = {};
+    const insertedPakalsArr = [];
     const res = {};
+    const pakalId = await getMaxPakalId();
     await pakals.forEach(async pakal => {
+      pakalId += 1;
       const {name, signatureList} = pakal;
       const signatureItems = await queryUtils.insertSignatureItems(signatureList);
       await signatureItems.forEach(signatureItemRow => {
@@ -74,10 +77,11 @@ const getSoldiersFromNamesList = async (id)=>{
         }
         pakalSignatureIdsMap[name].push(signatureItemRow.id);
       });
+      let insertPakalResult = await queryUtils.insertPakal(pakalId, name, pakalSignatureIdsMap[name]);
+      if(insertPakalResult.length > 0)
+        insertedPakalsArr.push(insertPakalResult);
     });
-
-    const queryInsertPakals = await queryUtils.createQueryInsertPakals(pakalSignatureIdsMap);
-    res.pakals = (await queryUtils.executeQuery(queryInsertPakals))[0];
+    res.pakals = insertedPakalsArr;
     return res;
   }
 
