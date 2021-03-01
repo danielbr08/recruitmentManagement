@@ -66,12 +66,13 @@ const getSoldiersFromNamesList = async (id)=>{
     const pakalSignatureIdsMap = {};
     const insertedPakalsArr = [];
     const res = {};
-    const pakalId = await getMaxPakalId();
+    let pakalId = await queryUtils.getMaxPakalId();
     await pakals.forEach(async pakal => {
       pakalId += 1;
       const {name, signatureList} = pakal;
       const signatureItems = await queryUtils.insertSignatureItems(signatureList);
-      await signatureItems.forEach(signatureItemRow => {
+      console.log("signatureItems: ", signatureItems);
+      await queryUtils.asyncForEach(signatureItems,signatureItemRow => {
         if(!pakalSignatureIdsMap.hasOwnProperty(name)){
           pakalSignatureIdsMap[name] = [];
         }
