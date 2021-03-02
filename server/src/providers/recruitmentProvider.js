@@ -67,21 +67,25 @@ const getSoldiersFromNamesList = async (id)=>{
     const insertedPakalsArr = [];
     const res = {};
     let pakalId = await queryUtils.getMaxPakalId();
-    await pakals.forEach(async pakal => {
+    for(let i=0; i< pakals.length; i++){
+      let pakal = pakals[i];
       pakalId += 1;
       const {name, signatureList} = pakal;
       const signatureItems = await queryUtils.insertSignatureItems(signatureList);
       console.log("signatureItems: ", signatureItems);
-      await queryUtils.asyncForEach(signatureItems,signatureItemRow => {
+      for(let i=0; i< signatureItems.length; i++){
+        let signatureItemRow = signatureItems[i];
         if(!pakalSignatureIdsMap.hasOwnProperty(name)){
           pakalSignatureIdsMap[name] = [];
         }
+        console.log("signatureItemRow: ", signatureItemRow);
         pakalSignatureIdsMap[name].push(signatureItemRow.id);
-      });
+      }
+      console.log("pakalSignatureIdsMap: ", pakalSignatureIdsMap);
       let insertPakalResult = await queryUtils.insertPakal(pakalId, name, pakalSignatureIdsMap[name]);
       if(insertPakalResult.length > 0)
         insertedPakalsArr.push(insertPakalResult);
-    });
+    }
     res.pakals = insertedPakalsArr;
     return res;
   }

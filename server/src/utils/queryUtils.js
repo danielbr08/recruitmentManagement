@@ -1,17 +1,3 @@
-
-Array.prototype.forEach = function (callback) {
-  // this represents our array
-  for (let index = 0; index < this.length; index++) {
-    // We call the callback for each entry
-    callback(this[index], index, this);
-  }
-};
-
-async function asyncForEach(array, callback) {
-  for (let index = 0; index < array.length; index++) {
-    await callback(array[index], index, array);
-  }
-}
 const {
   soldier_personal_details
 } = require("..//models/");
@@ -30,7 +16,8 @@ const getMaxPakalId = async() =>{
 
 const insertSignatureItems = async signatureList =>{
   const signatureItems = [];
-  await asyncForEach(signatureList, async signatureItem => {
+  for(let i=0;i<signatureList.length;i++){
+    let signatureItem = signatureList[i];
     const { item, serialNumber, quantity } = signatureItem;
     let query = `with t as (insert into public.signature_item(item, serial_number, quantity) VALUES ('${item}','${serialNumber}',${quantity}) ON CONFLICT (item, serial_number, quantity) DO NOTHING RETURNING id, item, serial_number, quantity)
     select id, item, serial_number as "serialNumber", quantity from t
@@ -38,20 +25,21 @@ const insertSignatureItems = async signatureList =>{
     select si.id, si.item, si.serial_number as "serialNumber", si.quantity from public.signature_item si where si.item = '${item}' and si.serial_number = '${serialNumber}' and si.quantity = ${quantity};`
     let result = (await executeQuery(query))[0];
     console.log("result: ", result);
-    signatureItems.push(result);
-  });
+    signatureItems.push(...result);
+  }
   return signatureItems;
 }
 
 const insertPakal = async (pakalId, name, signatureIds)=>{
-  let result;
-  await signatureIds.forEach(async signatureId => {
-    let query = `with t as (insert into public pakal(pakal_id, name, signature_id) VALUES (${pakalId}, ${name}, ${signatureId}, '${getNowFormated()}') ON CONFLICT (name, signature_id) DO NOTHING RETURNING id, pakal_id, name, signature_id)
+  let result = [];
+  for(let i=0;i<signatureIds.length;i++){
+    let signatureId = signatureIds[i];
+    let query = `with t as (insert into public.pakal(pakal_id, name, signature_id) VALUES (${pakalId}, '${name}', ${signatureId}) ON CONFLICT (name, signature_id) DO NOTHING RETURNING id, pakal_id, name, signature_id)
     select id, pakal_id as "pakalId", name, signature_id as "signatureId" from t
     union all
-    select p.id, p.pakal_id as "pakalId", p.name, p.signature_id as "signatureId" from public.pakal p where p.name = ${name} and p.signature_id = ${signatureId};`;
-    result = (await executeQuery(query))[0];
-  });
+    select p.id, p.pakal_id as "pakalId", p.name, p.signature_id as "signatureId" from public.pakal p where p.name = '${name}' and p.signature_id = ${signatureId};`;
+    result.push((await executeQuery(query))[0]);
+  }
   return result;
 }
 
@@ -113,6 +101,5 @@ module.exports = {
   insertSignatureItems,
   insertPakal,
   getMaxPakalId,
-  getNowFormated,
-  asyncForEach
+  getNowFormated
 };
