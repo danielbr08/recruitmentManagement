@@ -20,6 +20,12 @@ module.exports = function(sequelize, DataTypes) {
         defaultValue: ''
       }
     }, {
+      indexes:[
+        {
+          unique:true,
+          fields:['signature_id', 'name']
+        }
+      ],
       timestamps:false,
       sequelize,
       tableName: 'pakal',

@@ -43,6 +43,11 @@ const insertPakal = async (pakalId, name, signatureIds)=>{
   return result;
 }
 
+const createGetPakalsQuery = ()=>{
+  return `SELECT p.id, p.pakal_id as "pakalID", p.name as "pakalName", si.item, si.serial_number as "seriralNumber", si.quantity
+	FROM public.pakal p inner join signature_item si on p.signature_id = si.id;`;
+}
+
 const createQueryInsertSoldiers = async (soldiers)=>{
   let soldiersValues = "";
   let personalNumbers = "";
@@ -98,6 +103,7 @@ module.exports = {
   createLastVersionSoldierQuery,
   createInsertNamesListQuery,
   createQueryInsertSoldiersNamesList,
+  createGetPakalsQuery,
   insertSignatureItems,
   insertPakal,
   getMaxPakalId,

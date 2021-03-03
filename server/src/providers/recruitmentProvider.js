@@ -72,16 +72,13 @@ const getSoldiersFromNamesList = async (id)=>{
       pakalId += 1;
       const {name, signatureList} = pakal;
       const signatureItems = await queryUtils.insertSignatureItems(signatureList);
-      console.log("signatureItems: ", signatureItems);
       for(let i=0; i< signatureItems.length; i++){
         let signatureItemRow = signatureItems[i];
         if(!pakalSignatureIdsMap.hasOwnProperty(name)){
           pakalSignatureIdsMap[name] = [];
         }
-        console.log("signatureItemRow: ", signatureItemRow);
         pakalSignatureIdsMap[name].push(signatureItemRow.id);
       }
-      console.log("pakalSignatureIdsMap: ", pakalSignatureIdsMap);
       let insertPakalResult = await queryUtils.insertPakal(pakalId, name, pakalSignatureIdsMap[name]);
       if(insertPakalResult.length > 0)
         insertedPakalsArr.push(insertPakalResult);
@@ -89,6 +86,12 @@ const getSoldiersFromNamesList = async (id)=>{
     res.pakals = insertedPakalsArr;
     return res;
   }
+
+  const _getPakals = async () =>{
+    const query = queryUtils.createGetPakalsQuery();
+    console.log("query: ", query);
+    return (await queryUtils.executeQuery(query))[0];
+  } 
 
   const insertNamesList = async (name)=>{
     const namesListQuery = queryUtils.createInsertNamesListQuery(name, queryUtils.getNowFormated());
@@ -158,6 +161,15 @@ const getSoldiersFromNamesList = async (id)=>{
     savePakals: async (pakals) => {
       try{
         const result = await _savePakals(pakals);
+        return result;
+      } catch(error){
+        console.log("error: ", error);
+        return {error: true};
+      }
+    },
+    getPakals: async () => {
+      try{
+        const result = await _getPakals();
         return result;
       } catch(error){
         console.log("error: ", error);

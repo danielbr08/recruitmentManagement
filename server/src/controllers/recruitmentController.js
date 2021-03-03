@@ -35,6 +35,9 @@ module.exports = {
          res.status(200).send(result);
       else
          res.status(500).send("error occurd");
-
    },
+   getPakals: async (req,res,next) => {
+      const result = await recruitmentProvider.getPakals();
+      res.status(200).send(result);
+   }
 }
