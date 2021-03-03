@@ -90,7 +90,21 @@ const getSoldiersFromNamesList = async (id)=>{
   const _getPakals = async () =>{
     const query = queryUtils.createGetPakalsQuery();
     console.log("query: ", query);
-    return (await queryUtils.executeQuery(query))[0];
+    let res = (await queryUtils.executeQuery(query))[0];
+    console.log("res:", res);
+    let pakals = {};
+    for(let i=0;i<res.length;i++){
+      let row = res[i];
+      let signatureItem = {id:row.signatureId, item:row.item, serialNumber:row.seriralNumber, quantity:row.quantity}
+      if(!pakals.hasOwnProperty(row.pakalId)){
+        pakals[row.pakalId] = { pakalId: row.pakalId, name: row.pakalName, signatureList: [] };
+      } 
+      pakals[row.pakalId].signatureList.push(signatureItem);
+    }
+    console.log("pakals:", pakals);
+    console.log("Object.values(pakals):", Object.values(pakals));
+
+    return Object.values(pakals);
   } 
 
   const insertNamesList = async (name)=>{

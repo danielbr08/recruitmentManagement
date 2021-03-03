@@ -3,7 +3,7 @@
 <form>
   <mat-form-field floatLabel="always" hideRequiredMarker appearance="fill">
     <mat-select required placeholder='פק"ל' #pakalMatSelect>
-      <mat-option *ngFor='let pakal of pakals' [value]="pakal.id" [disabled]="isPakalSelected(pakal.id)"> {{pakal.name}} </mat-option>
+      <mat-option *ngFor='let pakal of pakals' [value]="pakal.pakalId" [disabled]="isPakalSelected(pakal.pakalId)"> {{pakal.name}} </mat-option>
     </mat-select>
   </mat-form-field>
 
@@ -19,7 +19,7 @@
   <!-- id Column -->
   <ng-container matColumnDef="id">
     <mat-header-cell *matHeaderCellDef> מזהה </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{getPakalObject(element.pakalId).id}} </mat-cell>
+    <mat-cell *matCellDef="let element"> {{getPakalObject(element.pakalId).pakalId}} </mat-cell>
   </ng-container>
 
   <!-- pakal Column -->

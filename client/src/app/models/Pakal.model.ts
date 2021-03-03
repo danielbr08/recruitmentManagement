@@ -2,6 +2,6 @@ import { SignatureItem } from "./SignatureItem.model";
 
 export interface Pakal {
     name: string;
-    id: number;
+    pakalId: number;
     signatureList: SignatureItem[];
   }

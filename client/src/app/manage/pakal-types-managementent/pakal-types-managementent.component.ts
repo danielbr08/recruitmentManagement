@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Pakal } from 'src/app/models/Pakal.model';
-
-const port = 3000;
+import { RequestsService } from 'src/app/services/requests.service';
 
 @Component({
   selector: 'app-pakal-types-managementent',
@@ -12,19 +11,18 @@ const port = 3000;
 export class PakalTypesManagemententComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'pakal', 'signatureList', ' '];
-  dataSource: Pakal[] = [{ id: 1, name: '', signatureList: [{id:1, item:'', serialNumber:'', quantity:1}] }];
+  dataSource: Pakal[] = [{ pakalId: 1, name: '', signatureList: [{id:1, item:'', serialNumber:'', quantity:1}] }];
   
-  constructor(private http: HttpClient) { }
+  constructor( private requestsService: RequestsService ) { }
 
   ngOnInit(): void {
+    this.refreshData();
   }
 
-  saveData(warehouseUnitTable: any) {
+  async saveData(warehouseUnitTable: any) {
     console.log('this.dataSource: ', JSON.stringify(this.dataSource));
-    const headers = { 'content-type': 'application/json'}  
-    const body = JSON.stringify(this.dataSource);
-    this.http.post(`http://localhost:${port}/api/recruitment/save-pakals`,body,{headers}).toPromise().then(data=>console.log("data: ", data)).catch(e=>console.log("error: ",e));
-
+    const res = await this.requestsService.savePakals(this.dataSource);
+    console.log("svaeData->res: ", res);
     // for (let i = 0; i < warehouseUnitTable._data.length; i++) {
     //   let row = warehouseUnitTable._data[i];
     //   console.log("row", row);
@@ -32,8 +30,7 @@ export class PakalTypesManagemententComponent implements OnInit {
   }
 
   addNewRow(){
-    let id = this.generateNewPakalId();
-    let newRow = { id, name:'', signatureList: [{id:1, item:'', serialNumber:'', quantity:1}]};
+    let newRow = { pakalId: -1, name:'', signatureList: [{id:-1, item:'', serialNumber:'', quantity:1}]};
     this.dataSource.push(newRow);
     this.refreshData();
     console.log('this.dataSource: ',this.dataSource);
@@ -61,7 +58,7 @@ export class PakalTypesManagemententComponent implements OnInit {
 
   generateNewPakalId(){
     let ids: number[] = [];
-    this.dataSource.map(item=>ids.push(item.id));
+    this.dataSource.map(item=>ids.push(item.pakalId));
     return Math.max(...ids) + 1;
   }
 
@@ -72,7 +69,7 @@ export class PakalTypesManagemententComponent implements OnInit {
   }
 
   getPakalIndex(pakalId: number){
-    return this.dataSource.findIndex(item=>item.id === pakalId );
+    return this.dataSource.findIndex(item=>item.pakalId === pakalId );
   }
 
   getSignatureIndex(pakalId: number, signatureId: number){
@@ -81,8 +78,8 @@ export class PakalTypesManagemententComponent implements OnInit {
     return pakal.signatureList.findIndex(item=>item.id === signatureId );
   }
 
-  refreshData(){
-    this.dataSource = [...this.dataSource];
+  async refreshData(){
+    this.dataSource = await this.requestsService.getPakals();
   }
 
 }

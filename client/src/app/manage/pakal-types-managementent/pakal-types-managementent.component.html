@@ -4,13 +4,13 @@
     <!-- id Column -->
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef> מזהה </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{element.pakalId}} </mat-cell>
     </ng-container>
   
     <!-- pakal Column -->
     <ng-container matColumnDef="pakal">
       <mat-header-cell *matHeaderCellDef> פק"ל </mat-header-cell>
-      <mat-cell *matCellDef="let element"> <input type="text" matInput required [value]=element.name name="pakal-{{element.id}}" [(ngModel)]="element.name"> </mat-cell>
+      <mat-cell *matCellDef="let element"> <input type="text" matInput required [value]=element.name name="pakal-{{element.pakalId}}" [(ngModel)]="element.name"> </mat-cell>
     </ng-container>
 
         <!-- quantity Column -->
