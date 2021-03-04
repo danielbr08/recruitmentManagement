@@ -29,10 +29,11 @@ export class PakalTypesManagemententComponent implements OnInit {
     // }
   }
 
-  addNewRow(){
-    let newRow = { pakalId: -1, name:'', signatureList: [{id:-1, item:'', serialNumber:'', quantity:1}]};
+  async addNewRow(){
+    let maxPakalId = await this.requestsService.getMaxPakalId() + 1;
+    let maxSignatureItemId = await this.requestsService.getMaxSignatureItemId() + 1;
+    let newRow = { pakalId: maxPakalId, name:'', signatureList: [{id:maxSignatureItemId, item:'', serialNumber:'', quantity:1}]};
     this.dataSource.push(newRow);
-    this.refreshData();
     console.log('this.dataSource: ',this.dataSource);
   }
 
@@ -40,7 +41,7 @@ export class PakalTypesManagemententComponent implements OnInit {
     let pakalIndex = this.getPakalIndex(pakalId);
     let id = this.generateNewSignatureId(pakalIndex);
     this.dataSource[pakalIndex].signatureList.push({id, item:'', serialNumber:'', quantity:1});
-    this.refreshData();
+    // this.refreshData();
   }
 
   removeSignatureItem(pakalId: number, signatureId: number){
@@ -80,6 +81,9 @@ export class PakalTypesManagemententComponent implements OnInit {
 
   async refreshData(){
     this.dataSource = await this.requestsService.getPakals();
+    if(this.dataSource.length == 0){
+      this.dataSource = [{ pakalId: 1, name: '', signatureList: [{id:1, item:'', serialNumber:'', quantity:1}] }];
+    }
   }
 
 }

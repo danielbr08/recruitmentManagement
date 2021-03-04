@@ -40,4 +40,14 @@ module.exports = {
       const result = await recruitmentProvider.getPakals();
       res.status(200).send(result);
    }
+   ,
+   getMaxPakalId: async (req,res,next) => {
+      const result = await recruitmentProvider.getMaxPakalId();
+      res.status(200).send(result);
+   }
+   ,
+   getMaxSignatureItemId: async (req,res,next) => {
+      const result = await recruitmentProvider.getMaxSignatureItemId();
+      res.status(200).send(result);
+   }
 }

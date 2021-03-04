@@ -107,6 +107,19 @@ const getSoldiersFromNamesList = async (id)=>{
     return Object.values(pakals);
   } 
 
+  const _getMaxPakalId = async () =>{
+    const query = `select case when max(id) is null then 0 else max(id) end as "maxId" from pakal;`;
+    const res = (await queryUtils.executeQuery(query))[0];
+    console.log("res: ", res);
+    return res;
+  } 
+
+  const _getMaxSignatureItemId = async () =>{
+    const query = `select case when max(id) is null then 0 else max(id) end as "maxId" from signature_item;`;
+    const res = (await queryUtils.executeQuery(query))[0];
+    return res;
+  } 
+
   const insertNamesList = async (name)=>{
     const namesListQuery = queryUtils.createInsertNamesListQuery(name, queryUtils.getNowFormated());
     return (await queryUtils.executeQuery(namesListQuery))[0][0].namesListId;
@@ -184,6 +197,24 @@ const getSoldiersFromNamesList = async (id)=>{
     getPakals: async () => {
       try{
         const result = await _getPakals();
+        return result;
+      } catch(error){
+        console.log("error: ", error);
+        return {error: true};
+      }
+    },
+    getMaxPakalId: async () => {
+      try{
+        const result = await _getMaxPakalId();
+        return result;
+      } catch(error){
+        console.log("error: ", error);
+        return {error: true};
+      }
+    },
+    getMaxSignatureItemId: async () => {
+      try{
+        const result = await _getMaxSignatureItemId();
         return result;
       } catch(error){
         console.log("error: ", error);

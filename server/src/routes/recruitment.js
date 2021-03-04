@@ -6,6 +6,8 @@ const recruitmentController = require('../controllers/recruitmentController')
 /* GET users listing. */
 router.get('/soldiers-list', recruitmentController.getSoldiersList);
 router.get('/names-lists', recruitmentController.getNamesLists);
+router.get('/max-pakal-id', recruitmentController.getMaxPakalId);
+router.get('/max-signature-item-id', recruitmentController.getMaxSignatureItemId);
 router.get('/pakals', recruitmentController.getPakals);
 router.post('/add-nameslist', recruitmentController.addNamesList);
 router.post('/save-pakals', recruitmentController.savePakals);
