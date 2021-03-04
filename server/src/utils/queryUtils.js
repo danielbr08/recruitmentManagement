@@ -34,10 +34,10 @@ const insertPakal = async (pakalId, name, signatureIds)=>{
   let result = [];
   for(let i=0;i<signatureIds.length;i++){
     let signatureId = signatureIds[i];
-    let query = `with t as (insert into public.pakal(pakal_id, name, signature_id) VALUES (${pakalId}, '${name}', ${signatureId}) ON CONFLICT (name, signature_id) DO NOTHING RETURNING id, pakal_id, name, signature_id)
-    select id, pakal_id as "pakalId", name, signature_id as "signatureId" from t
+    let query = `with t as (insert into public.pakal(pakal_id, name, signature_id) VALUES (${pakalId}, '${name}', ${signatureId}) ON CONFLICT (name, signature_id) DO NOTHING RETURNING pakal_id, name, signature_id)
+    select pakal_id as "pakalId", name, signature_id as "signatureId" from t
     union all
-    select p.id, p.pakal_id as "pakalId", p.name, p.signature_id as "signatureId" from public.pakal p where p.name = '${name}' and p.signature_id = ${signatureId};`;
+    select p.pakal_id as "pakalId", p.name, p.signature_id as "signatureId" from public.pakal p where p.name = '${name}' and p.signature_id = ${signatureId};`;
     result.push((await executeQuery(query))[0]);
   }
   return result;

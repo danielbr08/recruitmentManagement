@@ -22,7 +22,7 @@
                     <td><input type="text" placeholder="פריט" required [value]="signature.item" name="signature-item-{{signature.id}}" [(ngModel)]="signature.item"></td>
                     <td><input type="text" placeholder='מק"ט' required [value]="signature.serialNumber" name="signature-serialNumber-{{signature.serialNumber}}" [(ngModel)]="signature.serialNumber"></td>
                     <td><input min="1" type="number" placeholder="כמות" required [value]="signature.quantity" name="signature-quantity-{{signature.id}}" [(ngModel)]="signature.quantity"></td>
-                    <td [style.visibility]="element.signatureList.length>1 ? 'visible' : 'hidden'" (click)="removeSignatureItem(element.id,signature.id)"><mat-icon aria-label="Delete">delete</mat-icon></td>
+                    <td [style.visibility]="element.signatureList.length>1 ? 'visible' : 'hidden'" (click)="removeSignatureItem(element.pakalId,signature.id)"><mat-icon aria-label="Delete">delete</mat-icon></td>
                     <td [style.visibility]="signatureIndex ==  element.signatureList.length-1 ? 'visible' : 'hidden'" (click)="addNewSignatureItem(element.pakalId)"><mat-icon aria-label="add">add</mat-icon></td>
                 </tr>
             </table> 
@@ -33,7 +33,7 @@
     <ng-container matColumnDef=" "> 
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let element">
-            <button [style.visibility]="dataSource.length>1 ? 'visible' : 'hidden'" (click)="removePakalItem(element.id)" mat-icon-button matTooltip="Click to Delete" class="iconbutton" color="warn">
+            <button [style.visibility]="dataSource.length>1 ? 'visible' : 'hidden'" (click)="removePakalItem(element.pakalId)" mat-icon-button matTooltip="Click to Delete" class="iconbutton" color="warn">
         <mat-icon aria-label="Delete">delete</mat-icon> 
       </button>
     </mat-cell>

@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Pakal } from 'src/app/models/Pakal.model';
 import { RequestsService } from 'src/app/services/requests.service';
@@ -12,41 +11,47 @@ export class PakalTypesManagemententComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'pakal', 'signatureList', ' '];
   dataSource: Pakal[] = [{ pakalId: 1, name: '', signatureList: [{id:1, item:'', serialNumber:'', quantity:1}] }];
+  maxPakalId: number = 0;
+  maxSignatureItemlId: number = 0;
   
   constructor( private requestsService: RequestsService ) { }
 
   ngOnInit(): void {
     this.refreshData();
+    this.initMaxIds();
+  }
+
+  async initMaxIds(){
+    this.maxPakalId = (await this.requestsService.getMaxPakalId()) + 1;
+    this.maxSignatureItemlId = (await this.requestsService.getMaxSignatureItemId()) + 1;
   }
 
   async saveData(warehouseUnitTable: any) {
     console.log('this.dataSource: ', JSON.stringify(this.dataSource));
-    const res = await this.requestsService.savePakals(this.dataSource);
-    console.log("svaeData->res: ", res);
-    // for (let i = 0; i < warehouseUnitTable._data.length; i++) {
-    //   let row = warehouseUnitTable._data[i];
-    //   console.log("row", row);
-    // }
+    const res: any = await this.requestsService.savePakals(this.dataSource);
+    if(!res.error){
+      this.dataSource = res;
+    }
   }
 
   async addNewRow(){
-    let maxPakalId = await this.requestsService.getMaxPakalId() + 1;
-    let maxSignatureItemId = await this.requestsService.getMaxSignatureItemId() + 1;
-    let newRow = { pakalId: maxPakalId, name:'', signatureList: [{id:maxSignatureItemId, item:'', serialNumber:'', quantity:1}]};
+    console.log("this.maxPakalId: ", this.maxPakalId);
+    let newRow = { pakalId: this.maxPakalId++, name:'', signatureList: [{id:this.maxSignatureItemlId++, item:'', serialNumber:'', quantity:1}]};
     this.dataSource.push(newRow);
+    this.dataSource = [...this.dataSource];
     console.log('this.dataSource: ',this.dataSource);
   }
 
   addNewSignatureItem(pakalId: number){
     let pakalIndex = this.getPakalIndex(pakalId);
-    let id = this.generateNewSignatureId(pakalIndex);
-    this.dataSource[pakalIndex].signatureList.push({id, item:'', serialNumber:'', quantity:1});
+    this.dataSource[pakalIndex].signatureList.push({id:this.maxSignatureItemlId++, item:'', serialNumber:'', quantity:1});
     // this.refreshData();
   }
 
   removeSignatureItem(pakalId: number, signatureId: number){
     let pakalIndex = this.getPakalIndex(pakalId);
     let signatureIndex = this.getSignatureIndex(pakalId, signatureId);
+    console.log(pakalId, signatureId);
     this.dataSource[pakalIndex].signatureList.splice(signatureIndex,1);
     // this.refreshData();
   }
@@ -54,19 +59,8 @@ export class PakalTypesManagemententComponent implements OnInit {
   removePakalItem(pakalId: number){
     let pakalIndex = this.getPakalIndex(pakalId);
     this.dataSource.splice(pakalIndex,1);
-    this.refreshData();
-  }
-
-  generateNewPakalId(){
-    let ids: number[] = [];
-    this.dataSource.map(item=>ids.push(item.pakalId));
-    return Math.max(...ids) + 1;
-  }
-
-  generateNewSignatureId(pakalIndex: number){
-    let ids: number[] = [];
-    this.dataSource[pakalIndex].signatureList.map(item=>ids.push(item.id));
-    return Math.max(...ids) + 1;
+    this.dataSource = [...this.dataSource];
+    // this.refreshData();
   }
 
   getPakalIndex(pakalId: number){

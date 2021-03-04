@@ -21,12 +21,12 @@ export class RequestsService {
     return this.http.post(`http://localhost:${port}/api/recruitment/save-pakals`,body,{headers}).toPromise();
   }
 
-  async getMaxSignatureItemId(){
-    return (await this.http.get<any>(`http://localhost:${port}/api/recruitment/max-pakal-id`).toPromise()).maxId;
+  async getMaxPakalId(){
+    return +(await this.http.get<any>(`http://localhost:${port}/api/recruitment/max-pakal-id`).toPromise()).maxId;
 
   }
 
-  async getMaxPakalId(){
-    return (await this.http.get<any>(`http://localhost:${port}/api/recruitment/max-signature-item-id`).toPromise()).maxId;
+  async getMaxSignatureItemId(){
+    return +(await this.http.get<any>(`http://localhost:${port}/api/recruitment/max-signature-item-id`).toPromise()).maxId;
   }
 }

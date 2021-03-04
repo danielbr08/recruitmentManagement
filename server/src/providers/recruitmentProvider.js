@@ -63,6 +63,7 @@ const getSoldiersFromNamesList = async (id)=>{
 
   const _savePakals = async (pakals) => {
     console.log("pakals:", pakals);
+    const pakalSignatureMap = {};
     const pakalSignatureIdsMap = {};
     const insertedPakalsArr = [];
     const res = {};
@@ -74,17 +75,22 @@ const getSoldiersFromNamesList = async (id)=>{
       const signatureItems = await queryUtils.insertSignatureItems(signatureList);
       for(let i=0; i< signatureItems.length; i++){
         let signatureItemRow = signatureItems[i];
-        if(!pakalSignatureIdsMap.hasOwnProperty(name)){
+        if(!pakalSignatureMap.hasOwnProperty(name)){
           pakalSignatureIdsMap[name] = [];
+          pakalSignatureMap[name] = [];
         }
         pakalSignatureIdsMap[name].push(signatureItemRow.id);
+        pakalSignatureMap[name].push(signatureItemRow);
       }
-      let insertPakalResult = await queryUtils.insertPakal(pakalId, name, pakalSignatureIdsMap[name]);
-      if(insertPakalResult.length > 0)
-        insertedPakalsArr.push(insertPakalResult);
+      let insertPakalResult = (await queryUtils.insertPakal(pakalId, name, pakalSignatureIdsMap[name]))[0];
+      if(insertPakalResult.length > 0){
+        for(let i=0;i<insertPakalResult.length;i++){
+          let row = insertPakalResult[i];
+          insertedPakalsArr.push({pakalId: row.pakalId, name: row.name, signatureList: pakalSignatureMap[name]});
+        }
+      }
     }
-    res.pakals = insertedPakalsArr;
-    return res;
+    return insertedPakalsArr;
   }
 
   const _getPakals = async () =>{
@@ -108,15 +114,15 @@ const getSoldiersFromNamesList = async (id)=>{
   } 
 
   const _getMaxPakalId = async () =>{
-    const query = `select case when max(id) is null then 0 else max(id) end as "maxId" from pakal;`;
-    const res = (await queryUtils.executeQuery(query))[0];
+    const query = `select case when max(pakal_id) is null then 0 else max(pakal_id) end as "maxId" from pakal;`;
+    const res = (await queryUtils.executeQuery(query))[0][0];
     console.log("res: ", res);
     return res;
   } 
 
   const _getMaxSignatureItemId = async () =>{
     const query = `select case when max(id) is null then 0 else max(id) end as "maxId" from signature_item;`;
-    const res = (await queryUtils.executeQuery(query))[0];
+    const res = (await queryUtils.executeQuery(query))[0][0];
     return res;
   } 
 
