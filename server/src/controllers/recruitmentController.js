@@ -18,7 +18,8 @@ module.exports = {
       res.status(200).send(result);
    },
    addNamesList: async (req,res,next) => {
-      let result = await recruitmentProvider.addNamesList(req.body.namesList);
+      console.log("req.body: ", req.body);
+      let result = await recruitmentProvider.addNamesList(req.body.name, req.body.soldiers);
       if(!result.error)
          res.status(200).send(result);
       else

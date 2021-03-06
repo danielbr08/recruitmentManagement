@@ -3,7 +3,6 @@ import { NamesList } from '../models/NamesList.model';
 import * as XLSX from 'xlsx';
 import { Soldier } from 'src/app/models/Soldier.model';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 
 const port = 3000;
 
@@ -13,6 +12,7 @@ const port = 3000;
 export class NamesListServiceService {
 
   namesList: NamesList[] = [];
+  url: string = `http://localhost:${port}/api/recruitment`;
   constructor(private http: HttpClient) { }
 
   getNamesList(id: number){
@@ -28,7 +28,7 @@ export class NamesListServiceService {
       let workBook: any = null;
       let jsonData = null;
       const reader = new FileReader();
-      reader.onload = (event) => {
+      reader.onload = async (event) => {
         const data = reader.result;
         workBook = XLSX.read(data, { type: 'binary' });
         jsonData = workBook.SheetNames.reduce((initial: any, name: any) => {
@@ -38,26 +38,27 @@ export class NamesListServiceService {
         }, {});
         const dataString = jsonData["גיליון1"];
         dataString.forEach( (element: any) => {
-              let misgeret = element['נתיב מסגרת מלא'].split("\\");
-              let squad = misgeret[0];
-              let department = misgeret[1];
-              let _class = misgeret[2];
+              let misgeret = element['נתיב מסגרת מלא'];
+              let squad = misgeret[0].replaceAll("'","''");
+              let department = misgeret[1].replaceAll("'","''");
+              let _class = misgeret[2].replaceAll("'","''");
               let personalNumber = element['מספר אישי'];
-              let firstName = element['שם פרטי'];
-              let lastName = element['שם משפחה'];
+              let firstName = element['שם פרטי'].replaceAll("'","''");
+              let lastName = element['שם משפחה'].replaceAll("'","''");
               elements[personalNumber] = {squad,department,class: _class ,personalNumber, firstName, lastName, role:'', pakal:''};
           });
           let soldiers: Soldier[] = Object.values(elements);
           const headers = { 'content-type': 'application/json'}  
-          const body = {name, soldiers, creationDate: new Date()};
-          this.http.post(`http://localhost:${port}/api/recruitment/add-nameslist`,body,{headers});
-          this.refresh()
+          const body = JSON.stringify({name, soldiers});
+          let a = (await this.http.post(`${this.url}/add-nameslist`,body,{headers}).toPromise());
+          console.log("a: ", a);
+          // this.refresh();
 }
       reader.readAsBinaryString(file);
     }
 
     refresh(){
-      this.http.get<NamesList[]>(`http://localhost:${port}/api/recruitment/names-lists`).subscribe(data=>{
+      this.http.get<NamesList[]>(`${this.url}/names-lists`).subscribe(data=>{
         this.namesList = data;
       });
     }

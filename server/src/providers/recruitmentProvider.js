@@ -50,9 +50,8 @@ const getSoldiersFromNamesList = async (id)=>{
 
 }
 
-  const _addNamesList = async (namesList) => {
+  const _addNamesList = async (name, soldiers) => {
     const res = {};
-    const { soldiers, name } = namesList;
 
     res.namesListId = await insertNamesList(name);
     await insertSoldiersPersonalDetails(soldiers);
@@ -142,7 +141,8 @@ const getSoldiersFromNamesList = async (id)=>{
     const lastVersionDbSoldiers = (await queryUtils.executeQuery(getLastVersionSoldierQuery))[0];
     console.log("lastVersionDbSoldiers: ", lastVersionDbSoldiers);
     let soldiersDbMap = await utils.getNamesListSoldiersMap(lastVersionDbSoldiers);
-    await setSoldiersVersion(soldiers, soldiersDbMap);    
+    soldiersDbMap = setSoldiersVersion(soldiers, soldiersDbMap);    
+    console.log("soldiersDbMap: ", soldiersDbMap);
     const insertSoldiersQuery = await queryUtils.createQueryInsertSoldiers(Object.values(soldiersDbMap));
     return await queryUtils.executeQuery(insertSoldiersQuery);
   }
@@ -158,14 +158,17 @@ const getSoldiersFromNamesList = async (id)=>{
         && soldier1.role === soldier2.role && soldier1.pakalId === soldier2.pakalId && soldier1.creationDate === soldier2.creationDate;
   }
 
-  const setSoldiersVersion = async (newSoldiers, soldiersDbMap)=>{
+  const setSoldiersVersion = (newSoldiers, soldiersDbMap)=>{
     let newSoldiersMap = {};
-    await newSoldiers.forEach(newSoldier => {
+    console.log("newSoldiers: ", newSoldiers);
+    for(let i=0;i<newSoldiers.length;i++){
+      let newSoldier = newSoldiers[i]; 
       dbSoldier = soldiersDbMap[newSoldier.personalNumber];
       newSoldier.version = dbSoldier ? isSameSoldierVersion(newSoldier,dbSoldier) ? dbSoldier.version : dbSoldier.version + 1 : 1;
       newSoldiersMap[newSoldier.personalNumber] = newSoldier;
-    });
-    soldiersDbMap = newSoldiersMap;
+    }
+    // soldiersDbMap = newSoldiersMap; check why soldiersDbMap not changed - by ref
+    return newSoldiersMap;
   }
 
   module.exports = {
@@ -182,9 +185,9 @@ const getSoldiersFromNamesList = async (id)=>{
           return {error: true};
         }
     },
-    addNamesList: async (namesList) => {
+    addNamesList: async (name, soldiers) => {
       try{
-      const result = await _addNamesList(namesList);
+      const result = await _addNamesList(name, soldiers);
       return result;
       } catch(error){
         console.log("error: ", error);

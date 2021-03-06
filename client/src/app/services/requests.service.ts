@@ -9,24 +9,26 @@ const port = 3000;
 })
 export class RequestsService {
 
+  url: string = `http://localhost:${port}/api/recruitment`;
+
   constructor(private http: HttpClient) { }
 
   getPakals(){
-    return this.http.get<Pakal[]>(`http://localhost:${port}/api/recruitment/pakals`).toPromise();
+    return this.http.get<Pakal[]>(`${this.url}/pakals`).toPromise();
   }
 
   savePakals(data: any){
     const headers = { 'content-type': 'application/json'}  
     const body = JSON.stringify(data);
-    return this.http.post(`http://localhost:${port}/api/recruitment/save-pakals`,body,{headers}).toPromise();
+    return this.http.post(`${this.url}/save-pakals`,body,{headers}).toPromise();
   }
 
   async getMaxPakalId(){
-    return +(await this.http.get<any>(`http://localhost:${port}/api/recruitment/max-pakal-id`).toPromise()).maxId;
+    return +(await this.http.get<any>(`${this.url}/max-pakal-id`).toPromise()).maxId;
 
   }
 
   async getMaxSignatureItemId(){
-    return +(await this.http.get<any>(`http://localhost:${port}/api/recruitment/max-signature-item-id`).toPromise()).maxId;
+    return +(await this.http.get<any>(`${this.url}/max-signature-item-id`).toPromise()).maxId;
   }
 }

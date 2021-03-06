@@ -55,8 +55,8 @@ const createQueryInsertSoldiers = async (soldiers)=>{
     personalNumbers += `${soldier.personalNumber},`;
     soldiersValues += `('${soldier.personalNumber}','${soldier.version}','${soldier.squad}','${soldier.department}','${soldier.class}','${soldier.role}','${soldier.pakalId}','${getNowFormated()}'),`;
   });
-  personalNumbers = removeLastCharacters(personalNumbers, 1);// remove last unnecessary ',' character
-  soldiersValues = removeLastCharacters(soldiersValues, 1);
+  personalNumbers = utils.removeLastCharacters(personalNumbers, 1);// remove last unnecessary ',' character
+  soldiersValues = utils.removeLastCharacters(soldiersValues, 1);
  return `with t as (INSERT INTO public.soldier( personal_number, version, squad, department, class, role, pakal_id, creation_date) VALUES ${soldiersValues} ON CONFLICT (personal_number, version) DO NOTHING RETURNING soldier_id, personal_number, version)
  select soldier_id as "soldierId", personal_number as "personalNumber", version from t
  union all
@@ -68,7 +68,7 @@ const createQueryInsertSoldiersPersonalDetails = async (soldiers)=>{
   await soldiers.forEach(soldier => {
     soldiersValues += `('${soldier.personalNumber}','${soldier.firstName}','${soldier.lastName}','${getNowFormated()}'),`;
   });
-  soldiersValues = removeLastCharacters(soldiersValues, 1);
+  soldiersValues = utils.removeLastCharacters(soldiersValues, 1);
  return `INSERT INTO public.soldier_personal_details( personal_number, first_name, last_name, creation_date) VALUES ${soldiersValues} ON CONFLICT (personal_number) DO NOTHING RETURNING personal_number as "personalNumber";`;
 }
 
@@ -77,7 +77,7 @@ const createQueryInsertSoldiersNamesList = async (namesListid, soldiers)=>{
   await soldiers.forEach(soldier => {
     soldiersNamesListValues += `(${namesListid},${soldier.soldierId}),`;
   });
-  soldiersValues = removeLastCharacters(soldiersNamesListValues, 1);
+  soldiersValues = utils.removeLastCharacters(soldiersNamesListValues, 1);
   return `INSERT INTO public.names_list_soldiers( names_list_id, soldier_id) VALUES ${soldiersNamesListValues} RETURNING names_list_id as "namesListId", soldier_id as "soldierId";`;
 }
 
@@ -89,7 +89,7 @@ const createLastVersionSoldierQuery = async (personalNumbers)=>{
 }
 
 const createInsertNamesListQuery = (name, creationDate)=>{
-  return `INSERT INTO public.names_list( name, creation_date) VALUES ( '${name}', '${creationDate}') RETURNING names_list_id as "namesListId";`;
+  return `INSERT INTO public.names_list( name, creation_date) VALUES ( '${name}', '${creationDate}') RETURNING id as "namesListId";`;
 }
 
 const getNowFormated = ()=>{
