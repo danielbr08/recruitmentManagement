@@ -149,6 +149,7 @@ const getSoldiersFromNamesList = async (id)=>{
 
   const insertSoldiersNamesList = async (namesListid, soldiers)=>{
     const insertSoldiersNamesListQuery = await queryUtils.createQueryInsertSoldiersNamesList(namesListid, soldiers);
+    console.log("insertSoldiersNamesListQuery: ", insertSoldiersNamesListQuery);
     return (await queryUtils.executeQuery(insertSoldiersNamesListQuery))[0];
   }
 
