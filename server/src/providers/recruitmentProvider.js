@@ -163,7 +163,8 @@ const getSoldiersFromNamesList = async (id)=>{
     console.log("newSoldiers: ", newSoldiers);
     for(let i=0;i<newSoldiers.length;i++){
       let newSoldier = newSoldiers[i]; 
-      dbSoldier = soldiersDbMap[newSoldier.personalNumber];
+      newSoldier.pakalId = -1; // for now
+      let dbSoldier = soldiersDbMap[newSoldier.personalNumber];
       newSoldier.version = dbSoldier ? isSameSoldierVersion(newSoldier,dbSoldier) ? dbSoldier.version : dbSoldier.version + 1 : 1;
       newSoldiersMap[newSoldier.personalNumber] = newSoldier;
     }
