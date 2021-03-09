@@ -21,9 +21,7 @@ module.exports = function (sequelize, DataTypes) {
           unique: true,
           fields: ['names_list_id', 'soldier_id']
         }
-      ]
-    },
-    {
+      ],
       timestamps: false,
       sequelize,
       tableName: 'names_list_soldiers',
