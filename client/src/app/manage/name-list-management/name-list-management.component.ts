@@ -21,6 +21,7 @@ export class NameListManagementComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.namesListService.refresh();
   }
 
     editNamesList(id: number){
