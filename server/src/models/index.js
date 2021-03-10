@@ -32,6 +32,11 @@ Object.keys(db).forEach(modelName => {
 });
 
 // Relations
+// db.names_list.belongsToMany(db.soldier,{foreignKey: 'names_list_id', targetKey: 'soldier_id', foreignKeyConstraint: false});
+// db.soldier.belongsToMany(db.names_list,{foreignKey: 'soldier_id', targetKey: 'names_list_id', foreignKeyConstraint: false});
+
+// db.names_list.belongsToMany(db.soldier,{foreignKey: 'names_list_id', through: { model: db.names_list_soldiers, unique: false }});
+// db.soldier.belongsTo(db.names_list,{foreignKey: 'soldier_id', targetKey: 'race_id', foreignKeyConstraint: false});
 // db.results.belongsTo(db.races,{foreignKey: 'race_id', targetKey: 'race_id', foreignKeyConstraint: false});
 // db.races.hasMany(db.results);
 

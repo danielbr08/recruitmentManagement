@@ -53,7 +53,7 @@ const createQueryInsertSoldiers = async (soldiers)=>{
   let personalNumbers = "";
   await soldiers.forEach(soldier => {
     personalNumbers += `${soldier.personalNumber},`;
-    soldiersValues += `('${soldier.personalNumber}','${soldier.version}','${soldier.squad}','${soldier.department}','${soldier.class}','${soldier.role}','${soldier.pakalId}','${getNowFormated()}'),`;
+    soldiersValues += `('${soldier.personalNumber}','${soldier.version}','${soldier.squad}','${soldier.department}','${soldier.class}','${soldier.role}','-1','${getNowFormated()}'),`;
   });
   personalNumbers = utils.removeLastCharacters(personalNumbers, 1);// remove last unnecessary ',' character
   soldiersValues = utils.removeLastCharacters(soldiersValues, 1);
@@ -74,11 +74,18 @@ const createQueryInsertSoldiersPersonalDetails = async (soldiers)=>{
 
 const createQueryInsertSoldiersNamesList = async (namesListid, soldiers)=>{
   let soldiersNamesListValues = "";
-  await soldiers.forEach(soldier => {
+  for(let i=0;i<soldiers.length;i++){
+    soldier = soldiers[i];
     soldiersNamesListValues += `(${namesListid},${soldier.soldierId}),`;
+<<<<<<< HEAD
   });
   soldiersValues = utils.removeLastCharacters(soldiersNamesListValues, 1);
   return `INSERT INTO public.names_list_soldiers( names_list_id, soldier_id) VALUES ${soldiersValues} RETURNING names_list_id as "namesListId", soldier_id as "soldierId";`;
+=======
+  }
+  soldiersNamesListValues = utils.removeLastCharacters(soldiersNamesListValues, 1);
+  return `INSERT INTO public.names_list_soldiers( names_list_id, soldier_id) VALUES ${soldiersNamesListValues} RETURNING names_list_id as "namesListId", soldier_id as "soldierId";`;
+>>>>>>> startBuildServer
 }
 
 const createLastVersionSoldierQuery = async (personalNumbers)=>{

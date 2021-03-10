@@ -52,7 +52,7 @@ export class NamesListServiceService {
           const body = JSON.stringify({name, soldiers});
           let a = (await this.http.post(`${this.url}/add-nameslist`,body,{headers}).toPromise());
           console.log("a: ", a);
-          // this.refresh();
+          this.refresh();
 }
       reader.readAsBinaryString(file);
     }
