@@ -24,7 +24,7 @@ export class NamesListSoldiersManagementComponent implements OnInit {
 
   soldiers: Soldier[]  = [];
   namesList: NamesList | undefined;
-  displayedColumns: string[] = ['id','personalNumber',  'firstName', 'lastName','squad', 'department', 'class', 'role', 'pakal'];
+  displayedColumns: string[] = ['id','personalNumber', 'firstName', 'lastName','squad', 'department', 'class', 'role', 'pakal'];
 
   constructor(public activatedRoute: ActivatedRoute,
               public  namesListService: NamesListServiceService) { }

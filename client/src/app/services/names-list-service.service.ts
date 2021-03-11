@@ -50,8 +50,7 @@ export class NamesListServiceService {
           let soldiers: Soldier[] = Object.values(elements);
           const headers = { 'content-type': 'application/json'}  
           const body = JSON.stringify({name, soldiers});
-          let a = (await this.http.post(`${this.url}/add-nameslist`,body,{headers}).toPromise());
-          console.log("a: ", a);
+          await this.http.post(`${this.url}/add-nameslist`,body,{headers}).toPromise();
           this.refresh();
 }
       reader.readAsBinaryString(file);

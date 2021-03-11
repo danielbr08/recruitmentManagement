@@ -90,7 +90,6 @@ const createLastVersionSoldierQuery = async (personalNumbers)=>{
 }
 
 const createInsertNamesListQuery = (name, creationDate)=>{
-  console.log("creationDate: ", creationDate);
   console.log("query: ", `INSERT INTO public.names_list( name, creation_date) VALUES ( '${name}', '${creationDate}') RETURNING id as "namesListId";`);
   return `INSERT INTO public.names_list( name, creation_date) VALUES ( '${name}', '${creationDate}') RETURNING id as "namesListId";`;
 }
