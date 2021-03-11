@@ -48,37 +48,14 @@ const _getNamesList = async namesListId => {
 
 const _getNamesLists = async () => {
   const namesListMap = {};
-  const query = `select nl.id as "namesListId", nl.name, nl.creation_date as "namesListCreationDate",
-  spd.personal_number as "personalNumber", spd.first_name as "firstName",  spd.last_name as "lastName", spd.creation_date as "personalDetailsCreationDate",
-  s.id as "soldierId", s.version, s.squad, s.department, s.class, s.role, s.pakal_id as "pakalId", s.creation_date as "soldierCreationDate"
-  from names_list nl 
-     inner join names_list_soldiers nls on nl.id = nls.names_list_id
-     inner join soldier s on nls.soldier_id = s.id
-     inner join soldier_personal_details spd on s.personal_number = spd.personal_number;`;
+  const query = `select id ,name, creation_date as "creationDate", case when task_id is not null then task_id else -1 end as "taskId", 
+  (select count(*) from names_list_soldiers where t2.id = names_list_id) as "soldiersCount" from
+  (select id, name, creation_date, (select t.id from task t where t.names_list_id = nl.id ) as task_id  from names_list nl) as t2;`;
   const namesListsData = (await queryUtils.executeQuery(query))[0];
   for(let i=0;i<namesListsData.length;i++){
     let namesList = namesListsData[i];
-    let namesListId = namesList.namesListId;
-    if(!namesListMap.hasOwnProperty(namesListId)){
-      namesListMap[namesListId] = {namesListId};
-      namesListMap[namesListId].name = namesList.name;
-      namesListMap[namesListId].crationDate = namesList.crationDate;
-      namesListMap[namesListId].soldiers = [];
-    }
-    let personalNumber = namesList.personalNumber;
-    let firstName = namesList.firstName;
-    let lastName = namesList.lastName;
-    let personalDetailsCreationDate = namesList.personalDetailsCreationDate;
-    let soldierId = namesList.soldierId;
-    let version = namesList.version;
-    let squad = namesList.squad;
-    let department = namesList.department;
-    let _class = namesList.class;
-    let role = namesList.role;
-    let pakalId = namesList.pakalId;
-    let soldierCreationDate = namesList.soldierCreationDate;
-    let soldier = {personalNumber, firstName, lastName, personalDetailsCreationDate, soldierId, version, squad, department, class: _class, role, pakalId, soldierCreationDate}; 
-    namesListMap[namesListId].soldiers.push(soldier);
+    let {id, name, creationDate, taskId, soldiersCount} = namesList;
+    namesListMap[id] = {id, name, creationDate, taskId, soldiersCount};
   }
   return Object.values(namesListMap);
 }

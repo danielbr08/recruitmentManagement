@@ -3,7 +3,7 @@ import { Soldier } from "./Soldier.model";
 export interface NamesList {
     id: number;
     name: string;
-    soldiers: Soldier[]
+    soldiersCount: number;
     taskId: number;
     creationDate: Date
   }

@@ -30,10 +30,10 @@ export class NamesListSoldiersManagementComponent implements OnInit {
               public  namesListService: NamesListServiceService) { }
 
   ngOnInit(): void {
-    this.nameListId = this.activatedRoute.snapshot.params.id;
-    if(this.nameListId && this.nameListId>0)
-      this.namesList = this.namesListService.getNamesList(this.nameListId);
-    this.soldiers = this.namesList ? this.namesList.soldiers : [];
+    // this.nameListId = this.activatedRoute.snapshot.params.id;
+    // if(this.nameListId && this.nameListId>0)
+    //   this.namesList = this.namesListService.getNamesList(this.nameListId);
+    // this.soldiers = this.namesList ? this.namesList.soldiers : [];
     // this.dataSource.data = this.soldiers;
   }
 
