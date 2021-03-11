@@ -71,7 +71,9 @@ const getSoldiersFromNamesList = async (id)=>{
 
     res.namesListId = await insertNamesList(name);
     await insertSoldiersPersonalDetails(soldiers);
+    console.log("res.soldiers1: ", soldiers);
     res.soldiers = (await insertSoldiers(soldiers))[0];
+    console.log("res.soldiers2: ", res.soldiers);
     res.soldiersNamesList = await insertSoldiersNamesList(res.namesListId, res.soldiers);
     return res;
   }
@@ -159,6 +161,7 @@ const getSoldiersFromNamesList = async (id)=>{
     let soldiersDbMap = await utils.getNamesListSoldiersMap(lastVersionDbSoldiers);
     soldiersDbMap = setSoldiersVersion(soldiers, soldiersDbMap);    
     // console.log("soldiersDbMap: ", soldiersDbMap);
+     console.log("Object.values(soldiersDbMap): ", Object.values(soldiersDbMap).length);
     const insertSoldiersQuery = await queryUtils.createQueryInsertSoldiers(Object.values(soldiersDbMap));
     return await queryUtils.executeQuery(insertSoldiersQuery);
   }

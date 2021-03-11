@@ -24,7 +24,6 @@ const insertSignatureItems = async signatureList =>{
     union all
     select si.id, si.item, si.serial_number as "serialNumber", si.quantity from public.signature_item si where si.item = '${item}' and si.serial_number = '${serialNumber}' and si.quantity = ${quantity};`
     let result = (await executeQuery(query))[0];
-    console.log("result: ", result);
     signatureItems.push(...result);
   }
   return signatureItems;
@@ -57,10 +56,10 @@ const createQueryInsertSoldiers = async (soldiers)=>{
   });
   personalNumbers = utils.removeLastCharacters(personalNumbers, 1);// remove last unnecessary ',' character
   soldiersValues = utils.removeLastCharacters(soldiersValues, 1);
- return `with t as (INSERT INTO public.soldier( personal_number, version, squad, department, class, role, pakal_id, creation_date) VALUES ${soldiersValues} ON CONFLICT (personal_number, version) DO NOTHING RETURNING id, personal_number, version)
- select id as "soldierId", personal_number as "personalNumber", version from t
- union all
- select s1.id as "soldierId", s1.personal_number as "personalNumber", s1.version from public.soldier s1 where s1.personal_number in(${personalNumbers}) and s1.version = (select max(s2.version) from public.soldier s2 where s1.personal_number = s2.personal_number);`;
+ return `with t1 as (INSERT INTO public.soldier( personal_number, version, squad, department, class, role, pakal_id, creation_date) VALUES ${soldiersValues} ON CONFLICT (personal_number, version) DO NOTHING RETURNING id, personal_number, version)
+  select max(id) as "soldierId", personal_number as "personalNumber", max(version) as "version" from(select id ,personal_number, version from t1
+  union all
+  select s1.id, s1.personal_number, s1.version from public.soldier s1 where s1.personal_number in(${personalNumbers}) and s1.version = (select max(s2.version) from public.soldier s2 where s1.personal_number = s2.personal_number)) t2 group by t2.personal_number;`;
 }
 
 const createQueryInsertSoldiersPersonalDetails = async (soldiers)=>{
@@ -90,7 +89,6 @@ const createLastVersionSoldierQuery = async (personalNumbers)=>{
 }
 
 const createInsertNamesListQuery = (name, creationDate)=>{
-  console.log("query: ", `INSERT INTO public.names_list( name, creation_date) VALUES ( '${name}', '${creationDate}') RETURNING id as "namesListId";`);
   return `INSERT INTO public.names_list( name, creation_date) VALUES ( '${name}', '${creationDate}') RETURNING id as "namesListId";`;
 }
 
