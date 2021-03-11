@@ -155,17 +155,16 @@ const getSoldiersFromNamesList = async (id)=>{
     const personalNumbers = await utils.getPersonalNumbersFromSoldiers(soldiers);
     const getLastVersionSoldierQuery = await queryUtils.createLastVersionSoldierQuery(personalNumbers);
     const lastVersionDbSoldiers = (await queryUtils.executeQuery(getLastVersionSoldierQuery))[0];
-    console.log("lastVersionDbSoldiers: ", lastVersionDbSoldiers);
+    // console.log("lastVersionDbSoldiers: ", lastVersionDbSoldiers);
     let soldiersDbMap = await utils.getNamesListSoldiersMap(lastVersionDbSoldiers);
     soldiersDbMap = setSoldiersVersion(soldiers, soldiersDbMap);    
-    console.log("soldiersDbMap: ", soldiersDbMap);
+    // console.log("soldiersDbMap: ", soldiersDbMap);
     const insertSoldiersQuery = await queryUtils.createQueryInsertSoldiers(Object.values(soldiersDbMap));
     return await queryUtils.executeQuery(insertSoldiersQuery);
   }
 
   const insertSoldiersNamesList = async (namesListid, soldiers)=>{
     const insertSoldiersNamesListQuery = await queryUtils.createQueryInsertSoldiersNamesList(namesListid, soldiers);
-    console.log("insertSoldiersNamesListQuery: ", insertSoldiersNamesListQuery);
     return (await queryUtils.executeQuery(insertSoldiersNamesListQuery))[0];
   }
 
@@ -177,7 +176,6 @@ const getSoldiersFromNamesList = async (id)=>{
 
   const setSoldiersVersion = (newSoldiers, soldiersDbMap)=>{
     let newSoldiersMap = {};
-    console.log("newSoldiers: ", newSoldiers);
     for(let i=0;i<newSoldiers.length;i++){
       let newSoldier = newSoldiers[i]; 
       newSoldier.pakalId = -1; // for now
