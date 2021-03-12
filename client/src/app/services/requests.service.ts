@@ -13,6 +13,10 @@ export class RequestsService {
 
   constructor(private http: HttpClient) { }
 
+  getPakalsFull(){
+    return this.http.get<Pakal[]>(`${this.url}/pakals-full`).toPromise();
+  }
+
   getPakals(){
     return this.http.get<Pakal[]>(`${this.url}/pakals`).toPromise();
   }
@@ -30,5 +34,9 @@ export class RequestsService {
 
   async getMaxSignatureItemId(){
     return +(await this.http.get<any>(`${this.url}/max-signature-item-id`).toPromise()).maxId;
+  }
+
+  async getSoldiersNamesList(namesListId: number){
+    return await this.http.get<any>(`${this.url}/soldiers-names-list?namesListId=${namesListId}`).toPromise();
   }
 }

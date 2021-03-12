@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NamesList } from 'src/app/models/NamesList.model';
 import { Soldier } from 'src/app/models/Soldier.model';
 import { NamesListServiceService } from 'src/app/services/names-list-service.service';
+import { RequestsService } from 'src/app/services/requests.service';
 
 @Component({
   selector: 'app-names-list-soldiers-management',
@@ -23,18 +24,15 @@ export class NamesListSoldiersManagementComponent implements OnInit {
   public dataSource = new MatTableDataSource<Soldier>();
 
   soldiers: Soldier[]  = [];
-  namesList: NamesList | undefined;
-  displayedColumns: string[] = ['id','personalNumber', 'firstName', 'lastName','squad', 'department', 'class', 'role', 'pakal'];
+  displayedColumns: string[] = ['id','personalNumber', 'firstName', 'lastName','squad', 'department', 'class', 'role'];//, 'pakal'];
 
   constructor(public activatedRoute: ActivatedRoute,
-              public  namesListService: NamesListServiceService) { }
+              public  namesListService: NamesListServiceService,
+              public requestsService: RequestsService ) { }
 
   ngOnInit(): void {
-    // this.nameListId = this.activatedRoute.snapshot.params.id;
-    // if(this.nameListId && this.nameListId>0)
-    //   this.namesList = this.namesListService.getNamesList(this.nameListId);
-    // this.soldiers = this.namesList ? this.namesList.soldiers : [];
-    // this.dataSource.data = this.soldiers;
+    this.nameListId = this.activatedRoute.snapshot.params.id;
+    this.refresh();
   }
 
   ngAfterViewInit(): void {
@@ -46,6 +44,13 @@ export class NamesListSoldiersManagementComponent implements OnInit {
   doFilter(event: any){
     let value = event.target.value;
     this.dataSource.filter = value.trim().toLocaleLowerCase();
+  }
+
+  async refresh() {
+    this.soldiers = await this.requestsService.getSoldiersNamesList(this.nameListId);
+    console.log("soldiers: ", this.soldiers);
+    this.dataSource.data = this.soldiers;
+
   }
 
 }

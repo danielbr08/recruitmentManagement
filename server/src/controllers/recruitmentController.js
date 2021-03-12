@@ -13,6 +13,11 @@ module.exports = {
       const result = await recruitmentProvider.getSoldiersList();
       res.status(200).send(result);
    },
+   getSoldiersNamesList: async (req,res,next) => {
+      const namesListId = req.query.namesListId;
+      const result = await recruitmentProvider.getSoldiersNamesList(namesListId);
+      res.status(200).send(result);
+   },
    getNamesLists: async (req,res,next) => {
       const result = await recruitmentProvider.getNamesLists();
       res.status(200).send(result);
@@ -37,11 +42,14 @@ module.exports = {
       else
          res.status(500).send("error occurd");
    },
+   getPakalsFull: async (req,res,next) => {
+      const result = await recruitmentProvider.getPakalsFull();
+      res.status(200).send(result);
+   },
    getPakals: async (req,res,next) => {
       const result = await recruitmentProvider.getPakals();
       res.status(200).send(result);
-   }
-   ,
+   },
    getMaxPakalId: async (req,res,next) => {
       const result = await recruitmentProvider.getMaxPakalId();
       res.status(200).send(result);

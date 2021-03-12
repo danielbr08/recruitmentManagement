@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatSelect } from '@angular/material/select';
 import { Pakal } from '../models/Pakal.model';
 import { PakalAllocated } from '../models/pakalAllocated.model';
+import { RequestsService } from '../services/requests.service';
 
 const PAKALS: Pakal[] = // The vale should be taken from server(by service)
   [
@@ -22,12 +23,13 @@ export class EmergencyWarehouseUnitInventoryComponent implements OnInit {
   pakalQuaantity!: ElementRef;
   
   displayedColumns: string[] = ['id', 'pakal', 'quantity', ' '];
-  pakals: Pakal[]= PAKALS;
+  pakals: Pakal[]= [];//PAKALS;
   pakalsSelected: PakalAllocated[] = [];
 
-  constructor() { }
+  constructor( private requestsService: RequestsService ) { }
 
   ngOnInit(): void {
+    this.reloadPakals();
   }
 
   saveData() {
@@ -73,6 +75,10 @@ export class EmergencyWarehouseUnitInventoryComponent implements OnInit {
   resetMatSelect(){
     this.pakalMatSelect.value = null;
     this.pakalQuaantity.nativeElement.value = 1;
+  }
+
+  async reloadPakals(){
+    this.pakals = await this.requestsService.getPakals();
   }
 
 }

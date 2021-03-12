@@ -5,12 +5,12 @@ export interface Soldier {
     personalNumber: number;
     firstName: string;
     lastName: string;
-    personalDetailsCreationDate: Date;
+    // personalDetailsCreationDate: Date;
     version: number;
     squad: string;
     department: string;
     class: string;
     role: string;
-    pakal: Pakal;
-    soldierCreationDate: Date;
+    // pakal: Pakal;
+    // soldierCreationDate: Date;
   }

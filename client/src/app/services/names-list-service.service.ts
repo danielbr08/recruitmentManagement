@@ -15,6 +15,7 @@ export class NamesListServiceService {
   url: string = `http://localhost:${port}/api/recruitment`;
   constructor(private http: HttpClient) { }
 
+
   getNamesList(id: number){
     return this.namesList.find(element=>element.id==id);
   }

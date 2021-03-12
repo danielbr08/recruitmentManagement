@@ -74,7 +74,7 @@ export class PakalTypesManagemententComponent implements OnInit {
   }
 
   async refreshData(){
-    this.dataSource = await this.requestsService.getPakals();
+    this.dataSource = await this.requestsService.getPakalsFull();
     if(this.dataSource.length == 0){
       this.dataSource = [{ pakalId: 1, name: '', signatureList: [{id:1, item:'', serialNumber:'', quantity:1}] }];
     }

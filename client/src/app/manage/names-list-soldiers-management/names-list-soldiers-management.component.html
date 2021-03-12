@@ -31,7 +31,7 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header> שם פרטי </mat-header-cell>
       <mat-cell *matCellDef="let element"> 
         <mat-form-field>
-        <input matInput  type="text" required [value]="element.firstName" name="firstName-{{element.personalNumber}}" [(ngModel)]="element.firstName">
+        <input matInput  type="text" required [value]="element.firstName" name="firstName-{{element.personalNumber}}" [(ngModel)]="element.firstName" disabled>
       </mat-form-field>
       </mat-cell>
     </ng-container>
@@ -41,7 +41,7 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header> שם משפחה </mat-header-cell>
           <mat-cell *matCellDef="let element">
             <mat-form-field>
-            <input matInput type="text" required [value]="element.lastName" name="lastName-{{element.personalNumber}}" [(ngModel)]="element.lastName">
+            <input matInput type="text" required [value]="element.lastName" name="lastName-{{element.personalNumber}}" [(ngModel)]="element.lastName" disabled>
           </mat-form-field>
           </mat-cell>
         </ng-container>
@@ -87,14 +87,14 @@
               </ng-container>
             
               <!-- pakal Column -->
-              <ng-container matColumnDef="pakal">
+              <!-- <ng-container matColumnDef="pakal">
                 <mat-header-cell *matHeaderCellDef mat-sort-header> פק"ל </mat-header-cell>
                 <mat-cell *matCellDef="let element">
                   <mat-form-field>
                   <input matInput type="text" required [value]="element.pakal.pakal" name="pakal-{{element.personalNumber}}" [(ngModel)]="element.pakal.pakal">
                 </mat-form-field>
                   </mat-cell>
-              </ng-container>
+              </ng-container> -->
 
     <!-- delete Column -->
     <!-- <ng-container matColumnDef=" ">

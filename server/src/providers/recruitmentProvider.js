@@ -8,6 +8,15 @@ const _getSoldiersList = async () => {
       return soldiersData[0];
 }
 
+const _getSoldiersNamesList = async namesListId => {
+  const query = `SELECT spd.personal_number as "personalNumber", spd.first_name as "firstName", spd.last_name as "lastName", spd.creation_date as "personalDetailsCreationDate", s.id, s.version, s.squad, s.department, s.class, s.role, s.creation_date as "soldierCreationDate"
+	FROM public.soldier_personal_details spd 
+	inner join soldier s on spd.personal_number = s.personal_number 
+	inner join names_list_soldiers nl on s.id = nl.soldier_id where nl.names_list_id = ${namesListId};`;
+  const soldiersData = await queryUtils.executeQuery(query);
+    return soldiersData[0];
+}
+
 const _getNamesList = async namesListId => {
   const namesListMap = {};
   const query = `select nl.id as "namesListId", nl.name, nl.creation_date as "namesListCreationDate",
@@ -110,7 +119,7 @@ const getSoldiersFromNamesList = async (id)=>{
     return insertedPakalsArr;
   }
 
-  const _getPakals = async () =>{
+  const _getPakalsFull = async () =>{
     const query = queryUtils.createGetPakalsQuery();
     console.log("query: ", query);
     let res = (await queryUtils.executeQuery(query))[0];
@@ -128,6 +137,12 @@ const getSoldiersFromNamesList = async (id)=>{
     console.log("Object.values(pakals):", Object.values(pakals));
 
     return Object.values(pakals);
+  } 
+
+  const _getPakals = async () =>{
+    const query = `SELECT distinct pakal_id as "pakalId", name FROM pakal;`;
+    const pakals = await queryUtils.executeQuery(query);
+      return pakals[0];
   } 
 
   const _getMaxPakalId = async () =>{
@@ -195,6 +210,10 @@ const getSoldiersFromNamesList = async (id)=>{
       const result = await _getSoldiersList();
       return result;
     },
+    getSoldiersNamesList: async namesListId => {
+      const result = await _getSoldiersNamesList(namesListId);
+      return result;
+    },
     getNamesLists: async () => {
       try{
         const result = await _getNamesLists();
@@ -216,6 +235,15 @@ const getSoldiersFromNamesList = async (id)=>{
     savePakals: async (pakals) => {
       try{
         const result = await _savePakals(pakals);
+        return result;
+      } catch(error){
+        console.log("error: ", error);
+        return {error: true};
+      }
+    },
+    getPakalsFull: async () => {
+      try{
+        const result = await _getPakalsFull();
         return result;
       } catch(error){
         console.log("error: ", error);
