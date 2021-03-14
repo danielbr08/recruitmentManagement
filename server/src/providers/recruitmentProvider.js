@@ -1,5 +1,5 @@
 const utils = require('../utils/utils');
-const queryUtils = require('../utils/queryUtils')
+const queryUtils = require('../utils/queryUtils');
 
 const _getSoldiersList = async () => {
     const query = `SELECT personal_number as "personalNumber", first_name as "firstName", last_name as "lastName", creation_date as "creationDate" FROM public.soldier_personal_details ORDER BY personal_number ASC;`;
@@ -84,6 +84,12 @@ const getSoldiersFromNamesList = async (id)=>{
     res.soldiers = (await insertSoldiers(soldiers))[0];
     console.log("res.soldiers2: ", res.soldiers);
     res.soldiersNamesList = await insertSoldiersNamesList(res.namesListId, res.soldiers);
+    return res;
+  }
+
+  const _addTask = async (namesListID, name, currentTask) => {
+    const res = {};
+    res.taskId = await insertTask(namesListID, name, currentTask);
     return res;
   }
 
@@ -205,6 +211,11 @@ const getSoldiersFromNamesList = async (id)=>{
     return newSoldiersMap;
   }
 
+  const insertTask = async (namesListID, name, currentTask)=>{
+    const insertTaskQuery = await queryUtils.createQueryInsertTask(namesListID, name, currentTask);
+    return (await queryUtils.executeQuery(insertTaskQuery))[0];
+  }
+
   module.exports = {
     getSoldiersList: async () => {
       const result = await _getSoldiersList();
@@ -226,6 +237,15 @@ const getSoldiersFromNamesList = async (id)=>{
     addNamesList: async (name, soldiers) => {
       try{
       const result = await _addNamesList(name, soldiers);
+      return result;
+      } catch(error){
+        console.log("error: ", error);
+        return {error: true};
+      }
+    },
+    addTask: async (namesListID, name, currentTask) => {
+      try{
+      const result = await _addTask(namesListID, name, currentTask);
       return result;
       } catch(error){
         console.log("error: ", error);

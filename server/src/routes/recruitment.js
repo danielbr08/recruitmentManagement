@@ -13,6 +13,7 @@ router.get('/max-signature-item-id', recruitmentController.getMaxSignatureItemId
 router.get('/pakals-full', recruitmentController.getPakalsFull);
 router.get('/pakals', recruitmentController.getPakals);
 router.post('/add-nameslist', recruitmentController.addNamesList);
+router.post('/add-task', recruitmentController.addTask);
 router.post('/save-pakals', recruitmentController.savePakals);
 
 module.exports = router;

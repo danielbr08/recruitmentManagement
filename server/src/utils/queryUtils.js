@@ -92,6 +92,10 @@ const createInsertNamesListQuery = (name, creationDate)=>{
   return `INSERT INTO public.names_list( name, creation_date) VALUES ( '${name}', '${creationDate}') RETURNING id as "namesListId";`;
 }
 
+const createQueryInsertTask = (namesListID, name, currentTask)=>{
+  return `INSERT INTO task(names_list_id, name, status, current_task, creation_date) VALUES ( ${namesListID}, ${name}, 1, ${currentTask}, '${creationDate}'`;
+}
+
 const getNowFormated = ()=>{
   return dateFormat(new Date(), "yyyy-mm-dd hh:MM:ss");
 }

@@ -23,13 +23,18 @@ module.exports = {
       res.status(200).send(result);
    },
    addNamesList: async (req,res,next) => {
-      console.log("req.body: ", req.body);
       let result = await recruitmentProvider.addNamesList(req.body.name, req.body.soldiers);
       if(!result.error)
          res.status(200).send(result);
       else
          res.status(500).send("error occurd");
-
+   },
+   addTask: async (req,res,next) => {
+      let result = await recruitmentProvider.addTask(req.body.namesListID, req.body.name, req.body.currentTask);
+      if(!result.error)
+         res.status(200).send(result);
+      else
+         res.status(500).send("error occurd");
    },
    savePakals: async (req,res,next) => {
       const body = req.body;
