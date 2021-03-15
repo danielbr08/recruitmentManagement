@@ -69,6 +69,19 @@ const _getNamesLists = async () => {
   return Object.values(namesListMap);
 }
 
+const _getTasks = async () => {
+  // const namesListMap = {};
+  const query = `select t.id, t.name as "taskName", t.status, t.current_task as "currentTask", t.creation_date as "creationDate", nl.name as "namesListName" from task t inner join names_list nl on t.names_list_id = nl.id;`;
+  const tasksData = (await queryUtils.executeQuery(query))[0];
+  // for(let i=0;i<namesListsData.length;i++){
+  //   let namesList = namesListsData[i];
+  //   let {id, name, creationDate, taskId, soldiersCount} = namesList;
+  //   namesListMap[id] = {id, name, creationDate, taskId, soldiersCount};
+  // }
+  // return Object.values(namesListMap);
+  return tasksData;
+}
+
 const getSoldiersFromNamesList = async (id)=>{
   const query = `SELECT names_list_id as "namesList", string_agg(soldier_id::character varying, ', ') as "soldiersId"
 	FROM public.names_list_soldiers group by names_list_id;`;
@@ -87,9 +100,9 @@ const getSoldiersFromNamesList = async (id)=>{
     return res;
   }
 
-  const _addTask = async (namesListID, name, currentTask) => {
+  const _addTask = async (namesListId, name, currentTask) => {
     const res = {};
-    res.taskId = await insertTask(namesListID, name, currentTask);
+    res.taskId = (await insertTask(namesListId, name, currentTask))[0].taskId;
     return res;
   }
 
@@ -211,8 +224,8 @@ const getSoldiersFromNamesList = async (id)=>{
     return newSoldiersMap;
   }
 
-  const insertTask = async (namesListID, name, currentTask)=>{
-    const insertTaskQuery = await queryUtils.createQueryInsertTask(namesListID, name, currentTask);
+  const insertTask = async (namesListId, name, currentTask)=>{
+    const insertTaskQuery = await queryUtils.createQueryInsertTask(namesListId, name, currentTask);
     return (await queryUtils.executeQuery(insertTaskQuery))[0];
   }
 
@@ -234,6 +247,15 @@ const getSoldiersFromNamesList = async (id)=>{
           return {error: true};
         }
     },
+    getTasks: async () => {
+      try{
+        const result = await _getTasks();
+        return result;
+        } catch(error){
+          console.log("error: ", error);
+          return {error: true};
+        }
+    },
     addNamesList: async (name, soldiers) => {
       try{
       const result = await _addNamesList(name, soldiers);
@@ -243,9 +265,9 @@ const getSoldiersFromNamesList = async (id)=>{
         return {error: true};
       }
     },
-    addTask: async (namesListID, name, currentTask) => {
+    addTask: async (namesListId, name, currentTask) => {
       try{
-      const result = await _addTask(namesListID, name, currentTask);
+      const result = await _addTask(namesListId, name, currentTask);
       return result;
       } catch(error){
         console.log("error: ", error);

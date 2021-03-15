@@ -2,28 +2,36 @@ import { Injectable } from '@angular/core';
 import { Task } from '../models/Task.model';
 import { TaskStatus } from '../models/TaskStatus.model';
 import { NamesListServiceService } from './names-list-service.service';
+import { RequestsService } from './requests.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TasksServiceService {
 
-  constructor(public namesListService: NamesListServiceService) { }
+  constructor(public namesListService: NamesListServiceService,
+    public requestsService: RequestsService) { }
 
   tasks: Task[] = [];
 
-  addTask(task: Task) {
-    if(task.isCurrentTask){
-      this.changeCurrentTask(task.id);
-    }
-    this.tasks.push(task);
-    let namesList = this.namesListService.getNamesList(task.namesListId);
-    if(namesList){
-      namesList.taskId = task.id;
-    }
-    this.tasks = [...this.tasks];
-    this.namesListService.refresh();
-    console.log(this.tasks, namesList, task);
+  // addTask(task: Task) {
+  //   if(task.isCurrentTask){
+  //     this.changeCurrentTask(task.id);
+  //   }
+  //   this.tasks.push(task);
+  //   let namesList = this.namesListService.getNamesList(task.namesListId);
+  //   if(namesList){
+  //     namesList.taskId = task.id;
+  //   }
+  //   this.tasks = [...this.tasks];
+  //   this.namesListService.refresh();
+  //   console.log(this.tasks, namesList, task);
+  // }
+
+  addTask(task: Task){
+    let {name, namesListId, isCurrentTask} = task;
+    let data = {name, namesListId, isCurrentTask};
+    this.requestsService.addTask(data);
   }
 
   generateId() {

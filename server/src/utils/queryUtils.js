@@ -92,8 +92,8 @@ const createInsertNamesListQuery = (name, creationDate)=>{
   return `INSERT INTO public.names_list( name, creation_date) VALUES ( '${name}', '${creationDate}') RETURNING id as "namesListId";`;
 }
 
-const createQueryInsertTask = (namesListID, name, currentTask)=>{
-  return `INSERT INTO task(names_list_id, name, status, current_task, creation_date) VALUES ( ${namesListID}, ${name}, 1, ${currentTask}, '${creationDate}'`;
+const createQueryInsertTask = (namesListId, name, currentTask)=>{
+  return `INSERT INTO task(names_list_id, name, status, current_task, creation_date) VALUES ( ${namesListId}, '${name}', 1, ${currentTask}, '${getNowFormated()}') RETURNING id as "taskId"`;
 }
 
 const getNowFormated = ()=>{
@@ -108,6 +108,7 @@ module.exports = {
   createInsertNamesListQuery,
   createQueryInsertSoldiersNamesList,
   createGetPakalsQuery,
+  createQueryInsertTask,
   insertSignatureItems,
   insertPakal,
   getMaxPakalId,
