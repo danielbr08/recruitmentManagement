@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Task } from '../models/Task.model';
+import { RequestsService } from '../services/requests.service';
 
 @Component({
   selector: 'app-manage-current-task',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ManageCurrentTaskComponent implements OnInit {
 
-  constructor() { }
+  constructor(public requestsService : RequestsService) { }
+
+  current: Task | undefined;
 
   ngOnInit(): void {
+    this.refresh();
+  }
+
+  async refresh(){
+    this.currentTask = await this.requestsService.getCurrentTask();
   }
 
 }

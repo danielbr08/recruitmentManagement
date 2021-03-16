@@ -9,24 +9,9 @@ import { RequestsService } from './requests.service';
 })
 export class TasksServiceService {
 
-  constructor(public namesListService: NamesListServiceService,
-    public requestsService: RequestsService) { }
+  constructor(public requestsService: RequestsService) { }
 
-  tasks: Task[] = [];
-
-  // addTask(task: Task) {
-  //   if(task.isCurrentTask){
-  //     this.changeCurrentTask(task.id);
-  //   }
-  //   this.tasks.push(task);
-  //   let namesList = this.namesListService.getNamesList(task.namesListId);
-  //   if(namesList){
-  //     namesList.taskId = task.id;
-  //   }
-  //   this.tasks = [...this.tasks];
-  //   this.namesListService.refresh();
-  //   console.log(this.tasks, namesList, task);
-  // }
+  public tasks: Task[] = [];
 
   addTask(task: Task){
     let {name, namesListId, isCurrentTask} = task;
@@ -34,27 +19,14 @@ export class TasksServiceService {
     this.requestsService.addTask(data);
   }
 
-  generateId() {
-    if (this.tasks.length == 0) {
-      return 1;
-    }
-    let ids: number[] = [];
-    this.tasks.map(item => ids.push(item.id));
-    return Math.max(...ids) + 1;
-  }
-
   getTaskStatusName(taskStatusId: TaskStatus) {
     switch (taskStatusId) {
-      case TaskStatus.New:
-        return "New"
+      case TaskStatus.Active:
+        return "פעיל"
       case TaskStatus.Edit:
-        return "Edit"
+        return "בעריכה"
       case TaskStatus.Close:
-        return "Close"
+        return "סגור"
     }
-  }
-
-  changeCurrentTask(taskId: number){
-    this.tasks.map(_task=>_task.id !== taskId ? _task.isCurrentTask=false : _task.isCurrentTask=true);
   }
 }

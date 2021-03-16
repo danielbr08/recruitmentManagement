@@ -3,11 +3,14 @@ const router = express.Router();
 
 const recruitmentController = require('../controllers/recruitmentController')
 
+// localhost:3000/api/recruitment
+
 /* GET users listing. */
 router.get('/soldiers-list', recruitmentController.getSoldiersList);
 router.get('/soldiers-names-list', recruitmentController.getSoldiersNamesList);
 router.get('/names-lists', recruitmentController.getNamesLists);
 router.get('/tasks', recruitmentController.getTasks);
+router.get('/current-task', recruitmentController.getCurrentTask);
 router.get('/max-pakal-id', recruitmentController.getMaxPakalId);
 router.get('/max-signature-item-id', recruitmentController.getMaxSignatureItemId);
 router.get('/pakals-full', recruitmentController.getPakalsFull);

@@ -1,5 +1,5 @@
 export enum TaskStatus {
-    New,
+    Active,
     Edit,
     Close
   }

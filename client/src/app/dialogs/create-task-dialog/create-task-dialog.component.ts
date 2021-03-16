@@ -18,8 +18,7 @@ export class CreateTaskDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<CreateTaskDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: NamesList[], 
-    private service: TasksServiceService,
-    private requestsService : RequestsService) { }
+    private service: TasksServiceService) { }
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -29,12 +28,8 @@ export class CreateTaskDialogComponent implements OnInit {
   }
 
   async createNewTask(name: string, namesListId: number, isCurrentTask: boolean) {
-    let id = this.service.generateId();
-    let task: Task = { id, name, creationDate: new Date(), status: TaskStatus.New, namesListId, isCurrentTask };
+    let task: any = { name, namesListId, isCurrentTask };
     await this.service.addTask(task);
-    // await this.requestsService.getTasks();
-
-    console.log(name, namesListId, isCurrentTask, this.service.tasks);
     this.dialogRef.close();
   }
 

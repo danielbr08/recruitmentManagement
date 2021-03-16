@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Pakal } from '../models/Pakal.model';
-import { Task } from '../models/Task.model';
 
 const port = 3000;
 
@@ -39,6 +38,18 @@ export class RequestsService {
 
   async getSoldiersNamesList(namesListId: number){
     return await this.http.get<any>(`${this.url}/soldiers-names-list?namesListId=${namesListId}`).toPromise();
+  }
+
+  async getTasks(){
+    return await this.http.get<any>(`${this.url}/tasks`).toPromise();
+  }
+
+  async getNamesLists(){
+    return await this.http.get<any>(`${this.url}/names-lists`).toPromise();
+  }
+
+  async getCurrentTask(){
+    return await this.http.get<any>(`${this.url}/current-task`).toPromise();
   }
 
   addTask(data: any){

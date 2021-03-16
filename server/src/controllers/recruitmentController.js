@@ -26,6 +26,10 @@ module.exports = {
       const result = await recruitmentProvider.getTasks();
       res.status(200).send(result);
    },
+   getCurrentTask: async (req,res,next) => {
+      const result = await recruitmentProvider.getCurrentTask();
+      res.status(200).send(result);
+   },
    addNamesList: async (req,res,next) => {
       let result = await recruitmentProvider.addNamesList(req.body.name, req.body.soldiers);
       if(!result.error)

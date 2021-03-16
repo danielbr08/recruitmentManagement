@@ -56,30 +56,20 @@ const _getNamesList = async namesListId => {
 }
 
 const _getNamesLists = async () => {
-  const namesListMap = {};
   const query = `select id ,name, creation_date as "creationDate", case when task_id is not null then task_id else -1 end as "taskId", 
   (select count(*) from names_list_soldiers where t2.id = names_list_id) as "soldiersCount" from
-  (select id, name, creation_date, (select t.id from task t where t.names_list_id = nl.id ) as task_id  from names_list nl) as t2;`;
-  const namesListsData = (await queryUtils.executeQuery(query))[0];
-  for(let i=0;i<namesListsData.length;i++){
-    let namesList = namesListsData[i];
-    let {id, name, creationDate, taskId, soldiersCount} = namesList;
-    namesListMap[id] = {id, name, creationDate, taskId, soldiersCount};
-  }
-  return Object.values(namesListMap);
+  (select id, name, creation_date, (select t.id from task t where t.names_list_id = nl.id ) as task_id  from names_list nl) as t2 order by creation_date desc;`;
+  return (await queryUtils.executeQuery(query))[0];
 }
 
 const _getTasks = async () => {
-  // const namesListMap = {};
-  const query = `select t.id, t.name as "taskName", t.status, t.current_task as "currentTask", t.creation_date as "creationDate", nl.name as "namesListName" from task t inner join names_list nl on t.names_list_id = nl.id;`;
-  const tasksData = (await queryUtils.executeQuery(query))[0];
-  // for(let i=0;i<namesListsData.length;i++){
-  //   let namesList = namesListsData[i];
-  //   let {id, name, creationDate, taskId, soldiersCount} = namesList;
-  //   namesListMap[id] = {id, name, creationDate, taskId, soldiersCount};
-  // }
-  // return Object.values(namesListMap);
-  return tasksData;
+  const query = `select t.id, t.name as "taskName", t.status, t.current_task as "currentTask", t.creation_date as "creationDate",t.names_list_id as "namesListId", nl.name as "namesListName" from task t inner join names_list nl on t.names_list_id = nl.id;`;
+  return (await queryUtils.executeQuery(query))[0];
+}
+
+const _getCurrentTask = async () => {
+  const query = `select t.id, t.name as "taskName", t.status, t.current_task as "currentTask", t.creation_date as "creationDate",t.names_list_id as "namesListId", nl.name as "namesListName" from task t inner join names_list nl on t.names_list_id = nl.id where  t.current_task=true;`;
+  return (await queryUtils.executeQuery(query))[0];
 }
 
 const getSoldiersFromNamesList = async (id)=>{
@@ -250,6 +240,15 @@ const getSoldiersFromNamesList = async (id)=>{
     getTasks: async () => {
       try{
         const result = await _getTasks();
+        return result;
+        } catch(error){
+          console.log("error: ", error);
+          return {error: true};
+        }
+    },
+    getCurrentTask: async () => {
+      try{
+        const result = await _getCurrentTask();
         return result;
         } catch(error){
           console.log("error: ", error);

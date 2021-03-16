@@ -1,6 +1,6 @@
 <button mat-raised-button (click)="openDialog(namesLists)">משימה חדשה</button>
 
-<mat-table id="warehouseUnitTable" [dataSource]="taskService.tasks" class="mat-elevation-z8">
+<mat-table id="warehouseUnitTable" [dataSource]="tasks" class="mat-elevation-z8">
   <!-- id Column -->
   <ng-container matColumnDef="id">
     <mat-header-cell *matHeaderCellDef> מזהה </mat-header-cell>
@@ -10,7 +10,7 @@
   <!-- name Column -->
   <ng-container matColumnDef="name">
     <mat-header-cell *matHeaderCellDef> שם משימה </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+    <mat-cell *matCellDef="let element"> {{element.taskName}} </mat-cell>
   </ng-container>
 
   <!-- creationDate Column -->
@@ -35,14 +35,14 @@
   <!-- listNameId Column -->
   <ng-container matColumnDef="namesListId">
     <mat-header-cell *matHeaderCellDef> רשימת שמות מקושרת </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.namesListId}} </mat-cell>
+    <mat-cell *matCellDef="let element"> {{element.namesListName}} </mat-cell>
   </ng-container>
 
   <!-- pakal isCurrentTask -->
   <ng-container matColumnDef="isCurrentTask">
     <mat-header-cell *matHeaderCellDef> משימה נוכחית </mat-header-cell>
     <mat-cell *matCellDef="let element">
-      <mat-checkbox #currentTaskCB [checked]="element.isCurrentTask" (change)="taskService.changeCurrentTask(element.id)"></mat-checkbox>
+      <mat-checkbox #currentTaskCB [checked]="element.isCurrentTask" (change)="changeCurrentTask(element.id)"></mat-checkbox>
     </mat-cell>
   </ng-container>
 
