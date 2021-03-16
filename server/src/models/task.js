@@ -22,7 +22,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     current_task: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BOOLEAN,
       allowNull: false
     },
     creation_date: {
