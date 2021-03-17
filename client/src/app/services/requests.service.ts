@@ -57,7 +57,6 @@ export class RequestsService {
     return this.http.post(`${this.url}/add-task`,body,{headers: this.headers}).toPromise();
   }
   addNamesList(data: any){
-    const headers = { 'content-type': 'application/json'}  
     const body = JSON.stringify(data);
     return this.http.post(`${this.url}/add-nameslist`,body,{headers: this.headers}).toPromise();
   }

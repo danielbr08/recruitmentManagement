@@ -44,8 +44,8 @@ export class NamesListServiceService {
         elements[personalNumber] = { squad, department, class: _class, personalNumber, firstName, lastName, role: '', pakal: '' };
       });
       let soldiers: Soldier[] = Object.values(elements);
-      const body = JSON.stringify({ name, soldiers });
-      await this.requestsService.addNamesList(body);
+      const dataObject = { name, soldiers };
+      await this.requestsService.addNamesList(dataObject);
       this.refresh();
     }
     reader.readAsBinaryString(file);
