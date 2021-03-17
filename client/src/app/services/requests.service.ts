@@ -9,6 +9,7 @@ const port = 3000;
 })
 export class RequestsService {
 
+  headers = { 'content-type': 'application/json'};
   url: string = `http://localhost:${port}/api/recruitment`;
 
   constructor(private http: HttpClient) { }
@@ -29,7 +30,6 @@ export class RequestsService {
 
   async getMaxPakalId(){
     return +(await this.http.get<any>(`${this.url}/max-pakal-id`).toPromise()).maxId;
-
   }
 
   async getMaxSignatureItemId(){
@@ -53,9 +53,13 @@ export class RequestsService {
   }
 
   addTask(data: any){
+    const body = JSON.stringify(data);
+    return this.http.post(`${this.url}/add-task`,body,{headers: this.headers}).toPromise();
+  }
+  addNamesList(data: any){
     const headers = { 'content-type': 'application/json'}  
     const body = JSON.stringify(data);
-    return this.http.post(`${this.url}/add-task`,body,{headers}).toPromise();
+    return this.http.post(`${this.url}/add-nameslist`,body,{headers: this.headers}).toPromise();
   }
 
 }

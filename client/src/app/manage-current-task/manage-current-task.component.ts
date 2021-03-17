@@ -11,7 +11,7 @@ export class ManageCurrentTaskComponent implements OnInit {
 
   constructor(public requestsService : RequestsService) { }
 
-  current: Task | undefined;
+  currentTask: Task | undefined;
 
   ngOnInit(): void {
     this.refresh();

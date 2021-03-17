@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Task } from '../models/Task.model';
 import { TaskStatus } from '../models/TaskStatus.model';
-import { NamesListServiceService } from './names-list-service.service';
 import { RequestsService } from './requests.service';
 
 @Injectable({

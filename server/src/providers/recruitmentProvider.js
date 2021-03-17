@@ -69,7 +69,7 @@ const _getTasks = async () => {
 
 const _getCurrentTask = async () => {
   const query = `select t.id, t.name as "taskName", t.status, t.current_task as "currentTask", t.creation_date as "creationDate",t.names_list_id as "namesListId", nl.name as "namesListName" from task t inner join names_list nl on t.names_list_id = nl.id where  t.current_task=true;`;
-  return (await queryUtils.executeQuery(query))[0];
+  return (await queryUtils.executeQuery(query))[0][0];
 }
 
 const getSoldiersFromNamesList = async (id)=>{
