@@ -12,8 +12,9 @@ export class ManageCurrentTaskComponent implements OnInit {
 
   constructor(public requestsService : RequestsService) { }
 
-  currentTask: Task = {id: -1, name: "", creationDate: new Date(), status: TaskStatus.Active, namesListId: -1, currentTask: false, };
-  taskStatuses: TaskStatus[] = [TaskStatus.Active, TaskStatus.Edit, TaskStatus.Close]
+  currentTask: any = {id: -1, name: "", creationDate: new Date(), status: TaskStatus.Active, namesListId: -1, currentTask: false, };
+  tasks: any = [];
+  taskStatuses: any = [{"key":TaskStatus.Active, "val":"פעיל"} , {"key":TaskStatus.Edit, "val":"עריכה"} , {"key":TaskStatus.Close, "val":"סגור"} ]
 
   ngOnInit(): void {
     this.refresh();
@@ -21,7 +22,7 @@ export class ManageCurrentTaskComponent implements OnInit {
 
   async refresh(){
     this.currentTask = await this.requestsService.getCurrentTask();
-    console.log(this.currentTask );
+    this.tasks = await this.requestsService.getTasks()
   }
 
 }

@@ -63,12 +63,12 @@ const _getNamesLists = async () => {
 }
 
 const _getTasks = async () => {
-  const query = `select t.id, t.name as "taskName", t.status, t.current_task as "currentTask", t.creation_date as "creationDate",t.names_list_id as "namesListId", nl.name as "namesListName" from task t inner join names_list nl on t.names_list_id = nl.id;`;
+  const query = `select t.id, t.name as "name", t.status, t.current_task as "currentTask", t.creation_date as "creationDate",t.names_list_id as "namesListId", nl.name as "namesListName" from task t inner join names_list nl on t.names_list_id = nl.id;`;
   return (await queryUtils.executeQuery(query))[0];
 }
 
 const _getCurrentTask = async () => {
-  const query = `select t.id, t.name as "taskName", t.status, t.current_task as "currentTask", t.creation_date as "creationDate",t.names_list_id as "namesListId", nl.name as "namesListName" from task t inner join names_list nl on t.names_list_id = nl.id where  t.current_task=true;`;
+  const query = `select t.id, t.name as "name", t.status, t.current_task as "currentTask", t.creation_date as "creationDate",t.names_list_id as "namesListId", nl.name as "namesListName" from task t inner join names_list nl on t.names_list_id = nl.id where  t.current_task=true;`;
   return (await queryUtils.executeQuery(query))[0][0];
 }
 

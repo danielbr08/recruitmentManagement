@@ -1,10 +1,12 @@
 <form>
-    <mat-form-field floatLabel="always" hideRequiredMarker appearance="fill">
+  <div style="display: flex; flex-direction: row;">
+  <mat-form-field floatLabel="always" hideRequiredMarker appearance="fill">
       <mat-select required placeholder='משימה' #pakalMatSelect>
-        <mat-option *ngFor='let task of tasks' [value]="task.id"> {{task.name}} </mat-option>
+        <mat-option *ngFor='let task of tasks' [value]="task.id"> {{currentTask.name}} </mat-option>
       </mat-select>
     </mat-form-field>
     <input matInput type="text" [value]="currentTask.namesListName" disabled>
+  </div>
     <div></div>
 
   </form>
@@ -12,9 +14,14 @@
 <div class="border2 margin-bottom-30">
     <!-- <div>שם המשימה</div>
     <div>רשימת שמות מקושרת</div> -->
+    <mat-form-field floatLabel="always" hideRequiredMarker appearance="fill">
+      <mat-select required placeholder='סטטוס' #pakalMatSelect>
+        <mat-option *ngFor='let status of taskStatuses' [value]="status.key"> {{status.val}} </mat-option>
+      </mat-select>
+    </mat-form-field>
     <div>
         <span>משימה נוכחית&#63;</span>
-        <mat-checkbox  [checked]="currentTask.currentTask" (change)="changeCurrentTask(element.id)"></mat-checkbox>
+        <mat-checkbox  [checked]="currentTask.currentTask" ></mat-checkbox>
         <!-- <span style="margin: 15px;">לא</span> -->
         <!-- <button mat-button mat-raised-button color="disabled">הגדר כמשימה נוכחית</button> -->
     </div>
@@ -26,11 +33,6 @@
             <mat-option> מאושר </mat-option>
         </mat-select>
     </div> -->
-    <mat-form-field floatLabel="always" hideRequiredMarker appearance="fill">
-        <mat-select required placeholder='סטטוס' #pakalMatSelect>
-          <mat-option *ngFor='let status of taskStatuses' [value]="currentTask.id"> {{task.taskName}} </mat-option>
-        </mat-select>
-      </mat-form-field>
 
 </div>
 
