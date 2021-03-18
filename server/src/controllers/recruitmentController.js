@@ -38,7 +38,7 @@ module.exports = {
          res.status(500).send("error occurd");
    },
    addTask: async (req,res,next) => {
-      let result = await recruitmentProvider.addTask(req.body.namesListId, req.body.name, req.body.isCurrentTask);
+      let result = await recruitmentProvider.addTask(req.body.namesListId, req.body.name, req.body.currentTask);
       if(!result.error)
          res.status(200).send(result);
       else

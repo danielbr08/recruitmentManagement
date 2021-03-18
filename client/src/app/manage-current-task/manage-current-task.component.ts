@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Task } from '../models/Task.model';
+import { TaskStatus } from '../models/TaskStatus.model';
 import { RequestsService } from '../services/requests.service';
 
 @Component({
@@ -11,7 +12,8 @@ export class ManageCurrentTaskComponent implements OnInit {
 
   constructor(public requestsService : RequestsService) { }
 
-  currentTask: Task | undefined;
+  currentTask: Task = {id: -1, name: "", creationDate: new Date(), status: TaskStatus.Active, namesListId: -1, currentTask: false, };
+  taskStatuses: TaskStatus[] = [TaskStatus.Active, TaskStatus.Edit, TaskStatus.Close]
 
   ngOnInit(): void {
     this.refresh();
@@ -19,6 +21,7 @@ export class ManageCurrentTaskComponent implements OnInit {
 
   async refresh(){
     this.currentTask = await this.requestsService.getCurrentTask();
+    console.log(this.currentTask );
   }
 
 }

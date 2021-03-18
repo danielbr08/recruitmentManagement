@@ -38,11 +38,11 @@
     <mat-cell *matCellDef="let element"> {{element.namesListName}} </mat-cell>
   </ng-container>
 
-  <!-- pakal isCurrentTask -->
-  <ng-container matColumnDef="isCurrentTask">
+  <!-- pakal currentTask -->
+  <ng-container matColumnDef="currentTask">
     <mat-header-cell *matHeaderCellDef> משימה נוכחית </mat-header-cell>
     <mat-cell *matCellDef="let element">
-      <mat-checkbox #currentTaskCB [checked]="element.isCurrentTask" (change)="changeCurrentTask(element.id)"></mat-checkbox>
+      <mat-checkbox #currentTaskCB [checked]="element.currentTask" (change)="changeCurrentTask(element.id)"></mat-checkbox>
     </mat-cell>
   </ng-container>
 

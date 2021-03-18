@@ -5,7 +5,6 @@ import { CreateTaskDialogComponent } from 'src/app/dialogs/create-task-dialog/cr
 import { NamesList } from 'src/app/models/NamesList.model';
 import { Task } from 'src/app/models/Task.model';
 import { TaskStatus } from 'src/app/models/TaskStatus.model';
-import { NamesListServiceService } from 'src/app/services/names-list-service.service';
 import { RequestsService } from 'src/app/services/requests.service';
 import { TasksServiceService } from 'src/app/services/tasks-service.service';
 
@@ -20,7 +19,7 @@ export interface DialogData {
 })
 export class TasksManagemententComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'name', 'creationDate', 'status','namesListId','isCurrentTask', ' '];
+  displayedColumns: string[] = ['id', 'name', 'creationDate', 'status','namesListId','currentTask', ' '];
   taskStatuses: TaskStatus[] = [TaskStatus.Active, TaskStatus.Edit, TaskStatus.Close];
 
   namesLists: NamesList[]=[]; 
@@ -64,7 +63,7 @@ export class TasksManagemententComponent implements OnInit {
   }
 
   changeCurrentTask(taskId: number){
-    this.tasks.map(_task=>_task.id !== taskId ? _task.isCurrentTask=false : _task.isCurrentTask=true);
+    this.tasks.map(_task=>_task.id !== taskId ? _task.currentTask=false : _task.currentTask=true);
   }
 
 }

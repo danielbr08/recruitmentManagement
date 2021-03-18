@@ -13,8 +13,8 @@ export class TasksServiceService {
   public tasks: Task[] = [];
 
   addTask(task: Task){
-    let {name, namesListId, isCurrentTask} = task;
-    let data = {name, namesListId, isCurrentTask};
+    let {name, namesListId, currentTask} = task;
+    let data = {name, namesListId, currentTask};
     this.requestsService.addTask(data);
   }
 

@@ -27,8 +27,8 @@ export class CreateTaskDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  async createNewTask(name: string, namesListId: number, isCurrentTask: boolean) {
-    let task: any = { name, namesListId, isCurrentTask };
+  async createNewTask(name: string, namesListId: number, currentTask: boolean) {
+    let task: any = { name, namesListId, currentTask };
     await this.service.addTask(task);
     this.dialogRef.close();
   }
