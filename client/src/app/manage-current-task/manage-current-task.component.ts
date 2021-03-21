@@ -12,7 +12,7 @@ export class ManageCurrentTaskComponent implements OnInit {
 
   constructor(public requestsService : RequestsService) { }
 
-  currentTask: any = {id: -1, name: "", creationDate: new Date(), status: TaskStatus.Active, namesListId: -1, currentTask: false, };
+  currentTask: any = {id: -1, name: "", creationDate: new Date(), status: TaskStatus.Active, namesListId: -1, currentTask: false};
   tasks: any = [];
   taskStatuses: any = [{"key":TaskStatus.Active, "val":"פעיל"} , {"key":TaskStatus.Edit, "val":"עריכה"} , {"key":TaskStatus.Close, "val":"סגור"} ]
 
@@ -23,6 +23,10 @@ export class ManageCurrentTaskComponent implements OnInit {
   async refresh(){
     this.currentTask = await this.requestsService.getCurrentTask();
     this.tasks = await this.requestsService.getTasks()
+  }
+
+  saveData(taskId: number, status: number, currentTask: any){
+    console.log(taskId, status, currentTask);
   }
 
 }

@@ -1,7 +1,9 @@
 .margin-bottom-30{
     margin-bottom: 30px;
 }
-
+.margin-top-30{
+    margin-top: 30px;
+}
 .border2{
     border-bottom: 2px solid;
 }

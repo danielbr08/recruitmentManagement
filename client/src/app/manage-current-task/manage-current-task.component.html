@@ -1,38 +1,29 @@
 <form>
-  <div style="display: flex; flex-direction: row;">
+  <div>
   <mat-form-field floatLabel="always" hideRequiredMarker appearance="fill">
-      <mat-select required placeholder='משימה' #pakalMatSelect>
+      <mat-select required placeholder='משימה' #taskMatSelect [(value)]="currentTask.id">
         <mat-option *ngFor='let task of tasks' [value]="task.id"> {{currentTask.name}} </mat-option>
       </mat-select>
     </mat-form-field>
-    <input matInput type="text" [value]="currentTask.namesListName" disabled>
+    <div>
+      <span>רשימת שמות מקושרת: </span> 
+      <a href="manage/names-list/{{currentTask.id}}">{{currentTask.namesListName}}</a>
+  </div>
   </div>
     <div></div>
 
-  </form>
-
-<div class="border2 margin-bottom-30">
-    <!-- <div>שם המשימה</div>
-    <div>רשימת שמות מקושרת</div> -->
     <mat-form-field floatLabel="always" hideRequiredMarker appearance="fill">
-      <mat-select required placeholder='סטטוס' #pakalMatSelect>
+      <mat-select required placeholder='סטטוס' #statusMatSelect [(value)]="currentTask.status">
         <mat-option *ngFor='let status of taskStatuses' [value]="status.key"> {{status.val}} </mat-option>
       </mat-select>
     </mat-form-field>
     <div>
         <span>משימה נוכחית&#63;</span>
-        <mat-checkbox  [checked]="currentTask.currentTask" ></mat-checkbox>
-        <!-- <span style="margin: 15px;">לא</span> -->
-        <!-- <button mat-button mat-raised-button color="disabled">הגדר כמשימה נוכחית</button> -->
+        <mat-checkbox #currentTaskMatCheckbox [checked]="currentTask.currentTask"></mat-checkbox>
     </div>
 
-    <!-- <div style="width: 200px; text-align: rtl;">
-        <mat-select placeholder="סטטוס">
-            <mat-option> חדש </mat-option>
-            <mat-option> בעריכה </mat-option>
-            <mat-option> מאושר </mat-option>
-        </mat-select>
-    </div> -->
+    <button (click)="saveData(taskMatSelect.value,statusMatSelect.value, currentTaskMatCheckbox.value)" mat-button mat-raised-button color="primary">שמירה</button>
+  </form>
 
-</div>
+<div class="border2 margin-bottom-30 margin-top-30"></div>
 
