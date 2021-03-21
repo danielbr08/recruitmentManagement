@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Task } from '../models/Task.model';
 import { TaskStatus } from '../models/TaskStatus.model';
 import { RequestsService } from '../services/requests.service';
 
@@ -21,12 +20,18 @@ export class ManageCurrentTaskComponent implements OnInit {
   }
 
   async refresh(){
-    this.currentTask = await this.requestsService.getCurrentTask();
-    this.tasks = await this.requestsService.getTasks()
+    this.tasks = await this.requestsService.getTasks();
+    this.currentTask = this.tasks[0];
+    console.log("this.tasks: ", this.tasks);
   }
 
   saveData(taskId: number, status: number, currentTask: any){
     console.log(taskId, status, currentTask);
+  }
+
+  changeCurrentTask(taskId: number){
+    this.currentTask = {...this.tasks.filter((item: any)=>item.id === taskId)};
+    console.log("this.currentTask: ", this.currentTask);
   }
 
 }
