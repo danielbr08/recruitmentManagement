@@ -1,7 +1,7 @@
 <form>
   <div>
   <mat-form-field floatLabel="always" hideRequiredMarker appearance="fill">
-      <mat-select required placeholder='משימה' #taskMatSelect [(value)]="currentTask.id" (selectionChange)="changeCurrentTask($event.value)">
+      <mat-select required placeholder='משימה' #taskMatSelect (value)="currentTask.id" (selectionChange)="changeCurrentTask($event.value)">
         <mat-option *ngFor='let task of tasks' [value]="task.id"> {{task.name}} </mat-option>
       </mat-select>
     </mat-form-field>

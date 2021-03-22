@@ -22,7 +22,7 @@ export class ManageCurrentTaskComponent implements OnInit {
   async refresh(){
     this.tasks = await this.requestsService.getTasks();
     this.currentTask = this.tasks[0];
-    console.log("this.tasks: ", this.tasks);
+    console.log("currentTask: ", this.currentTask);
   }
 
   saveData(taskId: number, status: number, currentTask: any){
@@ -30,8 +30,8 @@ export class ManageCurrentTaskComponent implements OnInit {
   }
 
   changeCurrentTask(taskId: number){
-    this.currentTask = {...this.tasks.filter((item: any)=>item.id === taskId)};
-    console.log("this.currentTask: ", this.currentTask);
+    this.currentTask = this.tasks.filter((item: any)=>item.id === taskId)[0];
+    console.log("taskId: ", taskId, "tasks: ", this.tasks);
   }
 
 }
