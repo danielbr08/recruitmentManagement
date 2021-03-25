@@ -21,17 +21,21 @@ export class ManageCurrentTaskComponent implements OnInit {
 
   async refresh(){
     this.tasks = await this.requestsService.getTasks();
-    this.currentTask = this.tasks[0];
+    this.currentTask = {...this.tasks[0]};
     console.log("currentTask: ", this.currentTask);
   }
 
-  saveData(taskId: number, status: number, currentTask: any){
-    console.log(taskId, status, currentTask);
+  async saveData(){
+    await this.requestsService.updateTask(this.currentTask);
   }
 
   changeCurrentTask(taskId: number){
     this.currentTask = this.tasks.filter((item: any)=>item.id === taskId)[0];
     console.log("taskId: ", taskId, "tasks: ", this.tasks);
+  }
+
+  toggleCurrentTask(){
+    this.currentTask.currentTask = !this.currentTask.currentTask;
   }
 
 }

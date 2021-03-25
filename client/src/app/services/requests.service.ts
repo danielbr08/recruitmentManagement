@@ -61,4 +61,9 @@ export class RequestsService {
     return this.http.post(`${this.url}/add-nameslist`,body,{headers: this.headers}).toPromise();
   }
 
+  updateTask(data: any){
+    const body = JSON.stringify(data);
+    return this.http.post(`${this.url}/update-task`,body,{headers: this.headers}).toPromise(); 
+  }
+
 }

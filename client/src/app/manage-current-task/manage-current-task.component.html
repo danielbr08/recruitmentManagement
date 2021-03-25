@@ -1,7 +1,7 @@
 <form>
   <div>
   <mat-form-field floatLabel="always" hideRequiredMarker appearance="fill">
-      <mat-select required placeholder='משימה' #taskMatSelect (value)="currentTask.id" (selectionChange)="changeCurrentTask($event.value)">
+      <mat-select required placeholder='משימה' #taskMatSelect [(value)]="currentTask.id" (selectionChange)="changeCurrentTask($event.value)">
         <mat-option *ngFor='let task of tasks' [value]="task.id"> {{task.name}} </mat-option>
       </mat-select>
     </mat-form-field>
@@ -19,7 +19,7 @@
     </mat-form-field>
     <div>
         <span>משימה נוכחית&#63;</span>
-        <mat-checkbox #currentTaskMatCheckbox [checked]="currentTask.currentTask"></mat-checkbox>
+        <mat-checkbox #currentTaskMatCheckbox (change)="toggleCurrentTask()" [checked]="currentTask.currentTask"></mat-checkbox>
     </div>
 
     <button (click)="saveData(taskMatSelect.value,statusMatSelect.value, currentTaskMatCheckbox.value)" mat-button mat-raised-button color="primary">שמירה</button>
