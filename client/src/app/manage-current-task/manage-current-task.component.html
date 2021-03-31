@@ -22,7 +22,7 @@
         <mat-checkbox #currentTaskMatCheckbox (change)="toggleCurrentTask()" [checked]="currentTask.currentTask"></mat-checkbox>
     </div>
 
-    <button (click)="saveData(taskMatSelect.value,statusMatSelect.value, currentTaskMatCheckbox.value)" mat-button mat-raised-button color="primary">שמירה</button>
+    <button (click)="saveData()" mat-button mat-raised-button color="primary">שמירה</button>
   </form>
 
 <div class="border2 margin-bottom-30 margin-top-30"></div>

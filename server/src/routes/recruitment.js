@@ -10,6 +10,7 @@ router.get('/soldiers-list', recruitmentController.getSoldiersList);
 router.get('/soldiers-names-list', recruitmentController.getSoldiersNamesList);
 router.get('/names-lists', recruitmentController.getNamesLists);
 router.get('/tasks', recruitmentController.getTasks);
+router.post('/update-task', recruitmentController.updateTask);
 router.get('/current-task', recruitmentController.getCurrentTask);
 router.get('/max-pakal-id', recruitmentController.getMaxPakalId);
 router.get('/max-signature-item-id', recruitmentController.getMaxSignatureItemId);

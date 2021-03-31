@@ -63,8 +63,19 @@ const _getNamesLists = async () => {
 }
 
 const _getTasks = async () => {
-  const query = `select t.id, t.name as "name", t.status, t.current_task as "currentTask", t.creation_date as "creationDate",t.names_list_id as "namesListId", nl.name as "namesListName" from task t inner join names_list nl on t.names_list_id = nl.id;`;
+  const query = `select t.id, t.name as "name", t.status, t.current_task as "currentTask", t.creation_date as "creationDate",t.names_list_id as "namesListId", nl.name as "namesListName" from task t inner join names_list nl on t.names_list_id = nl.id order by t.current_task desc, t.creation_date desc;`;
   return (await queryUtils.executeQuery(query))[0];
+}
+
+const _updateTask = async (task) => {
+  const {id, currentTask, status} = task;
+  let query = `update task set current_task = ${currentTask},status = ${status} where id = ${id};`;
+  let res = (await queryUtils.executeQuery(query))[0];
+  if(currentTask){
+    query = `update task set current_task = false where task_id != ${taskId}`;
+    await queryUtils.executeQuery(query);
+  }
+  return res;
 }
 
 const _getCurrentTask = async () => {
@@ -240,6 +251,15 @@ const getSoldiersFromNamesList = async (id)=>{
     getTasks: async () => {
       try{
         const result = await _getTasks();
+        return result;
+        } catch(error){
+          console.log("error: ", error);
+          return {error: true};
+        }
+    },
+    updateTask: async (task) => {
+      try{
+        const result = await _updateTask(task);
         return result;
         } catch(error){
           console.log("error: ", error);
