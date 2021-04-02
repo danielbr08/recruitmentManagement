@@ -72,7 +72,7 @@ const _updateTask = async (task) => {
   let query = `update task set current_task = ${currentTask},status = ${status} where id = ${id};`;
   let res = (await queryUtils.executeQuery(query))[0];
   if(currentTask){
-    query = `update task set current_task = false where task_id != ${taskId}`;
+    query = `update task set current_task = false where id != ${id}`;
     await queryUtils.executeQuery(query);
   }
   return res;
@@ -137,6 +137,17 @@ const getSoldiersFromNamesList = async (id)=>{
       }
     }
     return insertedPakalsArr;
+  }
+
+  const _saveWarehouseUnit = async (_pakals) => {
+    const { taskId, pakals} = _pakals;
+    let query = queryUtils.createQueryInsertWarehouseUnit(taskId, pakals);
+    return (await queryUtils.executeQuery(query))[0];
+  }
+
+  const _getWarehouseUnit = async (taskId) => {
+    let query = queryUtils.createQueryGetWarehouseUnit(taskId);
+    return (await queryUtils.executeQuery(query))[0];
   }
 
   const _getPakalsFull = async () =>{
@@ -296,6 +307,24 @@ const getSoldiersFromNamesList = async (id)=>{
     savePakals: async (pakals) => {
       try{
         const result = await _savePakals(pakals);
+        return result;
+      } catch(error){
+        console.log("error: ", error);
+        return {error: true};
+      }
+    },
+    saveWarehouseUnit: async (pakals) => {
+      try{
+        const result = await _saveWarehouseUnit(pakals);
+        return result;
+      } catch(error){
+        console.log("error: ", error);
+        return {error: true};
+      }
+    },
+    getWarehouseUnit: async (pakals) => {
+      try{
+        const result = await _getWarehouseUnit(pakals);
         return result;
       } catch(error){
         console.log("error: ", error);

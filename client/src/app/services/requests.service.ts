@@ -28,6 +28,12 @@ export class RequestsService {
     return this.http.post(`${this.url}/save-pakals`,body,{headers}).toPromise();
   }
 
+  savePakalsAllocated(data: any){
+    const headers = { 'content-type': 'application/json'}  
+    const body = JSON.stringify(data);
+    return this.http.post(`${this.url}/save-warehouse-unit`,body,{headers}).toPromise();
+  }
+
   async getMaxPakalId(){
     return +(await this.http.get<any>(`${this.url}/max-pakal-id`).toPromise()).maxId;
   }
@@ -64,6 +70,10 @@ export class RequestsService {
   updateTask(data: any){
     const body = JSON.stringify(data);
     return this.http.post(`${this.url}/update-task`,body,{headers: this.headers}).toPromise(); 
+  }
+
+  getWareHouseUnit(taskID : any){
+    return this.http.get<any>(`${this.url}/warehouse-unit?taskId=${taskID}`).toPromise(); 
   }
 
 }

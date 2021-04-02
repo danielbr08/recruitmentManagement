@@ -3,6 +3,7 @@ import { MatSelect } from '@angular/material/select';
 import { Pakal } from '../models/Pakal.model';
 import { PakalAllocated } from '../models/pakalAllocated.model';
 import { RequestsService } from '../services/requests.service';
+import { TasksServiceService } from '../services/tasks-service.service';
 
 const PAKALS: Pakal[] = // The vale should be taken from server(by service)
   [
@@ -26,14 +27,20 @@ export class EmergencyWarehouseUnitInventoryComponent implements OnInit {
   pakals: Pakal[]= [];//PAKALS;
   pakalsSelected: PakalAllocated[] = [];
 
-  constructor( private requestsService: RequestsService ) { }
+  constructor( private requestsService: RequestsService,
+               private tasksService : TasksServiceService ) { }
 
   ngOnInit(): void {
+    this.reloadWareHouseUnit();
     this.reloadPakals();
   }
 
-  saveData() {
-    console.log("pakalsSelected", JSON.stringify(this.pakalsSelected));
+  async saveData() {
+    let currentTask = await this.tasksService.getCurrentTask();
+    let pakals = {pakals: this.pakalsSelected, taskId: currentTask.id};
+    console.log("pakalsSelected", pakals);
+    const res: any = await this.requestsService.savePakalsAllocated(pakals);
+    console.log("res: ", res);
   }
 
   addNewRow(){
@@ -79,6 +86,11 @@ export class EmergencyWarehouseUnitInventoryComponent implements OnInit {
 
   async reloadPakals(){
     this.pakals = await this.requestsService.getPakals();
+  }
+
+  async reloadWareHouseUnit(){
+    let currentTask = await this.requestsService.getCurrentTask();
+    this.pakalsSelected = await this.requestsService.getWareHouseUnit(currentTask.id);
   }
 
 }

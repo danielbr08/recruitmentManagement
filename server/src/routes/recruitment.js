@@ -19,5 +19,7 @@ router.get('/pakals', recruitmentController.getPakals);
 router.post('/add-nameslist', recruitmentController.addNamesList);
 router.post('/add-task', recruitmentController.addTask);
 router.post('/save-pakals', recruitmentController.savePakals);
+router.post('/save-warehouse-unit', recruitmentController.saveWarehouseUnit);
+router.get('/warehouse-unit', recruitmentController.getWarehouseUnit);
 
 module.exports = router;

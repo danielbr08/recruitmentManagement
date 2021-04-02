@@ -50,10 +50,24 @@ module.exports = {
    },
    savePakals: async (req,res,next) => {
       const body = req.body;
-      if(!body){
-         res.status(400).send("body is required!");
-      }
       let result = await recruitmentProvider.savePakals(body);
+      if(!result.error)
+         res.status(200).send(result);
+      else
+         res.status(500).send("error occurd");
+   },
+   saveWarehouseUnit: async (req,res,next) => {
+      const body = req.body;
+      let result = await recruitmentProvider.saveWarehouseUnit(body);
+      if(!result.error)
+         res.status(200).send(result);
+      else
+         res.status(500).send("error occurd");
+   },
+   getWarehouseUnit: async (req,res,next) => {
+      const taskId = req.query.taskId;
+      console.log(taskId);
+      let result = await recruitmentProvider.getWarehouseUnit(taskId);
       if(!result.error)
          res.status(200).send(result);
       else

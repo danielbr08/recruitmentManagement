@@ -95,6 +95,20 @@ const createInsertNamesListQuery = (name, creationDate)=>{
 const createQueryInsertTask = (namesListId, name, currentTask)=>{
   return `INSERT INTO task(names_list_id, name, status, current_task, creation_date) VALUES ( ${namesListId}, '${name}', 1, ${currentTask}, '${getNowFormated()}') RETURNING id as "taskId"`;
 }
+    
+const createQueryInsertWarehouseUnit = (taskId, pakals) =>{
+  let values = "";
+  for(let i=0; i< pakals.length; i++){
+    let pakal = pakals[i];
+    values += `(${taskId}, ${pakal.pakalId}, ${pakal.quantity} ),`;
+  }
+  values = utils.removeLastCharacters(values,1);
+  return `insert into warehouse_unit (task_id, pakal_id, quantity) values ${values}`;
+}
+
+const createQueryGetWarehouseUnit = (taskId) =>{
+  return `select id, pakal_id as "pakalId", quantity from warehouse_unit where task_id = ${taskId}`;
+}
 
 const getNowFormated = ()=>{
   return dateFormat(new Date(), "yyyy-mm-dd hh:MM:ss");
@@ -111,6 +125,8 @@ module.exports = {
   createQueryInsertTask,
   insertSignatureItems,
   insertPakal,
+  createQueryInsertWarehouseUnit,
+  createQueryGetWarehouseUnit,
   getMaxPakalId,
   getNowFormated
 };
