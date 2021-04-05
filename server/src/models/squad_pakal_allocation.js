@@ -14,10 +14,6 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.INTEGER,
         allowNull: false
       },
-      warehouse_total: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-      },
       squad1_total: {
         type: DataTypes.INTEGER,
         allowNull: false
@@ -35,10 +31,6 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false
       },
       support_total: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-      },
-      warehouse_allocated: {
         type: DataTypes.INTEGER,
         allowNull: false
       },
