@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatSelect } from '@angular/material/select';
 import { Pakal } from '../models/Pakal.model';
-import { PakalAllocated } from '../models/pakalAllocated.model';
+import { PakalUnitWarehouse } from '../models/PakalUnitWarehouse.model';
 import { RequestsService } from '../services/requests.service';
 import { TasksServiceService } from '../services/tasks-service.service';
 
@@ -25,7 +25,7 @@ export class EmergencyWarehouseUnitInventoryComponent implements OnInit {
   
   displayedColumns: string[] = ['id', 'pakal', 'quantity', ' '];
   pakals: Pakal[]= [];//PAKALS;
-  pakalsSelected: PakalAllocated[] = [];
+  pakalsSelected: PakalUnitWarehouse[] = [];
 
   constructor( private requestsService: RequestsService,
                private tasksService : TasksServiceService ) { }
