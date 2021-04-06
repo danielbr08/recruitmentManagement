@@ -1,1 +1,62 @@
 <app-manage-current-task></app-manage-current-task>
+
+<mat-table id="warehouseUnitTable" [dataSource]="pakalAllocated" class="mat-elevation-z8">
+    <!-- pakal Column -->
+    <ng-container matColumnDef="pakal">
+        <mat-header-cell *matHeaderCellDef> פק"ל </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.pakalName}} </mat-cell>
+    </ng-container>
+        <!-- pakal Column -->
+        <ng-container matColumnDef="warehousePakal">
+            <mat-header-cell *matHeaderCellDef> ימ"ח </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.warehouseTotal}} </mat-cell>
+        </ng-container>
+            <!-- pakal Column -->
+    <ng-container matColumnDef="squad1">
+        <mat-header-cell *matHeaderCellDef> פלוגה 1 </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.squad1Allocated}} </mat-cell>
+    </ng-container>
+        <!-- pakal Column -->
+        <ng-container matColumnDef="squad2">
+            <mat-header-cell *matHeaderCellDef> פלוגה 2 </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.squad2Allocated}} </mat-cell>
+        </ng-container>
+            <!-- pakal Column -->
+    <ng-container matColumnDef="squad3">
+        <mat-header-cell *matHeaderCellDef> פלוגה 3 </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.squad3Allocated}} </mat-cell>
+    </ng-container>
+        <!-- pakal Column -->
+        <ng-container matColumnDef="support">
+            <mat-header-cell *matHeaderCellDef> מסייעת </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.supportAllocated}} </mat-cell>
+        </ng-container>
+            <!-- pakal Column -->
+    <ng-container matColumnDef="headquarters">
+        <mat-header-cell *matHeaderCellDef> מפקדה </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.headquartersAllocated}} </mat-cell>
+    </ng-container>
+
+    <!-- warehouse-quantity Column -->
+    <ng-container matColumnDef="total">
+        <mat-header-cell *matHeaderCellDef> סה"כ </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <input min=1 type="number" placeholder='ימ"ח' required [value]="element.warehouseTotal"
+                name="warehouse-total-{{element.pakalId}}" [(ngModel)]="element.warehouseTotal">
+        </mat-cell>
+    </ng-container>
+
+    <!-- total-quantity Column -->
+    <!-- <ng-container matColumnDef="total">
+        <mat-header-cell *matHeaderCellDef> סה"כ </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <input min=0 type="number" placeholder='ימ"ח' required [value]="element.quantity"
+                name="warehouse-quantity-{{element.pakalId}}" [(ngModel)]="element.quantity">
+            <input min=0 type="number" placeholder='ימ"ח' required [value]="element.quantity"
+                name="warehouse-quantity-{{element.pakalId}}" [(ngModel)]="element.quantity">
+        </mat-cell>
+    </ng-container> -->
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
