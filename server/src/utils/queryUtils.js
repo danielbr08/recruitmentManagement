@@ -110,6 +110,13 @@ const createQueryGetWarehouseUnit = (taskId) =>{
   return `select id, pakal_id as "pakalId", quantity from warehouse_unit where task_id = ${taskId}`;
 }
 
+const createQueryGetAllocatePakalBattlion = (taskId) =>{
+  return `select wu.task_id as "taskId", wu.pakal_id as "pakalId",p.name as "pakalName", 
+	wu.quantity as "warehouseTotal", squad1_allocated as "squad1Allocated", squad2_allocated as "squad2Allocated", squad3_allocated as "squad3Allocated",headquarters_allocated as "headquartersAllocated", 
+  support_allocated as "supportAllocated", squad1_total as "squad1Total", squad2_total as "squad2Total", squad3_total as "squad3Total",headquarters_total as "headquartersTotal", support_total as "supportTotal"
+	from squad_pakal_allocation spa inner join warehouse_unit wu on spa.task_id = wu.task_id and spa.pakal_id = wu.pakal_id inner join pakal as p on p.pakal_id = wu.pakal_id where wu.task_id = ${taskId};`;
+}
+
 const getNowFormated = ()=>{
   return dateFormat(new Date(), "yyyy-mm-dd hh:MM:ss");
 }
@@ -127,6 +134,7 @@ module.exports = {
   insertPakal,
   createQueryInsertWarehouseUnit,
   createQueryGetWarehouseUnit,
+  createQueryGetAllocatePakalBattlion,
   getMaxPakalId,
   getNowFormated
 };

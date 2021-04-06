@@ -1,6 +1,6 @@
 <app-manage-current-task></app-manage-current-task>
 
-<mat-table id="warehouseUnitTable" [dataSource]="pakalAllocated" class="mat-elevation-z8">
+<mat-table id="allocatePakalTable" [dataSource]="pakalAllocated" class="mat-elevation-z8">
     <!-- pakal Column -->
     <ng-container matColumnDef="pakal">
         <mat-header-cell *matHeaderCellDef> פק"ל </mat-header-cell>
@@ -9,32 +9,32 @@
         <!-- pakal Column -->
         <ng-container matColumnDef="warehousePakal">
             <mat-header-cell *matHeaderCellDef> ימ"ח </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.warehouseTotal}} </mat-cell>
+            <mat-cell *matCellDef="let element"> <input matInput type="number" [value]="element.warehouseTotal" disabled></mat-cell>
         </ng-container>
             <!-- pakal Column -->
     <ng-container matColumnDef="squad1">
         <mat-header-cell *matHeaderCellDef> פלוגה 1 </mat-header-cell>
-        <mat-cell *matCellDef="let element"> <input matInput type="text" [value]="element.squad1Allocated"> / <input matInput type="text" [value]="element.squad1Total" disabled> </mat-cell>
+        <mat-cell *matCellDef="let element"> <input matInput type="number" [value]="element.squad1Allocated" disabled> <span class="slash">\</span> <input matInput type="number" [value]="element.squad1Total"> </mat-cell>
     </ng-container>
         <!-- pakal Column -->
         <ng-container matColumnDef="squad2">
             <mat-header-cell *matHeaderCellDef> פלוגה 2 </mat-header-cell>
-            <mat-cell *matCellDef="let element"> <input matInput type="text" [value]="element.squad2Allocated"> / <input matInput type="text" [value]="element.squad2Total" disabled> </mat-cell>
+            <mat-cell *matCellDef="let element"> <input matInput type="number" [value]="element.squad2Allocated" disabled> <span class="slash">\</span> <input matInput type="number" [value]="element.squad2Total"> </mat-cell>
         </ng-container>
             <!-- pakal Column -->
     <ng-container matColumnDef="squad3">
         <mat-header-cell *matHeaderCellDef> פלוגה 3 </mat-header-cell>
-        <mat-cell *matCellDef="let element"> <input matInput type="text" [value]="element.squad3Allocated"> / <input matInput type="text" [value]="element.squad3Total" disabled> </mat-cell>
+        <mat-cell *matCellDef="let element"> <input matInput type="number" [value]="element.squad3Allocated" disabled> <span class="slash">\</span> <input matInput type="number" [value]="element.squad3Total"> </mat-cell>
     </ng-container>
         <!-- pakal Column -->
         <ng-container matColumnDef="support">
             <mat-header-cell *matHeaderCellDef> מסייעת </mat-header-cell>
-            <mat-cell *matCellDef="let element"> <input matInput type="text" [value]="element.supportAllocated"> / <input matInput type="text" [value]="element.supportTotal" disabled> </mat-cell>
+            <mat-cell *matCellDef="let element"> <input matInput type="number" [value]="element.supportAllocated" disabled> <span class="slash">\</span> <input matInput type="number" [value]="element.supportTotal"> </mat-cell>
         </ng-container>
             <!-- pakal Column -->
     <ng-container matColumnDef="headquarters">
         <mat-header-cell *matHeaderCellDef> מפקדה </mat-header-cell>
-        <mat-cell *matCellDef="let element"> <input matInput type="text" [value]="element.headquartersAllocated"> / <input matInput type="text" [value]="element.headquartersTotal" disabled> </mat-cell>
+        <mat-cell *matCellDef="let element"> <input matInput type="number" [value]="element.headquartersAllocated" disabled> <span class="slash">\</span> <input matInput type="number" [value]="element.headquartersTotal"> </mat-cell>
     </ng-container>
 
     <!-- warehouse-quantity Column -->

@@ -72,8 +72,12 @@ export class RequestsService {
     return this.http.post(`${this.url}/update-task`,body,{headers: this.headers}).toPromise(); 
   }
 
-  getWareHouseUnit(taskID : any){
-    return this.http.get<any>(`${this.url}/warehouse-unit?taskId=${taskID}`).toPromise(); 
+  getWareHouseUnit(taskId : any){
+    return this.http.get<any>(`${this.url}/warehouse-unit?taskId=${taskId}`).toPromise(); 
+  }
+
+  getPalalAllocated(taskId : any){
+    return this.http.get<any>(`${this.url}/allocate-pakal-battlion?taskId=${taskId}`).toPromise(); 
   }
 
 }

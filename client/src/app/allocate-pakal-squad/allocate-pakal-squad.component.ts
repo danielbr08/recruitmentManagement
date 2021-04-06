@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { PakalAllocated } from '../models/pakalAllocated.model';
 import { PakalUnitWarehouse } from '../models/PakalUnitWarehouse.model';
 
 const PAKALSSQUAD: PakalUnitWarehouse[]=  [{"pakalId":1,"quantity":4},{"pakalId":2,"quantity":7}]; // The vale should be taken from server(by service)

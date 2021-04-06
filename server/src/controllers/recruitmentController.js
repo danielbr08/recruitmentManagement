@@ -66,8 +66,15 @@ module.exports = {
    },
    getWarehouseUnit: async (req,res,next) => {
       const taskId = req.query.taskId;
-      console.log(taskId);
       let result = await recruitmentProvider.getWarehouseUnit(taskId);
+      if(!result.error)
+         res.status(200).send(result);
+      else
+         res.status(500).send("error occurd");
+   },
+   getAllocatePakalBattlion: async (req,res,next) => {
+      const taskId = req.query.taskId;
+      let result = await recruitmentProvider.getAllocatePakalBattlion(taskId);
       if(!result.error)
          res.status(200).send(result);
       else

@@ -150,6 +150,11 @@ const getSoldiersFromNamesList = async (id)=>{
     return (await queryUtils.executeQuery(query))[0];
   }
 
+  const _getAllocatePakalBattlion = async (taskId) => {
+    let query = queryUtils.createQueryGetAllocatePakalBattlion(taskId);
+    return (await queryUtils.executeQuery(query))[0];
+  }
+
   const _getPakalsFull = async () =>{
     const query = queryUtils.createGetPakalsQuery();
     console.log("query: ", query);
@@ -325,6 +330,15 @@ const getSoldiersFromNamesList = async (id)=>{
     getWarehouseUnit: async (pakals) => {
       try{
         const result = await _getWarehouseUnit(pakals);
+        return result;
+      } catch(error){
+        console.log("error: ", error);
+        return {error: true};
+      }
+    },
+    getAllocatePakalBattlion: async (pakals) => {
+      try{
+        const result = await _getAllocatePakalBattlion(pakals);
         return result;
       } catch(error){
         console.log("error: ", error);

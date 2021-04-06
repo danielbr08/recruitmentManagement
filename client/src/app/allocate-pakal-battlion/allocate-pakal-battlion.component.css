@@ -1,0 +1,10 @@
+#allocatePakalTable input{
+    width: 30%;
+    text-align: center;
+}
+
+#allocatePakalTable mat-cell{
+    display: flex;
+    justify-content: center;
+    /* margin-left: 5px; */
+}

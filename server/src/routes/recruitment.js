@@ -21,5 +21,6 @@ router.post('/add-task', recruitmentController.addTask);
 router.post('/save-pakals', recruitmentController.savePakals);
 router.post('/save-warehouse-unit', recruitmentController.saveWarehouseUnit);
 router.get('/warehouse-unit', recruitmentController.getWarehouseUnit);
+router.get('/allocate-pakal-battlion', recruitmentController.getAllocatePakalBattlion);
 
 module.exports = router;
