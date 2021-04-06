@@ -14,27 +14,27 @@
             <!-- pakal Column -->
     <ng-container matColumnDef="squad1">
         <mat-header-cell *matHeaderCellDef> פלוגה 1 </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.squad1Allocated}} </mat-cell>
+        <mat-cell *matCellDef="let element"> <input matInput type="text" [value]="element.squad1Allocated"> / <input matInput type="text" [value]="element.squad1Total" disabled> </mat-cell>
     </ng-container>
         <!-- pakal Column -->
         <ng-container matColumnDef="squad2">
             <mat-header-cell *matHeaderCellDef> פלוגה 2 </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.squad2Allocated}} </mat-cell>
+            <mat-cell *matCellDef="let element"> <input matInput type="text" [value]="element.squad2Allocated"> / <input matInput type="text" [value]="element.squad2Total" disabled> </mat-cell>
         </ng-container>
             <!-- pakal Column -->
     <ng-container matColumnDef="squad3">
         <mat-header-cell *matHeaderCellDef> פלוגה 3 </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.squad3Allocated}} </mat-cell>
+        <mat-cell *matCellDef="let element"> <input matInput type="text" [value]="element.squad3Allocated"> / <input matInput type="text" [value]="element.squad3Total" disabled> </mat-cell>
     </ng-container>
         <!-- pakal Column -->
         <ng-container matColumnDef="support">
             <mat-header-cell *matHeaderCellDef> מסייעת </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.supportAllocated}} </mat-cell>
+            <mat-cell *matCellDef="let element"> <input matInput type="text" [value]="element.supportAllocated"> / <input matInput type="text" [value]="element.supportTotal" disabled> </mat-cell>
         </ng-container>
             <!-- pakal Column -->
     <ng-container matColumnDef="headquarters">
         <mat-header-cell *matHeaderCellDef> מפקדה </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.headquartersAllocated}} </mat-cell>
+        <mat-cell *matCellDef="let element"> <input matInput type="text" [value]="element.headquartersAllocated"> / <input matInput type="text" [value]="element.headquartersTotal" disabled> </mat-cell>
     </ng-container>
 
     <!-- warehouse-quantity Column -->
