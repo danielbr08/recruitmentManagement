@@ -36,4 +36,9 @@ export class AllocatePakalBattlionComponent implements OnInit {
     this.pakalAllocated = await this.requestsService.getPalalAllocated(currentTask.id);
   }
 
+
+  compareVal(val1: number, val2: number){
+    console.log("checkOverLimit: ", val1, val2, val1 > val2);
+    return val1 > val2 ? 1 : val1 < val2 ? -1 : 0;
+  }
 }
