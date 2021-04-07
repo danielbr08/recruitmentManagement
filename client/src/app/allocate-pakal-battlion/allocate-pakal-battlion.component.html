@@ -3,43 +3,43 @@
 <mat-table id="allocatePakalTable" [dataSource]="pakalAllocated" class="mat-elevation-z8">
     <!-- pakal Column -->
     <ng-container matColumnDef="pakal">
-        <mat-header-cell *matHeaderCellDef> פק"ל </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef> <div class="header">פק"ל</div> </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.pakalName}} </mat-cell>
     </ng-container>
         <!-- pakal Column -->
         <ng-container matColumnDef="warehousePakal">
-            <mat-header-cell *matHeaderCellDef> ימ"ח </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef> <div class="header">ימ"ח</div> </mat-header-cell>
             <mat-cell *matCellDef="let element"> <input matInput type="number" [value]="element.warehouseTotal" disabled></mat-cell>
         </ng-container>
             <!-- pakal Column -->
     <ng-container matColumnDef="squad1">
-        <mat-header-cell *matHeaderCellDef> פלוגה 1 </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef> <div class="header">פלוגה 1</div> </mat-header-cell>
         <mat-cell *matCellDef="let element"> <input matInput type="number" [value]="element.squad1Allocated" disabled> <span class="slash">\</span> <input matInput type="number" [value]="element.squad1Total"> </mat-cell>
     </ng-container>
         <!-- pakal Column -->
         <ng-container matColumnDef="squad2">
-            <mat-header-cell *matHeaderCellDef> פלוגה 2 </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef> <div class="header">פלוגה 2</div> </mat-header-cell>
             <mat-cell *matCellDef="let element"> <input matInput type="number" [value]="element.squad2Allocated" disabled> <span class="slash">\</span> <input matInput type="number" [value]="element.squad2Total"> </mat-cell>
         </ng-container>
             <!-- pakal Column -->
     <ng-container matColumnDef="squad3">
-        <mat-header-cell *matHeaderCellDef> פלוגה 3 </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef> <div class="header">פלוגה 3</div> </mat-header-cell>
         <mat-cell *matCellDef="let element"> <input matInput type="number" [value]="element.squad3Allocated" disabled> <span class="slash">\</span> <input matInput type="number" [value]="element.squad3Total"> </mat-cell>
     </ng-container>
         <!-- pakal Column -->
         <ng-container matColumnDef="support">
-            <mat-header-cell *matHeaderCellDef> מסייעת </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef> <div class="header">מסייעת</div> </mat-header-cell>
             <mat-cell *matCellDef="let element"> <input matInput type="number" [value]="element.supportAllocated" disabled> <span class="slash">\</span> <input matInput type="number" [value]="element.supportTotal"> </mat-cell>
         </ng-container>
             <!-- pakal Column -->
     <ng-container matColumnDef="headquarters">
-        <mat-header-cell *matHeaderCellDef> מפקדה </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef> <div class="header">מפקדה</div> </mat-header-cell>
         <mat-cell *matCellDef="let element"> <input matInput type="number" [value]="element.headquartersAllocated" disabled> <span class="slash">\</span> <input matInput type="number" [value]="element.headquartersTotal"> </mat-cell>
     </ng-container>
 
     <!-- warehouse-quantity Column -->
     <ng-container matColumnDef="total">
-        <mat-header-cell *matHeaderCellDef> סה"כ </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef> <div class="header">סה"כ</div> </mat-header-cell>
         <mat-cell *matCellDef="let element">
             <input min=1 type="number" placeholder='ימ"ח' required [value]="element.warehouseTotal"
                 name="warehouse-total-{{element.pakalId}}" [(ngModel)]="element.warehouseTotal">

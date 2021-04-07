@@ -1,5 +1,5 @@
 #allocatePakalTable input{
-    width: 30%;
+    width: 40%;
     text-align: center;
 }
 
@@ -7,4 +7,24 @@
     display: flex;
     justify-content: center;
     /* margin-left: 5px; */
+}
+
+#allocatePakalTable .header{
+    width:100%;
+    text-align:center; 
+    color: black ;
+    font: bold;
+}
+
+#allocatePakalTable .mat-header-cell{
+    border: solid red 2px;
+}
+
+#allocatePakalTable .mat-cell{
+    border: solid green 2px;
+}
+
+#allocatePakalTable input{
+    /* border: solid yellow 2px; */
+    padding: 2%;
 }
