@@ -14,7 +14,7 @@ export class AllocatePakalBattlionComponent implements OnInit {
   headquartersTotal: 0,
   pakalId: 3,
   pakalName: "פקל 2",
-  squad1Allocated: 0,
+  squad1Allocated: 2,
   squad1Total: 1,
   squad2Allocated: 0,
   squad2Total: 2,
@@ -41,4 +41,26 @@ export class AllocatePakalBattlionComponent implements OnInit {
     console.log("checkOverLimit: ", val1, val2, val1 > val2);
     return val1 > val2 ? 1 : val1 < val2 ? -1 : 0;
   }
+
+  compareTotalVal(pakal : PakalAllocated){
+     let allocated = this.getAllAllocated(pakal);
+     let total = this.getAllTotal(pakal);
+     return total > allocated ? 1 : total < allocated ? -1 : 0;
+  }
+
+  getAllAllocated(pakal : PakalAllocated){
+    return  pakal.squad1Allocated + pakal.squad2Allocated + pakal.squad3Allocated + pakal.supportAllocated + pakal.headquartersAllocated;
+  }
+
+  getAllTotal(pakal : PakalAllocated){
+    return pakal.squad1Total + pakal.squad2Total + pakal.squad3Total + pakal.supportTotal + pakal.headquartersTotal;
+  }
+
+  compareWarehouseVal(pakal : PakalAllocated){
+    let allTotal = this.getAllTotal(pakal);
+    return pakal.warehouseTotal > allTotal ? 1 : pakal.warehouseTotal == allTotal ? 0 : -1
+
+  }
+
+
 }
