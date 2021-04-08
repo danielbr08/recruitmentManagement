@@ -15,7 +15,7 @@
         </mat-header-cell>
         <mat-cell *matCellDef="let element" [ngClass]="{'over-limit': compareWarehouseVal(element) == 1, 'exact-limit': compareWarehouseVal(element) == 0,
         'below-limit': compareWarehouseVal(element) == -1}"> 
-        <input matInput type="number" [value]="element.warehouseTotal" disabled>
+        <input matInput type="number" [value]="element.warehouseTotal" [(ngModel)]="element.warehouseTotal" disabled>
         </mat-cell>
     </ng-container>
     <!-- pakal Column -->
@@ -26,8 +26,8 @@
         <mat-cell *matCellDef="let element"
             [ngClass]="{'over-limit': compareVal(element.squad1Total ,element.squad1Allocated) == 1, 
                                                         'below-limit': compareVal(element.squad1Total ,element.squad1Allocated) == -1}"> <input
-                matInput type="number" [value]="element.squad1Allocated" disabled> <span class="slash">\</span> <input
-                matInput type="number" [value]="element.squad1Total"> </mat-cell>
+                matInput type="number" [value]="element.squad1Allocated" [(ngModel)]="element.squad1Allocated"> <span class="slash">\</span> <input
+                matInput type="number" [value]="element.squad1Total" [(ngModel)]="element.squad1Total" disabled> </mat-cell>
     </ng-container>
     <!-- pakal Column -->
     <ng-container matColumnDef="squad2">
@@ -36,8 +36,8 @@
         </mat-header-cell>
         <mat-cell *matCellDef="let element" [ngClass]="{'over-limit': compareVal(element.squad2Total ,element.squad2Allocated) == 1, 
             'below-limit': compareVal(element.squad2Total ,element.squad2Allocated) == -1 }"> <input matInput
-                type="number" [value]="element.squad2Allocated" disabled> <span class="slash">\</span> <input matInput
-                type="number" [value]="element.squad2Total"> </mat-cell>
+                type="number" [value]="element.squad2Allocated" [(ngModel)]="element.squad2Allocated"> <span class="slash">\</span> <input matInput
+                type="number" [value]="element.squad2Total" [(ngModel)]="element.squad2Total" disabled> </mat-cell>
     </ng-container>
     <!-- pakal Column -->
     <ng-container matColumnDef="squad3">
@@ -46,8 +46,8 @@
         </mat-header-cell>
         <mat-cell *matCellDef="let element" [ngClass]="{'over-limit': compareVal(element.squad3Total ,element.squad3Allocated) == 1, 
         'below-limit': compareVal(element.squad3Total ,element.squad3Allocated) == -1 }"> <input matInput type="number"
-                [value]="element.squad3Allocated" disabled> <span class="slash">\</span> <input matInput type="number"
-                [value]="element.squad3Total"> </mat-cell>
+                [value]="element.squad3Allocated" [(ngModel)]="element.squad3Allocated"> <span class="slash">\</span> <input matInput type="number"
+                [value]="element.squad3Total" [(ngModel)]="element.squad3Total" disabled> </mat-cell>
     </ng-container>
     <!-- pakal Column -->
     <ng-container matColumnDef="support">
@@ -56,8 +56,8 @@
         </mat-header-cell>
         <mat-cell *matCellDef="let element" [ngClass]="{'over-limit': compareVal(element.supportTotal ,element.supportAllocated) == 1, 
             'below-limit': compareVal(element.supportTotal ,element.supportAllocated) == -1}"> <input matInput
-                type="number" [value]="element.supportAllocated" disabled> <span class="slash">\</span> <input matInput
-                type="number" [value]="element.supportTotal"> </mat-cell>
+                type="number" [value]="element.supportAllocated" [(ngModel)]="element.supportAllocated"> <span class="slash">\</span> <input matInput
+                type="number" [value]="element.supportTotal" [(ngModel)]="element.supportTotal" disabled> </mat-cell>
     </ng-container>
     <!-- pakal Column -->
     <ng-container matColumnDef="headquarters">
@@ -66,8 +66,8 @@
         </mat-header-cell>
         <mat-cell *matCellDef="let element" [ngClass]="{'over-limit': compareVal(element.headquartersTotal ,element.headquartersAllocated) == 1, 
         'below-limit': compareVal(element.headquartersTotal ,element.headquartersAllocated) == -1}"> <input matInput type="number"
-                [value]="element.headquartersAllocated" disabled> <span class="slash">\</span> <input matInput
-                type="number" [value]="element.headquartersTotal"> </mat-cell>
+                [value]="element.headquartersAllocated" [(ngModel)]="element.headquartersAllocated"> <span class="slash">\</span> <input matInput
+                type="number" [value]="element.headquartersTotal" [(ngModel)]="element.headquartersTotal" disabled> </mat-cell>
     </ng-container>
 
     <!-- warehouse-quantity Column -->
@@ -76,9 +76,9 @@
             <div class="header">סה"כ</div>
         </mat-header-cell>
         <mat-cell *matCellDef="let element" [ngClass]="{'over-limit': compareTotalVal(element) == 1, 'below-limit': compareTotalVal(element) == -1 }">
-            <input matInput type="number"
+            <input matInput type="number" min="0"
                 [value]="getAllAllocated(element)" disabled> <span class="slash">\</span> <input matInput
-                type="number" [value]="getAllTotal(element)" disabled> 
+                type="number" min="0" [value]="getAllTotal(element)" disabled> 
             <!-- <input min=1 type="number" placeholder='ימ"ח' required [value]="element.warehouseTotal"
                 name="warehouse-total-{{element.pakalId}}" [(ngModel)]="element.warehouseTotal"> -->
         </mat-cell>
