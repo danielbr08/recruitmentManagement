@@ -57,8 +57,8 @@ export class AllocatePakalBattlionComponent implements OnInit {
   }
 
   compareWarehouseVal(pakal : PakalAllocated){
-    let allTotal = this.getAllTotal(pakal);
-    return pakal.warehouseTotal > allTotal ? 1 : pakal.warehouseTotal == allTotal ? 0 : -1
+    let allAllocated = this.getAllAllocated(pakal);
+    return allAllocated > pakal.warehouseTotal ? 1 : pakal.warehouseTotal == allAllocated ? 0 : -1
 
   }
 

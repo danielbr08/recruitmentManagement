@@ -16,13 +16,13 @@
     font: bold;
 }
 
-#allocatePakalTable .mat-header-cell{
+/* #allocatePakalTable .mat-header-cell{
     border: solid red 2px;
 }
 
 #allocatePakalTable .mat-cell{
     border: solid green 2px;
-}
+} */
 
 #allocatePakalTable input{
     /* border: solid yellow 2px; */
@@ -30,8 +30,12 @@
 }
 
 .over-limit{
-    background-color: red;
+    background-color: rgb(252, 45, 45);
 }
 .below-limit{
     background-color: yellow;
+}
+
+.exact-limit{
+    background-color: rgb(47, 143, 47);
 }
