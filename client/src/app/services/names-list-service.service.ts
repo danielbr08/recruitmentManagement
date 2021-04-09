@@ -34,7 +34,7 @@ export class NamesListServiceService {
       }, {});
       const dataString = jsonData["גיליון1"];
       dataString.forEach((element: any) => {
-        let misgeret = element['נתיב מסגרת מלא'];
+        let misgeret = element['נתיב מסגרת מלא']; // check for separate this field
         let squad = misgeret[0].replaceAll("'", "''");
         let department = misgeret[1].replaceAll("'", "''");
         let _class = misgeret[2].replaceAll("'", "''");

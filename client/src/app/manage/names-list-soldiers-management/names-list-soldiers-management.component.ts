@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Input, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NamesList } from 'src/app/models/NamesList.model';
+import { ActivatedRoute } from '@angular/router';
 import { Soldier } from 'src/app/models/Soldier.model';
 import { NamesListServiceService } from 'src/app/services/names-list-service.service';
 import { RequestsService } from 'src/app/services/requests.service';
@@ -14,13 +13,15 @@ import { RequestsService } from 'src/app/services/requests.service';
   styleUrls: ['./names-list-soldiers-management.component.css']
 })
 export class NamesListSoldiersManagementComponent implements OnInit {
+  @Input()
+  namesListId!: number;
+
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
 
   @ViewChild(MatSort)
   sort!: MatSort;
   
-  nameListId: number = -1;
   public dataSource = new MatTableDataSource<Soldier>();
 
   soldiers: Soldier[]  = [];
@@ -28,10 +29,11 @@ export class NamesListSoldiersManagementComponent implements OnInit {
 
   constructor(public activatedRoute: ActivatedRoute,
               public  namesListService: NamesListServiceService,
-              public requestsService: RequestsService ) { }
+              public requestsService: RequestsService ) {}
 
   ngOnInit(): void {
-    this.nameListId = this.activatedRoute.snapshot.params.id;
+    let namesListIdFromUrl = this.activatedRoute.snapshot.params.id; 
+    this.namesListId = namesListIdFromUrl || this.namesListId;
     this.refresh();
   }
 
@@ -47,7 +49,7 @@ export class NamesListSoldiersManagementComponent implements OnInit {
   }
 
   async refresh() {
-    this.soldiers = await this.requestsService.getSoldiersNamesList(this.nameListId);
+    this.soldiers = await this.requestsService.getSoldiersNamesList(this.namesListId);
     console.log("soldiers: ", this.soldiers);
     this.dataSource.data = this.soldiers;
 
